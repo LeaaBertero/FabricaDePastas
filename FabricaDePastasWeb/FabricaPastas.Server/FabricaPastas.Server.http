@@ -1,4 +1,4 @@
-@FabricaPastas.Server_HostAddress = http://localhost:5068
+@FabricaPastas.Server_HostAddress = http://localhost:5286
 
 GET {{FabricaPastas.Server_HostAddress}}/weatherforecast/
 Accept: application/json
