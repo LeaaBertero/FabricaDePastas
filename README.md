@@ -1,6 +1,6 @@
-# FabriaDePastas
+# FabricaDePastas
 
-- Descripción del proyecto → Breve explicación de qué hace y por qué existe.
+- Descripción del proyecto → La plataforma web de la fábrica  de pastas, tiene como objetivo mejorar la administración de sus productos y las venta de los mismos  ofreciendo una experiencia fluida a los clientes. A través de éste sitio los usuarios, van a poder explorar el catálogo, realizando pedidos en línea, conocer la historia de la fábrica  y acceder a promociones exlusivas.  
 - Instalación → Pasos para configurar el entorno y correr el proyecto.
 - Uso → Instrucciones sobre cómo interactuar con la aplicación.
 - Estructura del código → Explicación de los principales módulos y directorios.
