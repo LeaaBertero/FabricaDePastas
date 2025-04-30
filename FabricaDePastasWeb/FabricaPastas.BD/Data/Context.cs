@@ -11,9 +11,10 @@ namespace FabricaPastas.BD.Data
     {
         public Context(DbContextOptions options) : base(options)
         {
-
         }
 
-        
+        protected Context()
+        {
+        }
     }
 }
