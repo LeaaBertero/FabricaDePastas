@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Rol : EntityBase
     {
         #region Clave primaria
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Rol_Id { get; set; }
         #endregion
 

@@ -15,230 +15,229 @@ namespace FabricaPastas.BD.Migrations
                 name: "Categoria_Producto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categoria_Producto", x => x.Id);
+                    table.PrimaryKey("PK_Categoria_Producto", x => x.Categoria_Producto_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Detalle_Lista_Precio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Detalle_Lista_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Detalle_Lista_Id = table.Column<int>(type: "int", nullable: false),
                     Lista_Precio_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Precio_Personalizado = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    Precio_Personalizado = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Detalle_Lista_Precio", x => x.Id);
+                    table.PrimaryKey("PK_Detalle_Lista_Precio", x => x.Detalle_Lista_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Detalle_Pedido",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Detalle_Pedido_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Detalle_Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Precio_Unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Precio_Unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Detalle_Pedido", x => x.Id);
+                    table.PrimaryKey("PK_Detalle_Pedido", x => x.Detalle_Pedido_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Estado_Pedido",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Estado_Pedido_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Estado_Pedido_Id = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Estado_Pedido", x => x.Id);
+                    table.PrimaryKey("PK_Estado_Pedido", x => x.Estado_Pedido_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Forma_Pago",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Forma_Pago_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Forma_Pago_Id = table.Column<int>(type: "int", nullable: false),
-                    Metodo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Metodo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Forma_Pago", x => x.Id);
+                    table.PrimaryKey("PK_Forma_Pago", x => x.Forma_Pago_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Lista_Precio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Lista_Precio_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Lista_Precio_Id = table.Column<int>(type: "int", nullable: false),
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Fecha_Desde = table.Column<DateOnly>(type: "date", nullable: false),
-                    Fecha_Hasta = table.Column<DateOnly>(type: "date", nullable: false)
+                    Fecha_Hasta = table.Column<DateOnly>(type: "date", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lista_Precio", x => x.Id);
+                    table.PrimaryKey("PK_Lista_Precio", x => x.Lista_Precio_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Metodo_entrega",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Metodo_Entrega_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Metodo_Entrega_Id = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Metodo_entrega", x => x.Id);
+                    table.PrimaryKey("PK_Metodo_entrega", x => x.Metodo_Entrega_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Pedido",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Pedido_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Estado_Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Forma_Pago_Id = table.Column<int>(type: "int", nullable: false),
                     Metodo_Entrega_Id = table.Column<int>(type: "int", nullable: false),
                     Fecha_Pedido = table.Column<DateOnly>(type: "date", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pedido", x => x.Id);
+                    table.PrimaryKey("PK_Pedido", x => x.Pedido_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Producto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Producto_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Categoria_Id = table.Column<int>(type: "int", nullable: false),
+                    Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PrecioBase = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Imagen_Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false)
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Producto", x => x.Id);
+                    table.PrimaryKey("PK_Producto", x => x.Producto_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Promocion",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Promocion_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Fecha_Inicio = table.Column<DateOnly>(type: "date", nullable: false),
                     Fecha_Fin = table.Column<DateOnly>(type: "date", nullable: false),
-                    Activa = table.Column<bool>(type: "bit", nullable: false)
+                    Activa = table.Column<bool>(type: "bit", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promocion", x => x.Id);
+                    table.PrimaryKey("PK_Promocion", x => x.Promocion_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Promocion_Producto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Promocion_Producto_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Promocion_Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Descuento_Porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Precio_Promocional = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Precio_Promocional = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promocion_Producto", x => x.Id);
+                    table.PrimaryKey("PK_Promocion_Producto", x => x.Promocion_Producto_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Promocion_Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Promocion_Usuario_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Promocion_Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
+                    Usuario_Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promocion_Usuario", x => x.Id);
+                    table.PrimaryKey("PK_Promocion_Usuario", x => x.Promocion_Usuario_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Rol",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Rol_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Rol_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_rol = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Nombre_rol = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rol", x => x.Id);
+                    table.PrimaryKey("PK_Rol", x => x.Rol_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tipo_Cliente",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Tipo_Cliente_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Tipo_Cliente_Id = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tipo_Cliente", x => x.Id);
+                    table.PrimaryKey("PK_Tipo_Cliente", x => x.Tipo_Cliente_Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Tipo_Cliete_Id = table.Column<int>(type: "int", nullable: false),
                     Rol_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -248,15 +247,16 @@ namespace FabricaPastas.BD.Migrations
                     Teléfono = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Dirección = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Cuit_Cuil = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Fecha_Registro = table.Column<DateOnly>(type: "date", nullable: false)
+                    Fecha_Registro = table.Column<DateOnly>(type: "date", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.Id);
+                    table.PrimaryKey("PK_Usuario", x => x.Usuario_Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "Categoria_Id_UQ",
+                name: "Categoria_Producto_Id_UQ",
                 table: "Categoria_Producto",
                 column: "Categoria_Producto_Id",
                 unique: true);

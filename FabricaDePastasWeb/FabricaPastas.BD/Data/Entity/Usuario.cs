@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Usuario : EntityBase
     {
         #region Clave primaria
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Usuario_Id { get; set; }
         #endregion
 

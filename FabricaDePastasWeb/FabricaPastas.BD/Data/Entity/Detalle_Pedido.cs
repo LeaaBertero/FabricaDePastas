@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Detalle_Pedido : EntityBase
     {
         #region Clave Primaria
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Detalle_Pedido_Id { get; set; }
         #endregion
 

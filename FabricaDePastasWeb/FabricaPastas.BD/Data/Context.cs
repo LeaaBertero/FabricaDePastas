@@ -10,11 +10,12 @@ namespace FabricaPastas.BD.Data
 {
     public class Context : DbContext
     {
-
+        #region constructor
         public Context(DbContextOptions<Context> options) : base(options)
         {
 
         }
+        #endregion
 
         #region entidades
         public DbSet<Categoria_Producto> Categoria_Producto { get; set; }
