@@ -1,5 +1,7 @@
 ﻿using FabricaPastas.BD.Data;
+using FabricaPastas.BD.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FabricaPastas.Server.Controllers
 {
@@ -14,5 +16,7 @@ namespace FabricaPastas.Server.Controllers
         {
             this.context = context;
         }
+
+       
     }
 }

@@ -1,7 +1,15 @@
 using FabricaPastas.BD.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region codigo para ignorar ciclos
+//-----------------------------------------------------------------------------
+builder.Services.AddControllersWithViews().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//-----------------------------------------------------------------------------
+#endregion
 
 // Add services to the container.
 

@@ -50,7 +50,7 @@ namespace FabricaPastas.BD.Data
             base.OnModelCreating(modelBuilder);
         }
         #endregion
-
-
     }
 }
+
+
