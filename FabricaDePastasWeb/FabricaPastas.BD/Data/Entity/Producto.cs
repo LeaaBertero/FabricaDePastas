@@ -9,32 +9,40 @@ using System.Threading.Tasks;
 namespace FabricaPastas.BD.Data.Entity
 {
 
+    #region Indices
     [Index(nameof(Producto_Id), Name = "Producto_Id_UQ", IsUnique = true)]
     [Index(nameof(Nombre), nameof(Descripcion), nameof(PrecioBase), nameof(Imagen_Url), nameof(Stock),
-        Name = "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock", IsUnique = false)]
+    Name = "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock", IsUnique = false)]
+    #endregion
     public class Producto : EntityBase
     {
 
+        #region Clave primaria
         public int Producto_Id { get; set; }
+        #endregion
 
-        public int CategoriaId { get; set; }
+        #region Claves foráneas
+        public int Categoria_Id { get; set; }
+        #endregion
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Nombre { get; set; }
+        #region Atributos de Validación
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Nombre { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Descripcion { get; set; }
+        [Required(ErrorMessage = "El campo Descripción es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Descripcion { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        public decimal PrecioBase { get; set; }
+        [Required(ErrorMessage = "El campo PrecioBase es obligatorio")]
+        public decimal? PrecioBase { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        public string Imagen_Url { get; set; }
+        [Required(ErrorMessage = "La imagen del producto es obligatoria")]
+        public string? Imagen_Url { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        public int Stock { get; set; }
+        [Required(ErrorMessage = "El campo Stock es obligatorio")]
+        public int? Stock { get; set; }
+        #endregion
 
 
 

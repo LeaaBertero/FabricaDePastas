@@ -8,19 +8,25 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
 {
+
+    #region indices
     [Index(nameof(Tipo_Cliente_Id), Name = "Tipo_Cliente_Id_UQ", IsUnique = true)]
-    [Index(nameof(Descripcion),Name = "Descripcion", IsUnique = false)]
-    public class TipoCliente : EntityBase
+    [Index(nameof(Descripcion),
+    Name = "Descripcion", IsUnique = false)]
+    #endregion
+    public class Tipo_Cliente : EntityBase
     {
 
-
+        #region Clave primaria
         public int Tipo_Cliente_Id { get; set; }
+        #endregion
 
-
-
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
+        #region Atributos de Validación
+        [Required(ErrorMessage = "El campo Descripción es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Descripcion { get; set; }
+        #endregion
+
 
 
 

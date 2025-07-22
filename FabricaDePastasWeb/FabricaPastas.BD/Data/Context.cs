@@ -10,41 +10,39 @@ namespace FabricaPastas.BD.Data
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options) : base(options)
 
+        public Context(DbContextOptions<Context> options) : base(options)
         {
 
         }
 
+        #region entidades
+        public DbSet<Categoria_Producto> Categoria_Producto { get; set; }
+        public DbSet<Detalle_Lista_Precio> Detalle_Lista_Precio { get; set; }
+        public DbSet<Detalle_Pedido> Detalle_Pedido { get; set; }
+        public DbSet<Estado_Pedido> Estado_Pedido { get; set; }
+        public DbSet<Forma_Pago> Forma_Pago { get; set; }
+        public DbSet<Lista_Precio> Lista_Precio { get; set; }
+        public DbSet<Metodo_Entrega> Metodo_entrega { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Promocion> Promocion { get; set; }
+        public DbSet<Promocion_Producto> Promocion_Producto { get; set; }
+        public DbSet<Promocion_Usuario> Promocion_Usuario { get; set; }
+        public DbSet<Rol> Rol { get; set; }
+        public DbSet<Tipo_Cliente> Tipo_Cliente { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        #endregion
 
-
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Rol> Roles { get; set; }
-        public DbSet<TipoCliente> TipoClientes { get; set; }
-        public DbSet<FormaPago> FormasPago { get; set; }
-        public DbSet<MetodoEntrega> MetodosEntrega { get; set; }
-        public DbSet<EstadoPedido> EstadosPedido { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<DetallePedido> DetallesPedido { get; set; }
-        public DbSet<CategoriaProducto> CategoriasProducto { get; set; }
-        public DbSet<Producto> Productos { get; set; }
-        public DbSet<Promocion> Promociones { get; set; }
-        public DbSet<PromocionProducto> PromocionesProducto { get; set; }
-        public DbSet<PromocionUsuario> PromocionesUsuario { get; set; }
-        public DbSet<ListaPrecio> ListasPrecio { get; set; }
-        public DbSet<DetalleListaPrecio> DetallesListaPrecio { get; set; }
-
-
-        #region Cascada
+        #region código para evitar qel borrado en cascada OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Éste codigo sirve para evitar que se borren los datos en cascada en la base de datos
             var cascadeFKs = modelBuilder.Model.G­etEntityTypes()
                                             .SelectMany(t => t.GetForeignKeys())
                                             .Where(fk => !fk.IsOwnership
                                                         && fk.DeleteBehavior == DeleteBehavior.Casca­de);
             foreach (var fk in cascadeFKs)
-            {        //Elimina el cmportamiento               
+            {
                 fk.DeleteBehavior = DeleteBehavior.Restr­ict;
             }
 

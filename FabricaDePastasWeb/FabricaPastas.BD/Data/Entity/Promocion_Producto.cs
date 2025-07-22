@@ -1,0 +1,40 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FabricaPastas.BD.Data.Entity
+{
+
+    #region Indices
+    [Index(nameof(Promocion_Producto_Id), Name = "Promocion_Producto_Id_UQ", IsUnique = true)]
+    [Index(nameof(Descuento_Porcentaje), nameof(Precio_Promocional),
+    Name = "Descuento_Porcentaje_Precio_Promocional", IsUnique = false)]
+    #endregion
+
+    public class Promocion_Producto : EntityBase
+    {
+
+        #region Clave primaria
+        public int Promocion_Producto_Id { get; set; }
+        #endregion
+
+        #region Claves foráneas
+        public int Promocion_Id { get; set; }
+        public int Producto_Id { get; set; }
+        #endregion
+
+        #region Atributos de Validación
+        [Required(ErrorMessage = "El campo Descuento_Porcentaje es obligatorio")]
+        public decimal Descuento_Porcentaje { get; set; }
+
+        [Required(ErrorMessage = "El campo Precio_Promocional es obligatorio")]
+        public decimal Precio_Promocional { get; set; }
+        #endregion
+
+
+    }
+}

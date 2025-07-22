@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 namespace FabricaPastas.BD.Data.Entity
 {
     #region Indices
-    [Index(nameof(Rol_Id), Name = "Rol_Id_UQ", IsUnique = true)]
-    [Index(nameof(Nombre_rol),
-    Name = "Nombre_rol", IsUnique = false)]
+    [Index(nameof(Estado_Pedido_Id), Name = "Estado_Pedido_Id_UQ", IsUnique = true)]
+    [Index(nameof(Descripcion),
+    Name = "Descripcion", IsUnique = false)]
     #endregion
 
-    public class Rol : EntityBase
+    public class Estado_Pedido : EntityBase
     {
-        #region Clave primaria
-        public int Rol_Id { get; set; }
+
+        #region Clave Primaria
+        public int Estado_Pedido_Id { get; set; }
         #endregion
 
         #region Atributos de Validación
-        [Required(ErrorMessage = "El campo Nombre_Rol es obligatorio")]
+        [Required(ErrorMessage = "El campo Descripcion del pedido es obligatorio")]
         [MaxLength(255, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Nombre_rol { get; set; }
+        public string? Descripcion { get; set; }
         #endregion
-
 
 
     }

@@ -7,54 +7,54 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
 {
-    public class Usuario:EntityBase
+    public class Usuario : EntityBase
     {
-        public int UsuarioID { get; set; }
+        #region Clave primaria
+        public int Usuario_Id { get; set; }
+        #endregion
 
+        #region Claves foráneas
+        public int Tipo_Cliete_Id { get; set; }
+        public int Rol_Id { get; set; }
+        #endregion
 
-        public int Tipo_ClienteID { get; set; }
-        public int Rol_ID { get; set; }
-
-        
-        
-        
-
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
+        #region Atributos de Validación 
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
+        [Required(ErrorMessage = "El campo Apellido es obligatorio")]
+        [MaxLength(30, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Apellido { get; set; }
 
         [Required(ErrorMessage = "El campo E-mail es obligatorio")]
         [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
+        [Required(ErrorMessage = "El campo Contraseña es obligatorio")]
         [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Contraseña { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Telefono { get; set; }
+        [Required(ErrorMessage = "El campo Teléfono es obligatorio")]
+        [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string Teléfono { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Direccion { get; set; }
+        [Required(ErrorMessage = "El campo Dirección es obligatorio")]
+        [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string Dirección { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
+        [Required(ErrorMessage = "El campo Cuit_Cuil es obligatorio")]
+        [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
         public string Cuit_Cuil { get; set; }
 
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]
-        public DateOnly FechaRegistro { get; set; }
+        [Required(ErrorMessage = "El campo Fecha es obligatorio")]
+        public DateOnly Fecha_Registro { get; set; }
+        #endregion
 
-        
 
-        
-      
+
+
+
 
 
     }

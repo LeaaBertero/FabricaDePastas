@@ -8,28 +8,32 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
 {
+    #region Indices
     [Index(nameof(Pedido_Id), Name = "Pedido_Id", IsUnique = true)]
-    [Index(nameof(Fecha_Pedido), nameof(Total), Name = "Fecha_Pedido_Total", IsUnique = false)]
+    [Index(nameof(Fecha_Pedido), nameof(Total),
+    Name = "Fecha_Pedido_Total", IsUnique = false)]
+    #endregion
     public class Pedido : EntityBase
     {
 
+        #region Clave Primaria
         public int Pedido_Id { get; set; }
-   
-        public int UsuarioId { get; set; }
+        #endregion
+
+        #region Claves Foráneas
+        public int Usuario_Id { get; set; }
+        public int Estado_Pedido_Id { get; set; }
+        public int Forma_Pago_Id { get; set; }
+        public int Metodo_Entrega_Id { get; set; }
+        #endregion
+
+        #region Atributos de Validación
+        [Required(ErrorMessage = "El campo Fecha de pedido es obligatorio")]
+        public DateOnly? Fecha_Pedido { get; set; }
 
 
-        public int EstadoPedidoId { get; set; }
-
-
-        public int FormaPagoId { get; set; }
-  
-
-        public int MetodoEntregaId { get; set; }
-
-        [Required(ErrorMessage = "El campo E-mail es obligatorio")]
-        public DateTime Fecha_Pedido { get; set; }
-
-        public decimal Total { get; set; }
+        public decimal? Total { get; set; }
+        #endregion
 
     }
 }
