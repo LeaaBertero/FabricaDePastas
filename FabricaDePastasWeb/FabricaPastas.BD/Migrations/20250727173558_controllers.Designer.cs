@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250722233433_inicio")]
-    partial class inicio
+    [Migration("20250727173558_controllers")]
+    partial class controllers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -380,22 +380,22 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Promocion_Usuario", b =>
                 {
-                    b.Property<int>("Promocion_Usuario_Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Promocion_Usuario_Id"));
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Promocion_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Promocion_Usuario_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Promocion_Usuario_Id");
+                    b.HasKey("Id");
 
                     b.ToTable("Promocion_Usuario");
                 });

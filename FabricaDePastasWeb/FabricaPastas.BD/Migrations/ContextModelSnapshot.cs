@@ -377,22 +377,22 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Promocion_Usuario", b =>
                 {
-                    b.Property<int>("Promocion_Usuario_Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Promocion_Usuario_Id"));
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Promocion_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Promocion_Usuario_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Promocion_Usuario_Id");
+                    b.HasKey("Id");
 
                     b.ToTable("Promocion_Usuario");
                 });

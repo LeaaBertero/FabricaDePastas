@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class ini : Migration
+    public partial class controllers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -193,15 +193,15 @@ namespace FabricaPastas.BD.Migrations
                 name: "Promocion_Usuario",
                 columns: table => new
                 {
-                    Promocion_Usuario_Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Promocion_Id = table.Column<int>(type: "int", nullable: false),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Promocion_Usuario_Id = table.Column<int>(type: "int", nullable: false),
+                    Promocion_Id = table.Column<int>(type: "int", nullable: false),
+                    Usuario_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promocion_Usuario", x => x.Promocion_Usuario_Id);
+                    table.PrimaryKey("PK_Promocion_Usuario", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

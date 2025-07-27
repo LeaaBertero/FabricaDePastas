@@ -11,8 +11,7 @@ namespace FabricaPastas.BD.Data.Entity
     public class Promocion_Usuario : EntityBase
     {
         #region Clave primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Promocion_Usuario_Id { get; set; }
         #endregion
 
