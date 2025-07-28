@@ -16,6 +16,7 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
+
         #region Método Get
         [HttpGet]
         public async Task<ActionResult<List<Detalle_Lista_Precio>>> Get()
@@ -24,21 +25,7 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
-        #region Método Get por {id}
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<Detalle_Lista_Precio>> Get(int id)
-        {
-            var detalle = await context.Detalle_Lista_Precio
-                .FirstOrDefaultAsync(x => x.Detalle_Lista_Id == id);
-
-            if (detalle == null)
-            {
-                return NotFound();
-            }
-
-            return detalle;
-        }
-        #endregion
+       
 
         #region Método Post
         [HttpPost]
@@ -48,10 +35,11 @@ namespace FabricaPastas.Server.Controllers
             {
                 context.Detalle_Lista_Precio.Add(entidad);
                 await context.SaveChangesAsync();
-                return entidad.Detalle_Lista_Id;
+                return entidad.Id;
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -61,32 +49,32 @@ namespace FabricaPastas.Server.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Detalle_Lista_Precio entidad)
         {
-            if (id != entidad.Detalle_Lista_Id)
+            if (id != entidad.Id)
             {
                 return BadRequest("Datos incorrectos");
             }
 
-            var detalle = await context.Detalle_Lista_Precio
-                .FirstOrDefaultAsync(e => e.Detalle_Lista_Id == id);
+            var dammy = await context.Detalle_Lista_Precio.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
 
-            if (detalle == null)
+            if (dammy == null)
             {
-                return NotFound("No se encontró el detalle de la lista de precio.");
+                return NotFound("No se encontró el detalle de la lista de precio");
             }
 
-            // Asignación de propiedades
-            detalle.Lista_Precio_Id = entidad.Lista_Precio_Id;
-            detalle.Producto_Id = entidad.Producto_Id;
-            detalle.Precio_Personalizado = entidad.Precio_Personalizado;
+            dammy.Precio_Personalizado = entidad.Precio_Personalizado;
+          
 
             try
             {
-                context.Detalle_Lista_Precio.Update(detalle);
+                context.Detalle_Lista_Precio.Update(dammy);
                 await context.SaveChangesAsync();
                 return Ok();
+
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -96,20 +84,22 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Detalle_Lista_Precio
-                .AnyAsync(x => x.Detalle_Lista_Id == id);
+            var existe = await context.Detalle_Lista_Precio.AnyAsync(x => x.Id == id);
 
             if (!existe)
             {
-                return NotFound($"El detalle con ID {id} no existe.");
+                return NotFound($"El detalle de la lista de precio {id} no existe.");
             }
 
-            var detalleABorrar = new Detalle_Lista_Precio { Detalle_Lista_Id = id };
+            Detalle_Lista_Precio EntidadAborrar = new Detalle_Lista_Precio();
 
-            context.Remove(detalleABorrar);
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
 
-            return Ok($"El detalle {id} fue eliminado correctamente.");
+            return Ok($"El detalle de la lista de precio {id} fue eliminado correctamente.");
         }
         #endregion
     }

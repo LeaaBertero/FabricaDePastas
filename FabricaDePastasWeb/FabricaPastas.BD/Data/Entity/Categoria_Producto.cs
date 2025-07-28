@@ -15,7 +15,7 @@ namespace FabricaPastas.BD.Data.Entity
     Name = "Nombre_Categoria", IsUnique = false)]
     #endregion
 
-    public class Categoria_Producto:EntityBase 
+    public class Categoria_Producto : EntityBase 
     {
 
         #region Clave Primaria

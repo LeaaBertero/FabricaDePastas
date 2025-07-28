@@ -16,6 +16,7 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
+
         #region Método Get
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
@@ -28,15 +29,14 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Producto>> Get(int id)
         {
-            var producto = await context.Producto
-                .FirstOrDefaultAsync(x => x.Producto_Id == id);
+            var dammy = await context.Producto.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (producto == null)
+            if (dammy == null)
             {
                 return NotFound();
             }
 
-            return producto;
+            return dammy;
         }
         #endregion
 
@@ -48,10 +48,11 @@ namespace FabricaPastas.Server.Controllers
             {
                 context.Producto.Add(entidad);
                 await context.SaveChangesAsync();
-                return entidad.Producto_Id;
+                return entidad.Id;
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -61,35 +62,36 @@ namespace FabricaPastas.Server.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Producto entidad)
         {
-            if (id != entidad.Producto_Id)
+            if (id != entidad.Id)
             {
                 return BadRequest("Datos incorrectos");
             }
 
-            var producto = await context.Producto
-                .FirstOrDefaultAsync(e => e.Producto_Id == id);
+            var dammy = await context.Producto.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
 
-            if (producto == null)
+            if (dammy == null)
             {
-                return NotFound("No se encontró el producto");
+                return NotFound("No se encontró el registro");
             }
 
-            // Asignación de propiedades
-            producto.Nombre = entidad.Nombre;
-            producto.Descripcion = entidad.Descripcion;
-            producto.PrecioBase = entidad.PrecioBase;
-            producto.Imagen_Url = entidad.Imagen_Url;
-            producto.Stock = entidad.Stock;
-            producto.Categoria_Producto_Id = entidad.Categoria_Producto_Id;
+            dammy.Nombre = entidad.Nombre;
+            dammy.Descripcion = entidad.Descripcion;
+            dammy.PrecioBase = entidad.PrecioBase;
+            dammy.Imagen_Url = entidad.Imagen_Url;
+            dammy.Stock = entidad.Stock;
+            
 
             try
             {
-                context.Producto.Update(producto);
+                context.Producto.Update(dammy);
                 await context.SaveChangesAsync();
                 return Ok();
+
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -99,21 +101,24 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Producto
-                .AnyAsync(x => x.Producto_Id == id);
+            var existe = await context.Producto.AnyAsync(x => x.Id == id);
 
             if (!existe)
             {
-                return NotFound($"El producto con ID {id} no existe.");
+                return NotFound($"El producto {id} no existe.");
             }
 
-            var productoABorrar = new Producto { Producto_Id = id };
+            Producto EntidadAborrar = new Producto();
 
-            context.Remove(productoABorrar);
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
 
             return Ok($"El producto {id} fue eliminado correctamente.");
         }
         #endregion
+
     }
 }

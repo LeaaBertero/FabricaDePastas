@@ -16,56 +16,58 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
-        // GET: api/Promocion_Producto
+
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Promocion_Producto>>> Get()
+        public async Task<ActionResult<List<Promocion_Producto>>> Get()
         {
             return await context.Promocion_Producto.ToListAsync();
         }
+        #endregion
 
-        // GET: api/Promocion_Producto/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Promocion_Producto>> GetById(int id)
-        {
-            var promocionProducto = await context.Promocion_Producto.FindAsync(id);
-            if (promocionProducto == null)
-                return NotFound();
+      
 
-            return promocionProducto;
-        }
-
-        // POST: api/Promocion_Producto
+        #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Promocion_Producto promocionProducto)
+        public async Task<ActionResult<int>> Post(Promocion_Producto entidad)
         {
-            context.Promocion_Producto.Add(promocionProducto);
-            await context.SaveChangesAsync();
-            return promocionProducto.Promocion_Producto_Id;
-        }
+            try
+            {
+                context.Promocion_Producto.Add(entidad);
+                await context.SaveChangesAsync();
+                return entidad.Id;
+            }
+            catch (Exception e)
+            {
 
-        // PUT: api/Promocion_Producto/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Promocion_Producto promocionProducto)
+                return BadRequest(e.Message);
+            }
+        }
+        #endregion
+
+       
+
+        #region Método Delete
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id != promocionProducto.Promocion_Producto_Id)
-                return BadRequest();
+            var existe = await context.Promocion_Producto.AnyAsync(x => x.Id == id);
 
-            context.Entry(promocionProducto).State = EntityState.Modified;
+            if (!existe)
+            {
+                return NotFound($"La promoción del producto {id} no existe.");
+            }
+
+            Promocion_Producto EntidadAborrar = new Promocion_Producto();
+
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
-            return NoContent();
-        }
 
-        // DELETE: api/Promocion_Producto/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var promocionProducto = await context.Promocion_Producto.FindAsync(id);
-            if (promocionProducto == null)
-                return NotFound();
-
-            context.Promocion_Producto.Remove(promocionProducto);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return Ok($"La promoción {id} fue eliminado correctamente.");
         }
+        #endregion
     }
 }

@@ -16,56 +16,54 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
-        // GET: api/Promocion_Usuario
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Promocion_Usuario>>> Get()
+        public async Task<ActionResult<List<Promocion_Usuario>>> Get()
         {
             return await context.Promocion_Usuario.ToListAsync();
         }
+        #endregion
 
-        // GET: api/Promocion_Usuario/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Promocion_Usuario>> GetById(int id)
-        {
-            var item = await context.Promocion_Usuario.FindAsync(id);
-            if (item == null)
-                return NotFound();
-
-            return item;
-        }
-
-        // POST: api/Promocion_Usuario
+        #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Promocion_Usuario promocionUsuario)
+        public async Task<ActionResult<int>> Post(Promocion_Usuario entidad)
         {
-            context.Promocion_Usuario.Add(promocionUsuario);
-            await context.SaveChangesAsync();
-            return promocionUsuario.Promocion_Usuario_Id;
-        }
+            try
+            {
+                context.Promocion_Usuario.Add(entidad);
+                await context.SaveChangesAsync();
+                return entidad.Id;
+            }
+            catch (Exception e)
+            {
 
-        // PUT: api/Promocion_Usuario/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Promocion_Usuario promocionUsuario)
+                return BadRequest(e.Message);
+            }
+        }
+        #endregion
+
+       
+        #region Método Delete
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id != promocionUsuario.Promocion_Usuario_Id)
-                return BadRequest();
+            var existe = await context.Promocion_Usuario.AnyAsync(x => x.Id == id);
 
-            context.Entry(promocionUsuario).State = EntityState.Modified;
+            if (!existe)
+            {
+                return NotFound($"La promoción del usuario {id} no existe.");
+            }
+
+            Promocion_Usuario EntidadAborrar = new Promocion_Usuario();
+
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
-            return NoContent();
-        }
 
-        // DELETE: api/Promocion_Usuario/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var item = await context.Promocion_Usuario.FindAsync(id);
-            if (item == null)
-                return NotFound();
-
-            context.Promocion_Usuario.Remove(item);
-            await context.SaveChangesAsync();
-            return NoContent();
+            return Ok($"La promoción del usuario {id} fue eliminado correctamente.");
         }
+        #endregion
     }
 }

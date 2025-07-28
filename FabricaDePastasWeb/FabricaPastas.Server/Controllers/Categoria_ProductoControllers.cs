@@ -24,22 +24,6 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
-        #region Método Get por {id}
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<Categoria_Producto>> Get(int id)
-        {
-            var categoria = await context.Categoria_Producto
-                .FirstOrDefaultAsync(x => x.Categoria_Producto_Id == id);
-
-            if (categoria == null)
-            {
-                return NotFound();
-            }
-
-            return categoria;
-        }
-        #endregion
-
         #region Método Post
         [HttpPost]
         public async Task<ActionResult<int>> Post(Categoria_Producto entidad)
@@ -48,10 +32,11 @@ namespace FabricaPastas.Server.Controllers
             {
                 context.Categoria_Producto.Add(entidad);
                 await context.SaveChangesAsync();
-                return entidad.Categoria_Producto_Id;
+                return entidad.Id;
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -61,30 +46,32 @@ namespace FabricaPastas.Server.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Categoria_Producto entidad)
         {
-            if (id != entidad.Categoria_Producto_Id)
+            if (id != entidad.Id)
             {
                 return BadRequest("Datos incorrectos");
             }
 
-            var categoria = await context.Categoria_Producto
-                .FirstOrDefaultAsync(e => e.Categoria_Producto_Id == id);
+            var dammy = await context.Categoria_Producto.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
 
-            if (categoria == null)
+            if (dammy == null)
             {
-                return NotFound("No se encontró la categoría");
+                return NotFound("No se encontró el registro");
             }
 
-            // Asignación de propiedades
-            categoria.Nombre_Categoria = entidad.Nombre_Categoria;
+            dammy.Nombre_Categoria = entidad.Nombre_Categoria;
+            
 
             try
             {
-                context.Categoria_Producto.Update(categoria);
+                context.Categoria_Producto.Update(dammy);
                 await context.SaveChangesAsync();
                 return Ok();
+
             }
             catch (Exception e)
             {
+
                 return BadRequest(e.Message);
             }
         }
@@ -94,20 +81,22 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Categoria_Producto
-                .AnyAsync(x => x.Categoria_Producto_Id == id);
+            var existe = await context.Categoria_Producto.AnyAsync(x => x.Id == id);
 
             if (!existe)
             {
-                return NotFound($"La categoría con ID {id} no existe.");
+                return NotFound($"La categoria {id} no existe.");
             }
 
-            var categoriaABorrar = new Categoria_Producto { Categoria_Producto_Id = id };
+            Categoria_Producto EntidadAborrar = new Categoria_Producto();
 
-            context.Remove(categoriaABorrar);
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
 
-            return Ok($"La categoría {id} fue eliminada correctamente.");
+            return Ok($"La categoría {id} fue eliminado correctamente.");
         }
         #endregion
     }

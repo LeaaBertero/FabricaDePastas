@@ -19,8 +19,8 @@ namespace FabricaPastas.Server.Controllers
 
         #region Método Get
         [HttpGet]
-        public async Task<ActionResult<List<Usuario>>> Get() 
-        { 
+        public async Task<ActionResult<List<Usuario>>> Get()
+        {
             return await context.Usuario.ToListAsync();
         }
         #endregion

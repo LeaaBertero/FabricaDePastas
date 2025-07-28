@@ -16,56 +16,105 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
-        // GET: api/Pedido
+
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pedido>>> Get()
+        public async Task<ActionResult<List<Pedido>>> Get()
         {
             return await context.Pedido.ToListAsync();
         }
+        #endregion
 
-        // GET: api/Pedido/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Pedido>> GetById(int id)
+        #region Método Get por {id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Pedido>> Get(int id)
         {
-            var pedido = await context.Pedido.FindAsync(id);
-            if (pedido == null)
+            var dammy = await context.Pedido.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (dammy == null)
+            {
                 return NotFound();
+            }
 
-            return pedido;
+            return dammy;
         }
+        #endregion
 
-        // POST: api/Pedido
+        #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Pedido pedido)
+        public async Task<ActionResult<int>> Post(Pedido entidad)
         {
-            context.Pedido.Add(pedido);
-            await context.SaveChangesAsync();
-            return pedido.Pedido_Id;
-        }
+            try
+            {
+                context.Pedido.Add(entidad);
+                await context.SaveChangesAsync();
+                return entidad.Id;
+            }
+            catch (Exception e)
+            {
 
-        // PUT: api/Pedido/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Pedido pedido)
+                return BadRequest(e.Message);
+            }
+        }
+        #endregion
+
+        #region Método Put
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] Pedido entidad)
         {
-            if (id != pedido.Pedido_Id)
-                return BadRequest();
+            if (id != entidad.Id)
+            {
+                return BadRequest("Datos incorrectos");
+            }
 
-            context.Entry(pedido).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-            return NoContent();
+            var dammy = await context.Pedido.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            if (dammy == null)
+            {
+                return NotFound("No se encontró el registro");
+            }
+
+            dammy.Fecha_Pedido = entidad.Fecha_Pedido;
+            dammy.Total = entidad.Total;
+            
+
+            try
+            {
+                context.Pedido.Update(dammy);
+                await context.SaveChangesAsync();
+                return Ok();
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
+        #endregion
 
-        // DELETE: api/Pedido/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        #region Método Delete
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            var pedido = await context.Pedido.FindAsync(id);
-            if (pedido == null)
-                return NotFound();
+            var existe = await context.Pedido.AnyAsync(x => x.Id == id);
 
-            context.Pedido.Remove(pedido);
+            if (!existe)
+            {
+                return NotFound($"El pedido {id} no existe.");
+            }
+
+            Pedido EntidadAborrar = new Pedido();
+
+            EntidadAborrar.Id = id;
+
+            context.Remove(EntidadAborrar);
+
             await context.SaveChangesAsync();
-            return NoContent();
+
+            return Ok($"El pedido {id} fue eliminado correctamente.");
         }
+        #endregion
     }
 }

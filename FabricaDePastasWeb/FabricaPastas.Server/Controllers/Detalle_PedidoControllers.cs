@@ -16,53 +16,37 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
+
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Detalle_Pedido>>> Get()
+        public async Task<ActionResult<List<Detalle_Pedido>>> Get()
         {
             return await context.Detalle_Pedido.ToListAsync();
         }
+        #endregion
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Detalle_Pedido>> GetById(int id)
-        {
-            var detalle = await context.Detalle_Pedido.FindAsync(id);
-            if (detalle == null)
-                return NotFound();
+       
 
-            return detalle;
-        }
-
+        #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Detalle_Pedido detalle)
+        public async Task<ActionResult<int>> Post(Detalle_Pedido entidad)
         {
-            context.Detalle_Pedido.Add(detalle);
-            await context.SaveChangesAsync();
-            return detalle.Detalle_Pedido_Id;
+            try
+            {
+                context.Detalle_Pedido.Add(entidad);
+                await context.SaveChangesAsync();
+                return entidad.Id;
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
+        #endregion
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Detalle_Pedido detalle)
-        {
-            if (id != detalle.Detalle_Pedido_Id)
-                return BadRequest();
+        
 
-            context.Entry(detalle).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var detalle = await context.Detalle_Pedido.FindAsync(id);
-            if (detalle == null)
-                return NotFound();
-
-            context.Detalle_Pedido.Remove(detalle);
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
+       
     }
 }

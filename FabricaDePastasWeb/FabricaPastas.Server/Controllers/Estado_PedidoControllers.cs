@@ -16,53 +16,15 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
+
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Estado_Pedido>>> Get()
+        public async Task<ActionResult<List<Estado_Pedido>>> Get()
         {
             return await context.Estado_Pedido.ToListAsync();
         }
+        #endregion
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Estado_Pedido>> GetById(int id)
-        {
-            var estado = await context.Estado_Pedido.FindAsync(id);
-            if (estado == null)
-                return NotFound();
-
-            return estado;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<int>> Post(Estado_Pedido estado)
-        {
-            context.Estado_Pedido.Add(estado);
-            await context.SaveChangesAsync();
-            return estado.Estado_Pedido_Id;
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Estado_Pedido estado)
-        {
-            if (id != estado.Estado_Pedido_Id)
-                return BadRequest();
-
-            context.Entry(estado).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var estado = await context.Estado_Pedido.FindAsync(id);
-            if (estado == null)
-                return NotFound();
-
-            context.Estado_Pedido.Remove(estado);
-            await context.SaveChangesAsync();
-
-            return NoContent();
-        }
+        
     }
 }

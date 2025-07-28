@@ -16,51 +16,84 @@ namespace FabricaPastas.Server.Controllers
             this.context = context;
         }
 
+
+        #region Método Get
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Lista_Precio>>> Get()
+        public async Task<ActionResult<List<Lista_Precio>>> Get()
         {
             return await context.Lista_Precio.ToListAsync();
         }
+        #endregion
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Lista_Precio>> GetById(int id)
+        #region Método Get por {id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Lista_Precio>> Get(int id)
         {
-            var lista = await context.Lista_Precio.FindAsync(id);
-            if (lista == null)
+            var dammy = await context.Lista_Precio.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (dammy == null)
+            {
                 return NotFound();
+            }
 
-            return lista;
+            return dammy;
         }
+        #endregion
 
+        #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Lista_Precio lista)
+        public async Task<ActionResult<int>> Post(Lista_Precio entidad)
         {
-            context.Lista_Precio.Add(lista);
-            await context.SaveChangesAsync();
-            return lista.Lista_Precio_Id;
-        }
+            try
+            {
+                context.Lista_Precio.Add(entidad);
+                await context.SaveChangesAsync();
+                return entidad.Id;
+            }
+            catch (Exception e)
+            {
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Lista_Precio lista)
+                return BadRequest(e.Message);
+            }
+        }
+        #endregion
+
+        #region Método Put
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] Lista_Precio entidad)
         {
-            if (id != lista.Lista_Precio_Id)
-                return BadRequest();
+            if (id != entidad.Id)
+            {
+                return BadRequest("Datos incorrectos");
+            }
 
-            context.Entry(lista).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-            return NoContent();
+            var dammy = await context.Lista_Precio.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            if (dammy == null)
+            {
+                return NotFound("No se encontró la lista de precio");
+            }
+
+            dammy.Fecha_Desde = entidad.Fecha_Desde;
+            dammy.Fecha_Hasta = entidad.Fecha_Hasta;
+          
+
+            try
+            {
+                context.Lista_Precio.Update(dammy);
+                await context.SaveChangesAsync();
+                return Ok();
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
+        #endregion
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var lista = await context.Lista_Precio.FindAsync(id);
-            if (lista == null)
-                return NotFound();
-
-            context.Lista_Precio.Remove(lista);
-            await context.SaveChangesAsync();
-            return NoContent();
-        }
+        
     }
 }
