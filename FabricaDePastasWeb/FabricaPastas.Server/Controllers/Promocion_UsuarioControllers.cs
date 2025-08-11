@@ -11,10 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public Promocion_UsuarioControllers(Context context)
         {
             this.context = context;
         }
+        #endregion
 
         #region Método Get
         [HttpGet]
@@ -42,7 +44,43 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
-       
+        //hacer un método PUT para actualizar las promociones
+        #region Método Put
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromBody] Promocion_Usuario entidad)
+        {
+            if (id != entidad.Id)
+            {
+                return BadRequest("Datos incorrectos");
+            }
+
+            var dammy = await context.Promocion_Usuario.
+                Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            if (dammy == null)
+            {
+                return NotFound("No se encontró el registro");
+            }
+
+            dammy.Fecha_Inicio_Promo = entidad.Fecha_Inicio_Promo;
+            dammy.Fecha_Fin_Promo = entidad.Fecha_Fin_Promo;
+           
+
+            try
+            {
+                context.Promocion_Usuario.Update(dammy);
+                await context.SaveChangesAsync();
+                return Ok();
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        #endregion
+
         #region Método Delete
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)

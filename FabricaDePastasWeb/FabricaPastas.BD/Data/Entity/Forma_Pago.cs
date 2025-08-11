@@ -18,8 +18,8 @@ namespace FabricaPastas.BD.Data.Entity
     {
 
         #region Clave Primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Forma_Pago_Id { get; set; }
         #endregion
 

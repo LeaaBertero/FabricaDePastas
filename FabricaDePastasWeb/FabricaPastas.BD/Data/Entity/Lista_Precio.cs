@@ -14,13 +14,12 @@ namespace FabricaPastas.BD.Data.Entity
     [Index(nameof(Fecha_Desde), nameof(Fecha_Hasta),
     Name = "Fecha_Desde_Fecha_Hasta", IsUnique = false)]
     #endregion
-
     public class Lista_Precio : EntityBase
     {
 
         #region Clave Primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Lista_Precio_Id { get; set; }
         #endregion
 

@@ -11,10 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public Categoria_ProductoControllers(Context context)
         {
             this.context = context;
         }
+        #endregion
 
         #region Método Get
         [HttpGet]

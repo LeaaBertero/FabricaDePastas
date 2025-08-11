@@ -11,11 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public Detalle_Lista_PrecioControllers(Context context)
         {
             this.context = context;
         }
-
+        #endregion
 
         #region Método Get
         [HttpGet]
@@ -24,8 +25,6 @@ namespace FabricaPastas.Server.Controllers
             return await context.Detalle_Lista_Precio.ToListAsync();
         }
         #endregion
-
-       
 
         #region Método Post
         [HttpPost]
@@ -44,7 +43,7 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-
+       
         #region Método Put
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Detalle_Lista_Precio entidad)
@@ -104,3 +103,5 @@ namespace FabricaPastas.Server.Controllers
         #endregion
     }
 }
+
+

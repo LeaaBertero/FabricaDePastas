@@ -11,8 +11,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Usuario : EntityBase
     {
         #region Clave primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Usuario_Id { get; set; }
         #endregion
 

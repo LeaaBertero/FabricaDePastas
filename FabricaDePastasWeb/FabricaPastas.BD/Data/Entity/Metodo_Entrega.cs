@@ -14,13 +14,12 @@ namespace FabricaPastas.BD.Data.Entity
     [Index(nameof(Descripcion),
     Name = "Descripcion", IsUnique = false)]
     #endregion
-
     public class Metodo_Entrega : EntityBase
     {
 
         #region Clave Primaria 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Metodo_Entrega_Id { get; set; }
         #endregion
 

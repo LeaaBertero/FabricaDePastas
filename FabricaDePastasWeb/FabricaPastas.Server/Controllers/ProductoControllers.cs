@@ -11,11 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public ProductoControllers(Context context)
         {
             this.context = context;
         }
-
+        #endregion
 
         #region Método Get
         [HttpGet]
@@ -119,6 +120,7 @@ namespace FabricaPastas.Server.Controllers
             return Ok($"El producto {id} fue eliminado correctamente.");
         }
         #endregion
+
 
     }
 }

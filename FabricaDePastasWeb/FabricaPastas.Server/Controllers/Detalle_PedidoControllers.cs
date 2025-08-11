@@ -11,11 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public Detalle_PedidoControllers(Context context)
         {
             this.context = context;
         }
-
+        #endregion
 
         #region Método Get
         [HttpGet]
@@ -24,8 +25,6 @@ namespace FabricaPastas.Server.Controllers
             return await context.Detalle_Pedido.ToListAsync();
         }
         #endregion
-
-       
 
         #region Método Post
         [HttpPost]
@@ -44,9 +43,9 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
+    }
+}
 
         
 
        
-    }
-}

@@ -18,8 +18,8 @@ namespace FabricaPastas.BD.Data.Entity
     {
 
         #region Clave Primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Pedido_Id { get; set; }
         #endregion
 
@@ -33,6 +33,7 @@ namespace FabricaPastas.BD.Data.Entity
         #region Atributos de Validación
         [Required(ErrorMessage = "El campo Fecha de pedido es obligatorio")]
         public DateOnly? Fecha_Pedido { get; set; }
+        public DateOnly? Fecha_Entrega { get; set; } //agregado para el método de entrega
 
 
         public decimal? Total { get; set; }

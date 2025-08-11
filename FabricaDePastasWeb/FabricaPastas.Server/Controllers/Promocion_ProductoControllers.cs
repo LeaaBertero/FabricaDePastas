@@ -11,11 +11,12 @@ namespace FabricaPastas.Server.Controllers
     {
         private readonly Context context;
 
+        #region constructor
         public Promocion_ProductoControllers(Context context)
         {
             this.context = context;
         }
-
+        #endregion
 
         #region Método Get
         [HttpGet]
@@ -24,8 +25,6 @@ namespace FabricaPastas.Server.Controllers
             return await context.Promocion_Producto.ToListAsync();
         }
         #endregion
-
-      
 
         #region Método Post
         [HttpPost]
@@ -44,9 +43,7 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-
-       
-
+      
         #region Método Delete
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)

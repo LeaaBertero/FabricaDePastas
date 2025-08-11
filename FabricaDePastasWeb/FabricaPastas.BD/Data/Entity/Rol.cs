@@ -18,8 +18,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Rol : EntityBase
     {
         #region Clave primaria
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Rol_Id { get; set; }
         #endregion
 
