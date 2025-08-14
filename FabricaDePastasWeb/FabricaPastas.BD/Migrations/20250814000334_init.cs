@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class inicio : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -214,7 +214,7 @@ namespace FabricaPastas.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rol_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_rol = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Nombre_rol = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,7 +228,7 @@ namespace FabricaPastas.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Tipo_Cliente_Id = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -245,12 +245,12 @@ namespace FabricaPastas.BD.Migrations
                     Tipo_Cliete_Id = table.Column<int>(type: "int", nullable: false),
                     Rol_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Contraseña = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Contraseña = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Teléfono = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Dirección = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Cuit_Cuil = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Dirección = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Cuit_Cuil = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fecha_Registro = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
