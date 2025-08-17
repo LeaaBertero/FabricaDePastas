@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FabricaPastas.BD.Data
+namespace FabricaDePastas.Shared.DTO
 {
-    public class EntityBase : IEntityBase
+    internal class CrearCategoria_ProductoDTO
     {
-        public int Id { get; set; }
     }
 }
