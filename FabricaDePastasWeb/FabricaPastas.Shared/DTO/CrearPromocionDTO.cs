@@ -1,28 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FabricaPastas.BD.Data.Entity
+namespace FabricaPastas.Shared.DTO
 {
-
-    #region Indices
-    [Index(nameof(Promocion_Id), Name = "Promocion_Id_UQ", IsUnique = true)]
-    [Index(nameof(Titulo), nameof(Descripcion), nameof(Fecha_Inicio), nameof(Fecha_Fin), nameof(Activa),
-    Name = "Titulo_Descripcion_Fecha_Inicio_Fecha_Fin_Activa", IsUnique = false)]
-    #endregion
-    public class Promocion : EntityBase
+    public class CrearPromocionDTO
     {
-
-        #region Clave primaria
-        [Key]
-        public int Promocion_Id { get; set; }
-        #endregion
-
         #region Atributos  
         [Required(ErrorMessage = "El campo Título es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
@@ -40,8 +26,6 @@ namespace FabricaPastas.BD.Data.Entity
 
         [Required(ErrorMessage = "El campo Activo es obligatorio")]
         public bool Activa { get; set; }
-        #endregion
-
-
+        #endregion  
     }
 }

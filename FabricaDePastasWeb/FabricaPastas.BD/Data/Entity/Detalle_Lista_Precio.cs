@@ -29,7 +29,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Producto_Id { get; set; }
         #endregion
 
-        #region atributos de validación
+        #region atributos 
         public decimal? Precio_Personalizado { get; set; }
         #endregion
     }

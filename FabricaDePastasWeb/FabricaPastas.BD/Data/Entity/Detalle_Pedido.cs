@@ -28,7 +28,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Producto_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos 
         [Required(ErrorMessage = "El campo Cantidad es obligatorio")]
         public int Cantidad { get; set; }
 

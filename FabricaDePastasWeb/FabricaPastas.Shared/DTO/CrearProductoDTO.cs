@@ -1,33 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FabricaPastas.BD.Data.Entity
+namespace FabricaPastas.Shared.DTO
 {
-
-    #region Indices
-    [Index(nameof(Producto_Id), Name = "Producto_Id_UQ", IsUnique = true)]
-    [Index(nameof(Nombre), nameof(Descripcion), nameof(PrecioBase), nameof(Imagen_Url), nameof(Stock),
-    Name = "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock", IsUnique = false)]
-    #endregion
-    public class Producto : EntityBase
+    public class CrearProductoDTO
     {
-
-        #region Clave primaria
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Producto_Id { get; set; }
-        #endregion
-
-        #region Claves foráneas
-        public int Categoria_Producto_Id { get; set; }
-        #endregion
-
         #region Atributos
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
@@ -46,10 +27,5 @@ namespace FabricaPastas.BD.Data.Entity
         [Required(ErrorMessage = "El campo Stock es obligatorio")]
         public int? Stock { get; set; }
         #endregion
-
-
-
-
-
     }
 }

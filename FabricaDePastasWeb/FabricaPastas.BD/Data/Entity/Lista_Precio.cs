@@ -27,7 +27,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Usuario_Id { get; set; }
         #endregion
 
-        #region atributos de Validación
+        #region atributos
         [Required(ErrorMessage = "El campo Fecha_Desde es obligatorio")]
         public DateOnly? Fecha_Desde { get; set; }
 

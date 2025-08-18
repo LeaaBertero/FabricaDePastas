@@ -23,7 +23,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Metodo_Entrega_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos
         [Required(ErrorMessage = "El campo Descripción de la entrega es obligatorio")]
         [MaxLength(30, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Descripcion { get; set; }

@@ -30,13 +30,14 @@ namespace FabricaPastas.BD.Data.Entity
         public int Metodo_Entrega_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
-        [Required(ErrorMessage = "El campo Fecha de pedido es obligatorio")]
+        #region Atributos 
+        [Required(ErrorMessage = "La fecha del pedido es obligatoria")]
         public DateOnly? Fecha_Pedido { get; set; }
+
+        [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
         public DateOnly? Fecha_Entrega { get; set; } //agregado para el método de entrega
 
-
-        public decimal? Total { get; set; }
+        public decimal Total { get; set; }
         #endregion
 
     }

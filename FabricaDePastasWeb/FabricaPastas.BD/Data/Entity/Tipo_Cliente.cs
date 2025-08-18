@@ -24,10 +24,10 @@ namespace FabricaPastas.BD.Data.Entity
         public int Tipo_Cliente_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos 
         [Required(ErrorMessage = "El campo Descripción es obligatorio")]
         [MaxLength(255, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
         #endregion
 
 

@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FabricaDePastas.Shared\FabricaDePastas.Shared.csproj" />
     <ProjectReference Include="..\FabricaPastas.BD\FabricaPastas.BD.csproj" />
+    <ProjectReference Include="..\FabricaPastas.Shared\FabricaPastas.Shared.csproj" />
   </ItemGroup>
 
 </Project>

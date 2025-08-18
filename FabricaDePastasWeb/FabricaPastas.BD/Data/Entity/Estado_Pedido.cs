@@ -24,7 +24,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Estado_Pedido_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos
         [Required(ErrorMessage = "El campo Descripcion del pedido es obligatorio")]
         [MaxLength(255, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Descripcion { get; set; }

@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FabricaPastas.BD.Data.Entity
+namespace FabricaPastas.Shared.DTO
 {
-    public class Usuario : EntityBase
+    public class CrearUsuarioDTO
     {
-        #region Clave primaria
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Usuario_Id { get; set; }
-        #endregion
-
-        #region Claves foráneas
-        public int Tipo_Cliete_Id { get; set; }
-        public int Rol_Id { get; set; }
-        #endregion
-
-        #region Atributos de Validación 
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Nombre { get; set; }
@@ -52,13 +39,5 @@ namespace FabricaPastas.BD.Data.Entity
 
         [Required(ErrorMessage = "El campo Fecha es obligatorio")]
         public DateOnly Fecha_Registro { get; set; }
-        #endregion
-
-
-
-
-
-
-
     }
 }

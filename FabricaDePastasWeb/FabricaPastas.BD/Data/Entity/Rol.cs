@@ -23,10 +23,10 @@ namespace FabricaPastas.BD.Data.Entity
         public int Rol_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos 
         [Required(ErrorMessage = "El campo Nombre_Rol es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Nombre_rol { get; set; }
+        public string? Nombre_rol { get; set; }
         #endregion
 
 

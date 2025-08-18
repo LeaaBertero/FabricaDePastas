@@ -23,7 +23,7 @@ namespace FabricaPastas.BD.Data.Entity
         public int Forma_Pago_Id { get; set; }
         #endregion
 
-        #region Atributos de Validación
+        #region Atributos 
         [Required(ErrorMessage = "El campo Método es obligatorio")]
         [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Metodo { get; set; }
