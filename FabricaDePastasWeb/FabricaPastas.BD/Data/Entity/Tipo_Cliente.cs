@@ -27,7 +27,7 @@ namespace FabricaPastas.BD.Data.Entity
         #region Atributos 
         [Required(ErrorMessage = "El campo Descripción es obligatorio")]
         [MaxLength(255, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string? Descripcion { get; set; }
+        public string Descripcion { get; set; }
         #endregion
 
 

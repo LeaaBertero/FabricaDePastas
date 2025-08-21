@@ -38,6 +38,13 @@ namespace FabricaPastas.BD.Data.Entity
         public DateOnly? Fecha_Entrega { get; set; } //agregado para el método de entrega
 
         public decimal Total { get; set; }
+
+        //#region Tablas relacionadas (Uno a muchos) - Listas
+        //public List<Pedido>? Pedidos { get; set; }
+        //public List<Promocion_Usuario>? Promociones_Usuario { get; set; }
+        //public List<Promocion_Producto>? Promociones_Producto { get; set; }
+        //public List<Promocion>? Promociones { get; set; }
+        //#endregion
         #endregion
 
     }

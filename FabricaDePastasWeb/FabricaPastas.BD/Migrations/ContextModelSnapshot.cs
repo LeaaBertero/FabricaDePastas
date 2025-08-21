@@ -307,11 +307,11 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Promocion", b =>
                 {
-                    b.Property<int>("Promocion_Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Promocion_Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activa")
                         .HasColumnType("bit");
@@ -327,7 +327,7 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<DateOnly>("Fecha_Inicio")
                         .HasColumnType("date");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("Promocion_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Titulo")
@@ -335,7 +335,7 @@ namespace FabricaPastas.BD.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Promocion_Id");
+                    b.HasKey("Id");
 
                     b.HasIndex(new[] { "Promocion_Id" }, "Promocion_Id_UQ")
                         .IsUnique();

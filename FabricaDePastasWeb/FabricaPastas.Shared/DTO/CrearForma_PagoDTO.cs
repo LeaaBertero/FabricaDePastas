@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.Shared.DTO
 {
-    public class CrearFormaPagoDTO
+    public class CrearForma_PagoDTO
     {
         #region Atributos de Validación
         [Required(ErrorMessage = "El campo Método es obligatorio")]

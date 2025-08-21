@@ -1,5 +1,7 @@
-﻿using FabricaPastas.BD.Data;
+﻿using AutoMapper;
+using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +12,13 @@ namespace FabricaPastas.Server.Controllers
     public class Lista_PrecioControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         #region constructor
-        public Lista_PrecioControllers(Context context)
+        public Lista_PrecioControllers(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
         #endregion
 
@@ -43,10 +47,19 @@ namespace FabricaPastas.Server.Controllers
 
         #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Lista_Precio entidad)
+        public async Task<ActionResult<int>> Post(CrearLista_PrecioDTO entidadDTO)
         {
             try
             {
+                //Lista_Precio entidad = new Lista_Precio();
+
+                //entidad.Fecha_Desde = entidadDTO.Fecha_Desde;
+                //entidad.Fecha_Hasta = entidadDTO.Fecha_Hasta;
+
+                Lista_Precio entidad = mapper.Map<Lista_Precio>(entidadDTO);
+
+
+
                 context.Lista_Precio.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;

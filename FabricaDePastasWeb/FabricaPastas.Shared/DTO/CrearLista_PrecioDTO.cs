@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.Shared.DTO
 {
-    public class CrearListaPrecioDTO
+    public class CrearLista_PrecioDTO
     {
 
         #region atributos de Validación

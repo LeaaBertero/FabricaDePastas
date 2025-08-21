@@ -1,5 +1,7 @@
-﻿using FabricaPastas.BD.Data;
+﻿using AutoMapper;
+using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +13,13 @@ namespace FabricaPastas.Server.Controllers
     public class UsuarioControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         #region constructor
-        public UsuarioControllers(Context context)
+        public UsuarioControllers(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
         #endregion
 
@@ -44,10 +48,25 @@ namespace FabricaPastas.Server.Controllers
 
         #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Usuario entidad)
+        public async Task<ActionResult<int>> Post(CrearUsuarioDTO entidadDTO)
         {
             try
             {
+                //Usuario entidad = new Usuario();
+
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
+
+                Usuario entidad = mapper.Map<Usuario>(entidadDTO);
+
+
+
                 context.Usuario.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;
