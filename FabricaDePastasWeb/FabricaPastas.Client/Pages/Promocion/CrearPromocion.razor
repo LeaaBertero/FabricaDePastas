@@ -1,0 +1,103 @@
+﻿@page "/api/Promocion/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+    <html>
+    
+        <head>
+            <title>Promoción</title>
+        </head>
+    
+        <body>
+        
+            <header>
+                <h1>Promoción de productos</h1>
+
+                <EditForm Model="promocion" OnValidSubmit="Grabar">
+                    <DataAnnotationsValidator />
+
+                    @* <ValidationSummary /> *@
+
+                    @*  <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <InputText placeholder="Nombre"  id="nombre" class="form-control" @bind-Value="usuario.Nombre" />
+                            <ValidationMessage For="@(() => usuario.Nombre)" />
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <InputText placeholder="Apellido"  id="apellido" class="form-control" @bind-Value="usuario.Apellido" />
+                            <ValidationMessage For="@(() => usuario.Apellido)" />
+                        </div> *@
+
+                    <div class="form-group">
+                        <label for="Titulo">Titulo de la promoción</label>
+                        <input type="text" @bind="promocion.Titulo" class="form-control" />
+                        <ValidationMessage For="@(() => promocion.Titulo)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Descripcion">descripción de la promoción</label>
+                        <input type="text" @bind="promocion.Descripcion" class="form-control" />
+                        <ValidationMessage For="@(() => promocion.Descripcion)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Fecha_Inicio">Fecha de inicio</label>
+                        <input type="date" @bind="promocion.Fecha_Inicio" class="form-control" />
+                        <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Fecha_Fin">Fecha finalización</label>
+                        <input type="date" @bind="promocion.Fecha_Fin" class="form-control" />
+                        <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Activa">¿Está activo?</label>
+                        <input type="checkbox" @bind="promocion.Activa" class="form-check-input" />
+                        <ValidationMessage For="@(() => promocion.Activa)" />
+                    </div>
+
+                    
+                    <div>
+                        <button class="btn btn-primary" type="submit">Registrar</button>
+                        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                    </div>
+
+                  
+                </EditForm>
+
+            </header>
+
+            <main>
+
+            </main>
+
+            <footer>
+                <p>&copy; 2023 La Nonna Pastas</p>
+            </footer>
+    
+        </body>
+
+    </html>
+
+@code {
+    private Promocion promocion = new Promocion();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Promocion>("api/Promocion", promocion);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/ListaUsuario"); //que vaya a la lista de promocioes (hacer!!)
+    }
+}

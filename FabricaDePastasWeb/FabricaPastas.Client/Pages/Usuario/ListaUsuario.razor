@@ -1,0 +1,159 @@
+﻿@page "/api/Usuario/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editar cateoriaLista de usuarios registrados</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
+    </header>
+
+    <main>
+
+        @*  <div>
+                <p>Para registrarte, hace click en el botón</p>
+                <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
+            </div> *@
+        <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
+        </div>
+
+      @*   <div class="bg-danger">
+            <a href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
+        </div> *@
+
+        <table>
+
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>E-mail</th>
+                <th>Contraseña</th>
+                <th>Nro Teléfono</th>
+            </tr>
+
+            @if (Mensaje == null)
+            {
+                if (ListaUsuarios == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (ListaUsuarios.Count == 0)
+                {
+                    <p>No existen usuarios </p>
+                }
+                else
+                {
+                    @foreach (var item in ListaUsuarios)
+                    {
+                        <tr>
+
+                            <td>@item.Nombre</td>
+                            <td>@item.Apellido</td>
+                            <td>@item.Email</td>
+                            <td>@item.Contraseña</td>
+                            <td>@item.Teléfono</td>
+
+                            <td>
+                                <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-danger"
+                                        @onclick="() => Eliminar(item)">
+                                    Borrar
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+
+
+    List<Usuario> ListaUsuarios;
+    Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Usuario>>("api/Usuario");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            ListaUsuarios = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+    #region Eliminar usuario
+    private async Task Eliminar(Usuario usuarioBorrar)
+    {
+        usuarioBorrar = usuario;
+
+
+    }
+    #endregion
+
+    private async Task Borrar()
+    {
+        var respuesta = await http.Delete($"api/Usuario/{usuario.Id}");
+        if (respuesta.Error)
+        {
+            var body = "No se pudo borrar";
+        }
+
+        await Leer();
+    }
+}
+
+
+
+
+
+

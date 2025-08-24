@@ -1,0 +1,148 @@
+﻿@page "/api/Usuario/Editar/{UsuarioId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editar usuario</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Editar usuario</h1>
+    </header>
+
+    <main>
+
+        <EditForm Model="Modificarusuario" OnValidSubmit="Grabar">
+
+            <DataAnnotationsValidator />
+            @* <ValidationSummary /> *@
+
+            @*  <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <InputText placeholder="Nombre"  id="nombre" class="form-control" @bind-Value="usuario.Nombre" />
+                        <ValidationMessage For="@(() => usuario.Nombre)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <InputText placeholder="Apellido"  id="apellido" class="form-control" @bind-Value="usuario.Apellido" />
+                        <ValidationMessage For="@(() => usuario.Apellido)" />
+                    </div> *@
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" @bind="Modificarusuario.Nombre" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Nombre)" />
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" @bind="Modificarusuario.Apellido" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Apellido)" />
+            </div>
+
+            <div class="form-group">
+                <label for="e-mail">E-mail</label>
+                <input type="email" @bind="Modificarusuario.Email" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Email)" />
+            </div>
+
+            <div class="form-group">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" @bind="Modificarusuario.Contraseña" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Contraseña)" />
+            </div>
+
+            @*  <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                <input type="tel" @bind="Modificarusuario.Teléfono" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Teléfono)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                <input type="text" @bind="Modificarusuario.Dirección" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Dirección)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion">Cuit / Cuil</label>
+                <input type="number" @bind="Modificarusuario.Cuit_Cuil" class="form-control" />
+                <ValidationMessage For="@(() => Modificarusuario.Cuit_Cuil)" />
+                </div> *@
+
+
+            <div>
+                <button class="btn btn-success" type="submit">Actualizar</button>
+                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            </div>
+
+
+        </EditForm>
+
+    </main>
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
+
+
+@code {
+
+    private Usuario Modificarusuario = new Usuario();
+
+    [Parameter]
+    public int UsuarioId { get; set; }
+
+
+
+    string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Usuario>($"api/Usuario/{UsuarioId}");
+
+        if (!respuesta.Error)
+        {
+            Modificarusuario = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Usuario");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Usuario>($"api/Usuario/{UsuarioId}", Modificarusuario);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Usuario");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Usuario/Lista");
+    }
+
+}
+

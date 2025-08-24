@@ -1,0 +1,105 @@
+﻿@page "/api/Rol"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista Roles</title>
+    <meta charset="utf-8" />
+</head>
+
+
+<body>
+
+    <header>
+
+        <h1>Seleccione el rol</h1>
+
+        <select>
+            <option value="listaRoles">Administrador</option>
+        </select>
+
+        <div class="btn btn-info">
+            <a href="/administracion">Ingresar</a>
+        </div>
+
+
+    </header>
+
+    <main>
+
+       @*  <table>
+
+            <tr>
+                <th>Nombre de rol</th>
+
+            </tr>
+
+
+
+            @if (Mensaje == null)
+            {
+                if (ListaRoles == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (ListaRoles.Count == 0)
+                {
+                    <p>No existen roles de usuarios cargados</p>
+                }
+                else
+                {
+                    @foreach (var item in ListaRoles)
+                    {
+                        <tr>
+                            <td>@item.Nombre_rol</td>
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table> *@
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+    private List<Rol> ListaRoles;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListaRoles = await Http.GetFromJsonAsync<List<Rol>>("api/Rol");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error obteniendo tipos de cliente: {ex.Message}");
+        }
+    }
+
+
+
+
+
+}

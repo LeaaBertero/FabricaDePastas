@@ -1,0 +1,127 @@
+﻿@page "/api/Promocion_Producto/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de promocion de productos</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="text-center">Lista de promociones de productos</h1>
+    </header>
+
+    <main>
+
+        <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Promocion_Producto/Crear">Crear promocion de producto</a>
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Nombre producto</th>
+                <th>Descuento porcentaje</th>
+                <th>Precio promocional</th>
+
+            </tr>
+
+            @if (Mensaje == null)
+            {
+                if (ListaPromo_prod == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (ListaPromo_prod.Count == 0)
+                {
+                    <p>No existen promociones de productos </p>
+                }
+                else
+                {
+                    @foreach (var item in ListaPromo_prod)
+                    {
+                        <tr>
+
+                            <td>@item.Nombre_Producto</td>
+                            <td>@item.Descuento_Porcentaje</td>
+                            <td>@item.Precio_Promocional</td>
+
+
+
+                            <td>
+                                <a class="btn btn-warning btn-sm" href="/api/Promocion_Producto/Editar/@item.Id">Modificar</a>
+                            </td>
+
+
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+
+
+    List<Promocion_Producto> ListaPromo_prod;
+    Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Promocion_Producto>>("api/Promocion_Producto");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            ListaPromo_prod = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+
+}
+
+
+
+
+
+
+

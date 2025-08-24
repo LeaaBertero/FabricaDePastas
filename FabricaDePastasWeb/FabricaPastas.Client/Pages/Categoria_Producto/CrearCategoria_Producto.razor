@@ -1,0 +1,66 @@
+﻿@page "/api/Categoria_Producto/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Categoria de productos</title>
+    </head>
+
+    <body>
+
+        <header>
+
+            <h1 class=" text-center">Acá podes cargar la categoría de productos</h1>
+
+            <EditForm Model="categoria_producto" OnValidSubmit="Grabar">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="nombreCategoria">Nombre de categoría</label>
+                    <input type="text" @bind="categoria_producto.Nombre_Categoria" class="form-control" />
+                    <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" type="submit">Crear categoría</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+                
+            </EditForm>
+
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+    private Categoria_Producto categoria_producto = new Categoria_Producto();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Categoria_Producto>("api/Categoria_Producto", categoria_producto);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Categoria_producto/Lista");
+    }
+}

@@ -1,0 +1,124 @@
+﻿@page "/api/Categoria_Producto/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Lista de categorías</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1 class="text-center">Lista de Categorias</h1>
+        </header>
+
+        <main>
+
+            <div>
+                <p>Nueva categoría</p>
+                <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">Crear categoria</a>
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Nombre de cateoría</th>
+                </tr>
+
+                @if (Mensaje == null)
+                {
+                    if (Lista_categoria == null)
+                    {
+                        <p>Buscando....</p>
+                    }
+                    else if (Lista_categoria.Count == 0)
+                    {
+                        <p>No existen categorias cargadas </p>
+                    }
+                    else
+                    {
+                        @foreach (var item in Lista_categoria)
+                        {
+                            <tr>
+
+                                <td>@item.Nombre_Categoria</td>
+                               
+
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
+                                </td>
+
+                                
+
+                            </tr>
+
+                        }
+                    }
+                }
+                else
+                {
+                    <p> Error: @Mensaje</p>
+                }
+
+
+            </table>
+
+        </main>
+
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+
+
+    List<Categoria_Producto> Lista_categoria;
+    
+    
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            Lista_categoria = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+   
+
+   
+}
+
+
+
+
+
+

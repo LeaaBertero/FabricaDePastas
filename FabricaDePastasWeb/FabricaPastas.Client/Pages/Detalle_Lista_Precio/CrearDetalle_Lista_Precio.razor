@@ -1,0 +1,68 @@
+﻿@page "/api/Detalle_Lista_Precio/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Registro de usuarios</title>
+    </head>
+
+    <body>
+
+        <header>
+
+            <h1 class=" text-center">Detalle lista de precios</h1>
+
+            <p>Indique el precio del producto</p>
+
+            <EditForm Model="detalle_listaPrecio" OnValidSubmit="Grabar">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="precio_personalizado">Precio personalizado</label>
+                    <input type="number" @bind="detalle_listaPrecio.Precio_Personalizado" />
+                    <ValidationMessage For="@(() => detalle_listaPrecio.Precio_Personalizado)" />
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" type="submit">Registrar</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+
+            </EditForm>
+
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+    private Detalle_Lista_Precio detalle_listaPrecio = new Detalle_Lista_Precio();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Detalle_Lista_Precio>("api/Detalle_Lista_Precio", detalle_listaPrecio);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/");
+    }
+}

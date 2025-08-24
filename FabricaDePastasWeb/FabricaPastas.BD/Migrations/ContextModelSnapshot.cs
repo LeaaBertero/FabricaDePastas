@@ -24,13 +24,13 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Categoria_Producto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Categoria_Producto_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Categoria_Producto_Id"));
 
-                    b.Property<int>("Categoria_Producto_Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre_Categoria")
@@ -38,7 +38,7 @@ namespace FabricaPastas.BD.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Categoria_Producto_Id");
 
                     b.HasIndex(new[] { "Categoria_Producto_Id" }, "Categoria_Producto_Id_UQ")
                         .IsUnique();
@@ -263,11 +263,11 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Producto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Producto_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Producto_Id"));
 
                     b.Property<int>("Categoria_Producto_Id")
                         .HasColumnType("int");
@@ -276,6 +276,9 @@ namespace FabricaPastas.BD.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Imagen_Url")
                         .IsRequired()
@@ -289,13 +292,10 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<decimal>("PrecioBase")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Producto_Id")
-                        .HasColumnType("int");
-
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Producto_Id");
 
                     b.HasIndex(new[] { "Nombre", "Descripcion", "PrecioBase", "Imagen_Url", "Stock" }, "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock");
 
@@ -356,6 +356,11 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<decimal>("Descuento_Porcentaje")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Nombre_Producto")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<decimal>("Precio_Promocional")
                         .HasColumnType("decimal(18,2)");
 
@@ -370,7 +375,7 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Descuento_Porcentaje", "Precio_Promocional" }, "Descuento_Porcentaje_Precio_Promocional");
+                    b.HasIndex(new[] { "Nombre_Producto", "Descuento_Porcentaje", "Precio_Promocional" }, "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional");
 
                     b.HasIndex(new[] { "Promocion_Producto_Id" }, "Promocion_Producto_Id_UQ")
                         .IsUnique();

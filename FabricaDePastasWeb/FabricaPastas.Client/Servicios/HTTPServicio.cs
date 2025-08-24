@@ -1,19 +1,16 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
-namespace LaNonnaPersonal.Client.Servicios
+namespace FabricaPastas.Client.Servicios
 {
     public class HTTPServicio : IHTTPServicio
     {
         private readonly HttpClient http;
 
-        #region Constructor
         public HTTPServicio(HttpClient http)
         {
             this.http = http;
         }
-        #endregion
 
         #region Método Get<T>
         public async Task<HTTPRespuesta<T>> Get<T>(string url)

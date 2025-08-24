@@ -12,8 +12,8 @@ namespace FabricaPastas.BD.Data.Entity
 
     #region Indices
     [Index(nameof(Promocion_Producto_Id), Name = "Promocion_Producto_Id_UQ", IsUnique = true)]
-    [Index(nameof(Descuento_Porcentaje), nameof(Precio_Promocional),
-    Name = "Descuento_Porcentaje_Precio_Promocional", IsUnique = false)]
+    [Index(nameof(Nombre_Producto), nameof(Descuento_Porcentaje), nameof(Precio_Promocional),
+    Name = "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional", IsUnique = false)]
     #endregion
 
     public class Promocion_Producto : EntityBase
@@ -31,6 +31,10 @@ namespace FabricaPastas.BD.Data.Entity
         #endregion
 
         #region Atributos 
+        [Required(ErrorMessage = "El Nombre del producto es obligatorio")]
+        [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Nombre_Producto { get; set; }
+
         [Required(ErrorMessage = "El campo Descuento_Porcentaje es obligatorio")]
         public decimal Descuento_Porcentaje { get; set; }
 

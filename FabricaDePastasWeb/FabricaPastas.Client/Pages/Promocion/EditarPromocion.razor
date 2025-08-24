@@ -1,0 +1,123 @@
+﻿@page "/api/Promocion/Editar/{PromocionId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Modificar promoción</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>Modificar promoción</h1>
+        </header>
+
+        <main>
+
+            <EditForm Model="promo" OnValidSubmit="Grabar">
+
+                <DataAnnotationsValidator />
+           
+                <div class="form-group">
+                    <label for="nombre">Titulo</label>
+                    <input type="text" @bind="promo.Titulo" class="form-control" />
+                    <ValidationMessage For="@(() => promo.Titulo)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre">Descripción</label>
+                    <input type="text" @bind="promo.Descripcion" class="form-control" />
+                    <ValidationMessage For="@(() => promo.Descripcion)" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre">Fecha inicio</label>
+                    <input type="date" @bind="promo.Fecha_Inicio" class="form-control" />
+                    <ValidationMessage For="@(() => promo.Fecha_Inicio)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre">Fecha fin</label>
+                    <input type="date" @bind="promo.Fecha_Fin" class="form-control" />
+                    <ValidationMessage For="@(() => promo.Fecha_Fin)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="activo">¿Está activo?</label>
+                    <input type="checkbox" id="activo" @bind="promo.Activa" class="form-check-input" />
+                    <ValidationMessage For="@(() => promo.Activa)" />
+                </div>
+          
+
+
+                <div>
+                    <button class="btn btn-success" type="submit">Modificar</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+
+
+            </EditForm>
+
+        </main>
+
+        <footer>
+
+        </footer>
+
+    </body>
+
+</html>
+
+
+@code {
+
+    private Promocion promo = new Promocion();
+
+    [Parameter]
+    public int PromocionId { get; set; }
+
+    string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Promocion>($"api/Promocion/{PromocionId}");
+
+        if (!respuesta.Error)
+        {
+            promo = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Promocion");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Promocion>($"api/Promocion/{PromocionId}", promo);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Promocion");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Promocion/Lista");
+    }
+
+}

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class ini : Migration
+    public partial class CategoriaProd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,14 @@ namespace FabricaPastas.BD.Migrations
                 name: "Categoria_Producto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categoria_Producto", x => x.Id);
+                    table.PrimaryKey("PK_Categoria_Producto", x => x.Categoria_Producto_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,19 +140,19 @@ namespace FabricaPastas.BD.Migrations
                 name: "Producto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Producto_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PrecioBase = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Imagen_Url = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false)
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Producto", x => x.Id);
+                    table.PrimaryKey("PK_Producto", x => x.Producto_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,6 +182,7 @@ namespace FabricaPastas.BD.Migrations
                     Promocion_Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
+                    Nombre_Producto = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Descuento_Porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Precio_Promocional = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -369,9 +370,9 @@ namespace FabricaPastas.BD.Migrations
                 columns: new[] { "Titulo", "Descripcion", "Fecha_Inicio", "Fecha_Fin", "Activa" });
 
             migrationBuilder.CreateIndex(
-                name: "Descuento_Porcentaje_Precio_Promocional",
+                name: "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional",
                 table: "Promocion_Producto",
-                columns: new[] { "Descuento_Porcentaje", "Precio_Promocional" });
+                columns: new[] { "Nombre_Producto", "Descuento_Porcentaje", "Precio_Promocional" });
 
             migrationBuilder.CreateIndex(
                 name: "Promocion_Producto_Id_UQ",

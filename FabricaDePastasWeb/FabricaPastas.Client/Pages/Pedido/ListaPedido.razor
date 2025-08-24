@@ -1,0 +1,127 @@
+﻿@page "/api/Pedido/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Editar Pedidos registrados</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1 class="text-center">Lista pedidos registrados en el sistema</h1>
+        </header>
+
+        <main>
+
+            @*  <div>
+                    <p>Para registrarte, hace click en el botón</p>
+                    <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
+                </div> *@
+
+            <table>
+
+                <tr>
+                    <th>Fecha pedido</th>
+                    <th>Total</th>
+                   
+                </tr>
+
+                @if (Mensaje == null)
+                {
+                    if (Lista_pedidos == null)
+                    {
+                        <p>Buscando....</p>
+                    }
+                    else if (Lista_pedidos.Count == 0)
+                    {
+                        <p>No existen listas de pedidos </p>
+                    }
+                    else
+                    {
+                        @foreach (var item in Lista_pedidos)
+                        {
+                            <tr>
+
+                                <td>@item.Fecha_Pedido</td>
+                                <td>@item.Fecha_Entrega</td>
+                                <td>@item.Total</td>
+                                
+
+                              @*   <td>
+                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
+                                </td> *@
+
+                              
+
+                            </tr>
+
+                        }
+                    }
+                }
+                else
+                {
+                    <p> Error: @Mensaje</p>
+                }
+
+
+            </table>
+
+        </main>
+
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+    </html>
+
+@code {
+
+
+    List<Pedido> Lista_pedidos;
+    // Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Pedido>>("api/Pedido");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            Lista_pedidos = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+    
+
+    
+}
+
+
+
+
+
+

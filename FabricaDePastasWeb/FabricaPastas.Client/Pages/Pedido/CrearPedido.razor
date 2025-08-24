@@ -1,0 +1,84 @@
+﻿@page "/api/Pedido/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Pedido</title>
+
+
+    </head>
+
+    <body>
+
+        <header>
+
+            <h1 class="text-center fondo">Fecha de pedidos y costos</h1>
+
+            <EditForm Model="pedido" OnValidSubmit="Grabar">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="Fechapedido">Fecha pedido</label>
+                    <input type="date" @bind="pedido.Fecha_Pedido" class="form-control" />
+                    <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Fechapedido">Fecha entrega</label>
+                    <input type="date" @bind="pedido.Fecha_Entrega" class="form-control" />
+                    <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="total">Total</label>
+                    <input type="number" @bind="pedido.Total" class="form-control" />
+                    <ValidationMessage For="@(() => pedido.Total)" />
+                </div>
+
+           
+
+
+                <div>
+                    <button class="btn btn-primary" type="submit">Registrar</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+
+            </EditForm>
+
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+    private Pedido pedido = new Pedido();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Pedido>("api/Pedido", pedido);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/");
+    }
+}
+

@@ -1,0 +1,50 @@
+﻿@page "/administracion"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+    <html>
+    
+        <head>
+            <title>Administracion</title>
+        </head>
+    
+        <body>
+
+            <header>
+
+                <h1>Administración</h1>
+
+                <h3>Menú de navegación</h3>
+
+                <nav>
+                    <nav>
+                        <ul>
+                            <li><a href="/api/Usuario/Lista">Usuarios</a></li>
+                            <li><a href="/api/Tipo_Cliente">Tipo de cliente</a></li>
+                            @* <li><a href="/api/Rol">Rol del cliente</a></li> *@
+                            <li><a href="/api/Promocion/Lista">Promoción</a></li>
+                            <li><a href="/api/Producto/Lista">Lista de productos</a></li>
+                            <li><a href="/api/Categoria_Producto/Lista">Lista de categorias de productos</a></li>
+                            <li><a href="/api/Promocion_Producto/Lista">Promociones de productos</a></li>
+                            <li><a href="/api/Detalle_Lista_Precio/Lista">Detalle de lista de precios</a></li>
+                            <li><a href="/api/Pedido/Lista">Detalle de lista de pedidos</a></li>
+                        </ul>
+                    </nav>
+
+                </nav>
+
+            </header>
+
+            <main>
+
+            </main>
+        
+            <footer>
+
+            </footer>
+        
+        </body>
+        
+    </html>
+    

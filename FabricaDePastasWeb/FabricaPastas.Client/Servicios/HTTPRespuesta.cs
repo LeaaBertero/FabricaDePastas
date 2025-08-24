@@ -1,21 +1,19 @@
-﻿using System.Net.Http;
-
-namespace LaNonnaPersonal.Client.Servicios
+﻿namespace FabricaPastas.Client.Servicios
 {
     public class HTTPRespuesta<T>
     {
-        public T Respuesta { get;}
-        public bool Error { get;}
+        public T Respuesta { get; }
+        public bool Error { get; }
 
         public HttpResponseMessage HttpResponseMessage { get; set; }
-       
+
         public HTTPRespuesta(T respuesta, bool error, HttpResponseMessage httpResponseMessage)
         {
             Respuesta = respuesta;
             Error = error;
             HttpResponseMessage = httpResponseMessage;
         }
-       
+
         public async Task<string> ObtenerError()
         {
             if (!Error)
@@ -40,10 +38,5 @@ namespace LaNonnaPersonal.Client.Servicios
                     return HttpResponseMessage.Content.ReadAsStringAsync().Result;
             }
         }
-
-
-
     }
-
-
 }

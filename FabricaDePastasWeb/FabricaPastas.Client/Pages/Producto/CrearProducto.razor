@@ -1,0 +1,96 @@
+﻿@page "/api/Producto/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+    <html>
+
+        <head>
+            <title>Registro de productos</title>
+        </head>
+
+        <body>
+
+            <header>
+
+                <h1 class=" text-center">Carga de productos (Stock)</h1>
+
+                <EditForm Model="producto" OnValidSubmit="Grabar">
+                    <DataAnnotationsValidator />
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" @bind="producto.Nombre" class="form-control" />
+                        <ValidationMessage For="@(() => producto.Nombre)" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" @bind="producto.Descripcion" class="form-control" />
+                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preciobase">Precio base</label>
+                        <input type="number" @bind="producto.PrecioBase" class="form-control" />
+                        <ValidationMessage For="@(() => producto.PrecioBase)" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imagenproducto">Imagen del producto</label>
+                        <input type="file" name="imagen" accept="image/*" @bind="producto.Imagen_Url" />
+                        <ValidationMessage For="@(() => producto.Imagen_Url)" />
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="tel" name="stock" min="0" step="1" required @bind="producto.Stock" />
+                        <ValidationMessage For="@(() => producto.Stock)" />
+                    </div>
+
+                    
+
+
+                    <div>
+                        <button class="btn btn-primary" type="submit">Registrar</button>
+                        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                    </div>
+
+
+                </EditForm>
+
+
+
+            </header>
+
+            <main>
+
+            </main>
+
+            <footer>
+                <p>&copy; 2025 La Nonna Personal</p>
+            </footer>
+
+        </body>
+
+    </html>
+
+@code {
+    private Producto producto = new Producto();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Producto>("api/Producto", producto);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Producto/Lista");
+    }
+}

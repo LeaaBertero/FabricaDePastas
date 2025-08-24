@@ -1,0 +1,123 @@
+﻿@page "/api/Detalle_Lista_Precio/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Editar cateoriaLista de usuarios registrados</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
+        </header>
+
+        <main>
+
+            @*  <div>
+                    <p>Para registrarte, hace click en el botón</p>
+                    <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
+                </div> *@
+
+            <table>
+
+                <tr>
+                    <th>Detalle lista de precio</th>
+                </tr>
+
+                @if (Mensaje == null)
+                {
+                    if (ListaDetalleLista_precio == null)
+                    {
+                        <p>Buscando....</p>
+                    }
+                    else if (ListaDetalleLista_precio.Count == 0)
+                    {
+                        <p>No ningún detalle de lista de precios </p>
+                    }
+                    else
+                    {
+                        @foreach (var item in ListaDetalleLista_precio)
+                        {
+                            
+                            <tr>
+
+                                <td>@item.Precio_Personalizado</td>
+                                
+
+                              @*   <td>
+                                    <a class="btn btn-warning btn-sm" href="/#/@item.Id">Modificar</a>
+                                </td> *@
+
+ 
+                            </tr>
+
+                        }
+                    }
+                }
+                else
+                {
+                    <p> Error: @Mensaje</p>
+                }
+
+
+            </table>
+
+        </main>
+
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+
+
+    List<Detalle_Lista_Precio> ListaDetalleLista_precio;
+    // Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Detalle_Lista_Precio>>("api/Detalle_Lista_Precio");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            ListaDetalleLista_precio = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+}
+
+    
+
+    
+
+
+
+
+
+

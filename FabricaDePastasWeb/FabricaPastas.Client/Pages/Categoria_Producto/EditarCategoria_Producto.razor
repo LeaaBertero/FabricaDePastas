@@ -1,0 +1,99 @@
+﻿@page "/api/Categoria_Producto/Editar/{Categoria_ProductoId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Editar Categoria producto</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>Editar categoria producto</h1>
+        </header>
+
+        <main>
+
+            <EditForm Model="EditarCategoriaproducto" OnValidSubmit="Grabar">
+
+                <DataAnnotationsValidator />
+               
+
+                <div class="form-group">
+                    <label for="Nombrecategoria">Nombre categoria</label>
+                    <input type="text" @bind="EditarCategoriaproducto.Nombre_Categoria" class="form-control" />
+                    <ValidationMessage For="@(() => EditarCategoriaproducto.Nombre_Categoria)" />
+                </div>
+
+          
+                <div>
+                    <button class="btn btn-success" type="submit">Actualizar categoría</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+
+            </EditForm>
+
+        </main>
+
+        <footer>
+        </footer>
+
+    </body>
+
+</html>
+
+
+@code {
+
+    private Categoria_Producto EditarCategoriaproducto = new Categoria_Producto();
+
+    [Parameter]
+    public int Categoria_ProductoId { get; set; }
+
+
+
+    // string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Categoria_Producto>($"api/Categoria_Producto/{Categoria_ProductoId}");
+
+        if (!respuesta.Error)
+        {
+            EditarCategoriaproducto = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Categoria_Producto");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Categoria_Producto>($"api/Categoria_Producto/{Categoria_ProductoId}", EditarCategoriaproducto);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Categoria_Producto");
+    }
+
+    // private void Cancelar()
+    // {
+    //     navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+    // }
+
+}

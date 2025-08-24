@@ -1,0 +1,75 @@
+﻿@page "/api/Usuario/Registro/Login"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Registro de usuarios</title>
+    </head>
+
+    <body>
+
+        <header>
+
+            <h1 class=" text-center">Ingresá usuario y contraseña para acceder al sistema</h1>
+
+            <EditForm Model="usuario" OnValidSubmit="Grabar">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="e-mail">E-mail</label>
+                    <input type="email" @bind="usuario.Email" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Email)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" @bind="usuario.Contraseña" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Contraseña)" />
+                </div>
+
+                
+                <div>
+                    <button class="btn btn-primary" type="submit">Ingresar</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
+
+            </EditForm>
+
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
+
+    </body>
+
+</html>
+
+@code {
+    private Usuario usuario = new Usuario();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Usuario>("/", usuario);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/");
+    }
+
+
+}

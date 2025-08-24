@@ -7,6 +7,11 @@
     </div>
 </div>
 
+<div class="bg-light text-center text-uppercase">
+    <h4>Listas</h4>
+</div>
+
+
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
@@ -14,6 +19,69 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Usuario/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Usuarios
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Tipo_Cliente" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Tipo_Cliente
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Rol" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Rol
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Promocion_Producto/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Lista promo_prod
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Promocion/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Promocion
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Producto/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Producto
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Pedido/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Pedido
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Detalle_Lista_Precio/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Detalle lista precio
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Categoria_Producto/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Lista categoría
+            </NavLink>
+        </div>
+
+     @*    <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Categoria_Producto/Crear" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Categoria producto
+            </NavLink>
+        </div> *@
+
+      
+        
       @*   <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
