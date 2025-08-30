@@ -103,7 +103,7 @@ namespace FabricaPastas.Server.Controllers
             dammy.Teléfono = entidad.Teléfono;
             dammy.Dirección = entidad.Dirección;
             dammy.Cuit_Cuil = entidad.Cuit_Cuil;
-            dammy.Fecha_Registro = entidad.Fecha_Registro;
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {

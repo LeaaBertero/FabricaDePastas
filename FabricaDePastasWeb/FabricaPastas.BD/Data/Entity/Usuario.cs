@@ -50,8 +50,8 @@ namespace FabricaPastas.BD.Data.Entity
         //[MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Cuit_Cuil { get; set; }
 
-        [Required(ErrorMessage = "El campo Fecha es obligatorio")]
-        public DateOnly Fecha_Registro { get; set; }
+        //[Required(ErrorMessage = "El campo Fecha es obligatorio")]
+        //public DateOnly Fecha_Registro { get; set; }
         #endregion
 
 

@@ -26,5 +26,24 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
+        //#region Método Post
+
+        //[HttpPost]
+        //public async Task<ActionResult<int>> Post(Rol entidad)
+        //{
+        //    try
+        //    {
+        //        context.Rol.Add(entidad);
+        //        await context.SaveChangesAsync();
+        //        return entidad.Id;
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        return BadRequest(e.Message);
+        //    }
+        //}
+        //#endregion
+
     }
 }

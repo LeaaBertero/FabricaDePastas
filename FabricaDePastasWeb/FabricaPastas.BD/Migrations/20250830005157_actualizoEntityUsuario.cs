@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class CategoriaProd : Migration
+    public partial class actualizoEntityUsuario : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -251,8 +251,7 @@ namespace FabricaPastas.BD.Migrations
                     Contraseña = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Teléfono = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Dirección = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Cuit_Cuil = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fecha_Registro = table.Column<DateOnly>(type: "date", nullable: false)
+                    Cuit_Cuil = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

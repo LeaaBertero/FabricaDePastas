@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250824171753_CategoriaProd")]
-    partial class CategoriaProd
+    [Migration("20250830005157_actualizoEntityUsuario")]
+    partial class actualizoEntityUsuario
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -497,9 +497,6 @@ namespace FabricaPastas.BD.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateOnly>("Fecha_Registro")
-                        .HasColumnType("date");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

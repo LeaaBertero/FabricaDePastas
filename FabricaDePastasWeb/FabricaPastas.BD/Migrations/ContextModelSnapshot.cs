@@ -495,9 +495,6 @@ namespace FabricaPastas.BD.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateOnly>("Fecha_Registro")
-                        .HasColumnType("date");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
