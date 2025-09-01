@@ -1,5 +1,7 @@
-﻿using FabricaPastas.BD.Data;
+﻿using AutoMapper;
+using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,25 +11,36 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Tipo_Cliente")]
     public class Tipo_ClienteControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly ITipo_ClienteRepositorio repositorio;
+
+        //private readonly Context context;
 
         #region constructor
-        public Tipo_ClienteControllers(Context context)
+        public Tipo_ClienteControllers(ITipo_ClienteRepositorio repositorio,
+                                       IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
+            this.Mapper = mapper;
         }
+
+        public IMapper Mapper { get; }
         #endregion
 
         #region Método Get
         [HttpGet]
         public async Task<ActionResult<List<Tipo_Cliente>>> Get()
         {
-            return await context.Tipo_Cliente.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
+      
+
     }
 }
+
+
 
        
 

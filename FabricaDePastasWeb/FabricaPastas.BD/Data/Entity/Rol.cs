@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
 {
-    #region Indices
-    [Index(nameof(Rol_Id), Name = "Rol_Id_UQ", IsUnique = true)]
-    [Index(nameof(Nombre_rol),
-    Name = "Nombre_rol", IsUnique = false)]
-    #endregion
+    //#region Indices
+    //[Index(nameof(Rol_Id), Name = "Rol_Id_UQ", IsUnique = true)]
+    //[Index(nameof(Nombre_rol),
+    //Name = "Nombre_rol", IsUnique = false)]
+    //#endregion
 
     public class Rol : EntityBase
     {

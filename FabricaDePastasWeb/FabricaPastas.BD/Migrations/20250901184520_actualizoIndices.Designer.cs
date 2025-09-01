@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250830005157_actualizoEntityUsuario")]
-    partial class actualizoEntityUsuario
+    [Migration("20250901184520_actualizoIndices")]
+    partial class actualizoIndices
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -378,11 +378,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Nombre_Producto", "Descuento_Porcentaje", "Precio_Promocional" }, "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional");
-
-                    b.HasIndex(new[] { "Promocion_Producto_Id" }, "Promocion_Producto_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Promocion_Producto");
                 });
 
@@ -394,11 +389,11 @@ namespace FabricaPastas.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Fecha_Fin_Promo")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha_Fin_Promo")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("Fecha_Inicio_Promo")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha_Inicio_Promo")
+                        .HasColumnType("date");
 
                     b.Property<int>("Promocion_Id")
                         .HasColumnType("int");
@@ -432,11 +427,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Nombre_rol" }, "Nombre_rol");
-
-                    b.HasIndex(new[] { "Rol_Id" }, "Rol_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Rol");
                 });
 
@@ -457,11 +447,6 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Descripcion" }, "Descripcion");
-
-                    b.HasIndex(new[] { "Tipo_Cliente_Id" }, "Tipo_Cliente_Id_UQ")
-                        .IsUnique();
 
                     b.ToTable("Tipo_Cliente");
                 });

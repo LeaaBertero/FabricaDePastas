@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Detalle_Pedido")]
     public class Detalle_PedidoControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IDetalle_PedidoRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public Detalle_PedidoControllers(Context context, IMapper mapper)
+        public Detalle_PedidoControllers(IDetalle_PedidoRepositorio repositorio,
+                                         IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio; 
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,7 +31,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Detalle_Pedido>>> Get()
         {
-            return await context.Detalle_Pedido.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
@@ -36,16 +41,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Detalle_Pedido entidad = new Detalle_Pedido();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Cantidad = entidadDTO.Cantidad;
-                //entidad.Precio_Unitario = entidadDTO.Precio_Unitario;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Detalle_Pedido entidad = mapper.Map<Detalle_Pedido>(entidadDTO);
 
-                context.Detalle_Pedido.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+
+                return await repositorio.Insert(entidad);
+
             }
             catch (Exception e)
             {
@@ -53,7 +64,7 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
-        #endregion
+        #endregion  
     }
 }
 

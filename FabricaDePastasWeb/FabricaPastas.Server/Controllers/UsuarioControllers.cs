@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,17 @@ namespace FabricaPastas.Server.Controllers
 
     public class UsuarioControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IUsuarioRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public UsuarioControllers(Context context, IMapper mapper)
+        public UsuarioControllers(IUsuarioRepositorio repositorio, 
+                                  IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -27,7 +32,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Usuario>>> Get()
         {
-            return await context.Usuario.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
@@ -35,7 +40,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Usuario>> Get(int id)
         {
-            var dammy = await context.Usuario.FirstOrDefaultAsync(x => x.Id == id);
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
@@ -66,10 +71,8 @@ namespace FabricaPastas.Server.Controllers
                 Usuario entidad = mapper.Map<Usuario>(entidadDTO);
 
 
+                return await repositorio.Insert(entidad);
 
-                context.Usuario.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
             }
             catch (Exception e)
             {
@@ -88,12 +91,11 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Usuario.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró el registro");
+                return NotFound("No se encontró el registro buscado");
             }
 
             dammy.Nombre = entidad.Nombre;
@@ -107,8 +109,9 @@ namespace FabricaPastas.Server.Controllers
 
             try
             {
-                context.Usuario.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
+              
                 return Ok();
 
             }
@@ -124,22 +127,20 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Usuario.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
 
             if (!existe)
             {
                 return NotFound($"El usuario {id} no existe.");
             }
-
-            Usuario EntidadAborrar = new Usuario();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"El usuario {id} fue eliminado correctamente.");
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar el usuario");
+            }
         }
         #endregion
     }

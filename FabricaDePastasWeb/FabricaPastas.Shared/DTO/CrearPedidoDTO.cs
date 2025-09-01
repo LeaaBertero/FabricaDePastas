@@ -12,10 +12,10 @@ namespace FabricaPastas.Shared.DTO
 
         #region Atributos 
         [Required(ErrorMessage = "La fecha del pedido es obligatoria")]
-        public DateOnly? Fecha_Pedido { get; set; }
+        public DateOnly Fecha_Pedido { get; set; }
         
         [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
-        public DateOnly? Fecha_Entrega { get; set; } //agregado para el método de entrega
+        public DateOnly Fecha_Entrega { get; set; } //agregado para el método de entrega
 
         public decimal Total { get; set; }
         #endregion

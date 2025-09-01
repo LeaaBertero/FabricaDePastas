@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Lista_Precio")]
     public class Lista_PrecioControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly ILista_PrecioRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public Lista_PrecioControllers(Context context, IMapper mapper)
+        public Lista_PrecioControllers(ILista_PrecioRepositorio repositorio,
+                                       IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,7 +31,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Lista_Precio>>> Get()
         {
-            return await context.Lista_Precio.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
@@ -34,7 +39,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Lista_Precio>> Get(int id)
         {
-            var dammy = await context.Lista_Precio.FirstOrDefaultAsync(x => x.Id == id);
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
@@ -51,18 +56,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Lista_Precio entidad = new Lista_Precio();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Fecha_Desde = entidadDTO.Fecha_Desde;
-                //entidad.Fecha_Hasta = entidadDTO.Fecha_Hasta;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Lista_Precio entidad = mapper.Map<Lista_Precio>(entidadDTO);
 
 
+                return await repositorio.Insert(entidad);
 
-                context.Lista_Precio.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
             }
             catch (Exception e)
             {
@@ -81,22 +90,23 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Lista_Precio.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró la lista de precio");
+                return NotFound("No se encontró la lista de precio buscada");
             }
 
             dammy.Fecha_Desde = entidad.Fecha_Desde;
             dammy.Fecha_Hasta = entidad.Fecha_Hasta;
-          
+            
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
-                context.Lista_Precio.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
+
                 return Ok();
 
             }
@@ -107,6 +117,8 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
+
+       
     }
 }
 

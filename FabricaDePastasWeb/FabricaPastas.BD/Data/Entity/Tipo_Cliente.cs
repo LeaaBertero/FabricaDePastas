@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace FabricaPastas.BD.Data.Entity
 {
 
-    #region indices
-    [Index(nameof(Tipo_Cliente_Id), Name = "Tipo_Cliente_Id_UQ", IsUnique = true)]
-    [Index(nameof(Descripcion),
-    Name = "Descripcion", IsUnique = false)]
-    #endregion
+    //#region indices
+    //[Index(nameof(Tipo_Cliente_Id), Name = "Tipo_Cliente_Id_UQ", IsUnique = true)]
+    //[Index(nameof(Descripcion),
+    //Name = "Descripcion", IsUnique = false)]
+    //#endregion
     public class Tipo_Cliente : EntityBase
     {
 
@@ -27,7 +27,7 @@ namespace FabricaPastas.BD.Data.Entity
         #region Atributos 
         [Required(ErrorMessage = "El campo Descripción es obligatorio")]
         [MaxLength(255, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
         #endregion
 
 

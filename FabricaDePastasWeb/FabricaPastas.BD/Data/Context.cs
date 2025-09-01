@@ -18,6 +18,7 @@ namespace FabricaPastas.BD.Data
         #endregion
 
         #region entidades
+        
         public DbSet<Categoria_Producto> Categoria_Producto { get; set; }
         public DbSet<Detalle_Lista_Precio> Detalle_Lista_Precio { get; set; }
         public DbSet<Detalle_Pedido> Detalle_Pedido { get; set; }

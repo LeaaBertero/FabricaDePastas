@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
 using FabricaPastas.BD.Data.Entity;
 using FabricaPastas.Shared.DTO;
 
@@ -8,7 +8,6 @@ namespace FabricaPastas.Server.Util
     {
         public AutoMapperProfiles()
         {
-
             #region DTO Categoria_Producto
             CreateMap<CrearCategoria_ProductoDTO, Categoria_Producto>();
             CreateMap<Categoria_Producto, CrearCategoria_ProductoDTO>();
@@ -60,8 +59,8 @@ namespace FabricaPastas.Server.Util
             #endregion
 
             #region DTO Promocion_Producto
-            CreateMap<CrearUsuarioDTO, Usuario>();
-            CreateMap<Usuario, CrearUsuarioDTO>();
+            CreateMap<CrearPromocion_ProductoDTO, Promocion_Producto>();
+            CreateMap<Promocion_Producto, CrearPromocion_ProductoDTO>();
             #endregion
 
             #region DTO Promocion_Usuario

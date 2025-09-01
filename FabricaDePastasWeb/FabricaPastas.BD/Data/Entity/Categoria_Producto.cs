@@ -27,7 +27,7 @@ namespace FabricaPastas.BD.Data.Entity
         #region Atributos de Validación
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string Nombre_Categoria { get; set; }
+        public string? Nombre_Categoria { get; set; }
         #endregion
 
 

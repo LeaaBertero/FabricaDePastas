@@ -12,9 +12,9 @@ namespace FabricaPastas.Shared.DTO
 
         #region atributos 
         [Required(ErrorMessage = "La fecha de inicio de promo es obligatoria")]
-        public DateTime Fecha_Inicio_Promo { get; set; }
+        public DateOnly Fecha_Inicio_Promo { get; set; }
         [Required(ErrorMessage = "La fecha de fin de promo es obligatoria")]
-        public DateTime Fecha_Fin_Promo { get; set; }
+        public DateOnly Fecha_Fin_Promo { get; set; }
         #endregion
     }
 }

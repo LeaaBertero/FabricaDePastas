@@ -1,0 +1,99 @@
+﻿@page "/api/Detalle_Lista_Precio/Editar/{Detalle_Lista_PrecioId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>modificar Detalle lista precio</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Editar categoria producto</h1>
+    </header>
+
+    <main>
+
+        <EditForm Model="EditarDetalle_lista_precio" OnValidSubmit="Grabar">
+
+            <DataAnnotationsValidator />
+
+
+            <div class="form-group">
+                <label for="DetalleListaPrecio">Detalle lista precio</label>
+                <input type="text" @bind="EditarDetalle_lista_precio.Precio_Personalizado" class="form-control" />
+                <ValidationMessage For="@(() => EditarDetalle_lista_precio.Precio_Personalizado)" />
+            </div>
+
+
+            <div>
+                <button class="btn btn-success" type="submit">Cargar detalle lista</button>
+                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            </div>
+
+        </EditForm>
+
+    </main>
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
+
+
+@code {
+
+    private Detalle_Lista_Precio EditarDetalle_lista_precio = new Detalle_Lista_Precio();
+
+    [Parameter]
+    public int Detalle_Lista_PrecioId { get; set; }
+
+
+
+    // string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Detalle_Lista_Precio>($"api/Detalle_Lista_Precio/{Detalle_Lista_PrecioId}");
+
+        if (!respuesta.Error)
+        {
+            EditarDetalle_lista_precio = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Detalle_Lista_Precio");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Detalle_Lista_Precio>($"api/Detalle_Lista_Precio/{Detalle_Lista_PrecioId}", EditarDetalle_lista_precio);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Detalle_Lista_Precio");
+    }
+
+    // private void Cancelar()
+    // {
+    //     navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+    // }
+
+}

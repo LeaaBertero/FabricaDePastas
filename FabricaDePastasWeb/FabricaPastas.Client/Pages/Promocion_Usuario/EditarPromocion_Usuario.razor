@@ -1,0 +1,105 @@
+﻿@page "/api/Promocion_Usuario/Editar/{Promocion_UsuarioId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Promocion usuario</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Editar promocion usuario</h1>
+    </header>
+
+    <main>
+
+        <EditForm Model="EditarPromocion_usuario" OnValidSubmit="Grabar">
+
+            <DataAnnotationsValidator />
+
+
+            <div class="form-group">
+                <label for="FechaInicioPromo">FechaInicioPromo</label>
+                <input type="date" @bind="EditarPromocion_usuario.Fecha_Fin_Promo" class="form-control" />
+                <ValidationMessage For="@(() => EditarPromocion_usuario.Fecha_Inicio_Promo)" />
+            </div>
+
+            <div class="form-group">
+                <label for="FechaFinPromo">FechaFinPromo</label>
+                <input type="date" @bind="EditarPromocion_usuario.Fecha_Fin_Promo" class="form-control" />
+                <ValidationMessage For="@(() => EditarPromocion_usuario.Fecha_Fin_Promo)" />
+            </div>
+
+
+            <div>
+                <button class="btn btn-success" type="submit">Modificar</button>
+                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            </div>
+
+        </EditForm>
+
+    </main>
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
+
+
+@code {
+
+    private Promocion_Usuario EditarPromocion_usuario = new Promocion_Usuario();
+
+    [Parameter]
+    public int Promocion_UsuarioId { get; set; }
+
+
+
+    // string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Promocion_Usuario>($"api/Promocion_Usuario/{Promocion_UsuarioId}");
+
+        if (!respuesta.Error)
+        {
+            EditarPromocion_usuario = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Promocion_Usuario");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Promocion_Usuario>($"api/Promocion_Usuario/{Promocion_UsuarioId}", EditarPromocion_usuario);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Promocion_Usuario");
+    }
+
+    // private void Cancelar()
+    // {
+    //     navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+    // }
+
+}

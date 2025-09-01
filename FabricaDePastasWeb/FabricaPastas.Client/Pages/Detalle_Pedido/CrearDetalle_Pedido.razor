@@ -1,0 +1,77 @@
+﻿@page "/api/Detalle_Pedido/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registro de productos</title>
+</head>
+
+<body>
+
+    <header>
+
+        <h1 class=" text-center">Carga de productos (Stock)</h1>
+
+        <EditForm Model="detallePedido" OnValidSubmit="Grabar">
+            <DataAnnotationsValidator />
+
+            <div class="form-group">
+                <label for="Cantidad">Cantidad</label>
+                <input type="number" @bind="detallePedido.Cantidad" class="form-control" />
+                <ValidationMessage For="@(() => detallePedido.Cantidad)" />
+            </div>
+
+            <div class="form-group">
+                <label for="precioUnitario">Precio unitario</label>
+                <input type="number" @bind="detallePedido.Precio_Unitario"  class="form-control" />
+                <ValidationMessage For="@(() => detallePedido.Precio_Unitario)" />
+            </div>
+
+           
+
+            <div>
+                <button class="btn btn-primary" type="submit">Registrar</button>
+                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            </div>
+
+
+        </EditForm>
+
+
+
+    </header>
+
+    <main>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+    private Detalle_Pedido detallePedido = new Detalle_Pedido();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Detalle_Pedido>("api/Detalle_Pedido", detallePedido);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Detalle_Pedido/Lista");
+    }
+}

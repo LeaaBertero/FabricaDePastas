@@ -1,0 +1,116 @@
+﻿@page "/api/Detalle_Pedido/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Lista de Productos en stock</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="text-center">Lista de Productos registrados en stock</h1>
+    </header>
+
+    <main>
+
+        <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Detalle_Pedido/Crear">Cargar detalle pedido</a>
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+            
+            </tr>
+
+            @if (Mensaje == null)
+            {
+                if (Listadetalle_peddo == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (Listadetalle_peddo.Count == 0)
+                {
+                    <p>No existen detalle de pedidos cargados </p>
+                }
+                else
+                {
+                    @foreach (var item in Listadetalle_peddo)
+                    {
+                        <tr>
+                            <td>@item.Cantidad</td>
+                            <td>@item.Precio_Unitario</td>
+                          
+
+                            @* <td class="d-grid gap-2 col-6 mx-auto">
+                                <a class="btn btn-warning btn-sm"
+                                   href="/api/Producto/Editar/@item.Id">Modificar producto</a>
+                            </td> *@
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+
+    List<Detalle_Pedido> Listadetalle_peddo;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Detalle_Pedido>>("api/Detalle_Pedido");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            Listadetalle_peddo = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+}
+
+
+
+
+
+

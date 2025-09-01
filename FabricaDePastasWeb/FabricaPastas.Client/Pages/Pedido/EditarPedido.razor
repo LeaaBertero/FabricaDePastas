@@ -1,0 +1,112 @@
+﻿@page "/api/Pedido/Editar/{Categoria_ProductoId:int}"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editar pedido</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Editar pedido</h1>
+    </header>
+
+    <main>
+
+        <EditForm Model="Editar_pedido" OnValidSubmit="Grabar">
+
+            <DataAnnotationsValidator />
+
+
+            <div class="form-group">
+                <label for="FechaPedido">Fecha pedido</label>
+                <input type="date" step="7" @bind="Editar_pedido.Fecha_Pedido" class="form-control" />
+                <ValidationMessage For="@(() => Editar_pedido.Fecha_Pedido)" />
+            </div>
+            
+            <div class="form-group">
+                <label for="FechaEntrega">Fecha entrega</label>
+                <input type="date" step="7" @bind="Editar_pedido.Fecha_Entrega" class="form-control" />
+                <ValidationMessage For="@(() => Editar_pedido.Fecha_Entrega)" />
+            </div>
+            
+            <div class="form-group">
+                <label for="Nombrecategoria">Nombre categoría|</label>
+                <input type="number" @bind="Editar_pedido.Total" class="form-control" />
+                <ValidationMessage For="@(() => Editar_pedido.Total)" />
+            </div>
+
+
+            <div>
+                <button class="btn btn-success" type="submit">Actualizar categoría</button>
+                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            </div>
+
+        </EditForm>
+
+    </main>
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
+
+
+@code {
+
+    private Pedido Editar_pedido = new Pedido();
+
+    [Parameter]
+    public int Editar_PedidoId { get; set; }
+
+
+
+    // string pepe = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Pedido>($"api/Pedido/{Editar_PedidoId}");
+
+        if (!respuesta.Error)
+        {
+            Editar_pedido = respuesta.Respuesta;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/api/Pedido");
+        }
+    }
+
+
+
+    private async Task Grabar()
+    {
+        //tDocumento.Personas = new List<Persona>();
+
+        var httpRespuesta = await http.Put<Pedido>($"api/Pedido/{Editar_pedido}", Editar_pedido);
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/Pedido");
+    }
+
+    // private void Cancelar()
+    // {
+    //     navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+    // }
+
+}
+

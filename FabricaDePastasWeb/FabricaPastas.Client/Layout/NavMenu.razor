@@ -7,11 +7,6 @@
     </div>
 </div>
 
-<div class="bg-light text-center text-uppercase">
-    <h4>Listas</h4>
-</div>
-
-
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
@@ -39,6 +34,12 @@
         </div>
         
         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Promocion_Usuario/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Lista promo_usuario
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="/api/Promocion_Producto/Lista" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Lista promo_prod
             </NavLink>
@@ -61,6 +62,30 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Pedido
             </NavLink>
         </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Detalle_Pedido/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Detalle Pedido
+            </NavLink>
+        </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Detalle_Lista_Precio/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Detalle Lista precio
+            </NavLink>
+        </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/ListaEstado_Pedido/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Estado de Pedido
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/api/Forma_Pago/Lista" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Forma pago
+            </NavLink>
+        </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/api/Detalle_Lista_Precio/Lista" Match="NavLinkMatch.All">
@@ -73,6 +98,8 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>Lista categoría
             </NavLink>
         </div>
+
+       
 
      @*    <div class="nav-item px-3">
             <NavLink class="nav-link" href="/api/Categoria_Producto/Crear" Match="NavLinkMatch.All">

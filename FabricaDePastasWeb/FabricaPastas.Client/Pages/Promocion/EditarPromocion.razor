@@ -17,38 +17,38 @@
 
         <main>
 
-            <EditForm Model="promo" OnValidSubmit="Grabar">
+            <EditForm Model="promocion" OnValidSubmit="Grabar">
 
                 <DataAnnotationsValidator />
            
                 <div class="form-group">
                     <label for="nombre">Titulo</label>
-                    <input type="text" @bind="promo.Titulo" class="form-control" />
-                    <ValidationMessage For="@(() => promo.Titulo)" />
+                    <input type="text" @bind="promocion.Titulo" class="form-control" />
+                    <ValidationMessage For="@(() => promocion.Titulo)" />
                 </div>
 
                 <div class="form-group">
                     <label for="nombre">Descripción</label>
-                    <input type="text" @bind="promo.Descripcion" class="form-control" />
-                    <ValidationMessage For="@(() => promo.Descripcion)" />
+                    <input type="text" @bind="promocion.Descripcion" class="form-control" />
+                    <ValidationMessage For="@(() => promocion.Descripcion)" />
                 </div>
                 
                 <div class="form-group">
                     <label for="nombre">Fecha inicio</label>
-                    <input type="date" @bind="promo.Fecha_Inicio" class="form-control" />
-                    <ValidationMessage For="@(() => promo.Fecha_Inicio)" />
+                    <input type="date" @bind="promocion.Fecha_Inicio" class="form-control" />
+                    <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
                 </div>
 
                 <div class="form-group">
                     <label for="nombre">Fecha fin</label>
-                    <input type="date" @bind="promo.Fecha_Fin" class="form-control" />
-                    <ValidationMessage For="@(() => promo.Fecha_Fin)" />
+                    <input type="date" @bind="promocion.Fecha_Fin" class="form-control" />
+                    <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
                 </div>
 
                 <div class="form-group">
                     <label for="activo">¿Está activo?</label>
-                    <input type="checkbox" id="activo" @bind="promo.Activa" class="form-check-input" />
-                    <ValidationMessage For="@(() => promo.Activa)" />
+                    <input type="checkbox" id="activo" @bind="promocion.Activa" class="form-check-input" />
+                    <ValidationMessage For="@(() => promocion.Activa)" />
                 </div>
           
 
@@ -74,7 +74,7 @@
 
 @code {
 
-    private Promocion promo = new Promocion();
+    private Promocion promocion = new Promocion();
 
     [Parameter]
     public int PromocionId { get; set; }
@@ -93,7 +93,7 @@
 
         if (!respuesta.Error)
         {
-            promo = respuesta.Respuesta;
+            promocion = respuesta.Respuesta;
         }
         else
         {
@@ -107,7 +107,7 @@
     {
         //tDocumento.Personas = new List<Persona>();
 
-        var httpRespuesta = await http.Put<Promocion>($"api/Promocion/{PromocionId}", promo);
+        var httpRespuesta = await http.Put<Promocion>($"api/Promocion/{PromocionId}", promocion);
         if (httpRespuesta.Error)
         {
             var body = httpRespuesta.HttpResponseMessage;

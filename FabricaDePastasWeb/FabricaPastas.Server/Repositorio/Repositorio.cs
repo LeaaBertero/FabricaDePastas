@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FabricaPastas.Server.Repositorio
 {
-    public class Repositorio<E> : IRepositorio<E> where E : class, IEntityBase
+    public class Repositorio<E> : IRepositorio<E> 
+                    where E : class, IEntityBase
     {
         private readonly Context context;
 

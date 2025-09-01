@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
-{
-
-    #region Indices
-    [Index(nameof(Promocion_Producto_Id), Name = "Promocion_Producto_Id_UQ", IsUnique = true)]
-    [Index(nameof(Nombre_Producto), nameof(Descuento_Porcentaje), nameof(Precio_Promocional),
-    Name = "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional", IsUnique = false)]
-    #endregion
+{ 
+    //#region Indices
+    //[Index(nameof(Promocion_Producto_Id), Name = "Promocion_Producto_Id_UQ", IsUnique = true)]
+    //[Index(nameof(Nombre_Producto), nameof(Descuento_Porcentaje), nameof(Precio_Promocional),
+    //Name = "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional", IsUnique = false)]
+    //#endregion
 
     public class Promocion_Producto : EntityBase
     {

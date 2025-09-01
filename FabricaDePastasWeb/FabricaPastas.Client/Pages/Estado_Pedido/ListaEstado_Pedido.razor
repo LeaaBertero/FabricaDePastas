@@ -1,0 +1,114 @@
+﻿@page "/api/ListaEstado_Pedido/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Editar Pedidos registrados</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="text-center">Lista pedidos registrados en el sistema</h1>
+    </header>
+
+    <main>
+
+      @*   <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Pedido/Crear">Realizar pedido</a>
+        </div> *@
+
+        <table>
+
+            <tr>
+                <th>Descripción</th>
+                
+            </tr>
+
+            @if (Mensaje == null)
+            {
+                if (Listaestado_pedido == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (Listaestado_pedido.Count == 0)
+                {
+                    <p>No existen listas de pedidos </p>
+                }
+                else
+                {
+                    @foreach (var item in Listaestado_pedido)
+                    {
+                        <tr>
+
+                            <td>@item.Descripcion</td>
+                          
+
+
+                            @*   <td>
+                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
+                                </td> *@
+
+
+
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+
+    List<Estado_Pedido> Listaestado_pedido;
+    // Estado_Pedido estado_pedido;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Estado_Pedido>>("api/Estado_Pedido");
+
+        Mensaje = "";
+
+        if (!resp.Error)
+        {
+            Listaestado_pedido = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+}

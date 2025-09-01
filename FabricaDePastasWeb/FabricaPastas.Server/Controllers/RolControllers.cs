@@ -1,5 +1,7 @@
-﻿using FabricaPastas.BD.Data;
+﻿using AutoMapper;
+using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +11,18 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Rol")]
     public class RolControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IRolRepositorio repositorio;
+
+        //private readonly Context context;
+        private readonly IMapper mapper;
 
         #region constructor
-        public RolControllers(Context context)
+        public RolControllers(IRolRepositorio repositorio,
+                              IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
+            this.mapper = mapper;
         }
         #endregion
 
@@ -22,28 +30,12 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Rol>>> Get()
         {
-            return await context.Rol.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
-        //#region Método Post
-
-        //[HttpPost]
-        //public async Task<ActionResult<int>> Post(Rol entidad)
-        //{
-        //    try
-        //    {
-        //        context.Rol.Add(entidad);
-        //        await context.SaveChangesAsync();
-        //        return entidad.Id;
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //        return BadRequest(e.Message);
-        //    }
-        //}
-        //#endregion
+       
 
     }
 }
+

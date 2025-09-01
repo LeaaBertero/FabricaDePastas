@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Categoria_Producto")]
     public class Categoria_ProductoControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly ICategoria_ProductoRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public Categoria_ProductoControllers(Context context, IMapper mapper)
+        public Categoria_ProductoControllers(ICategoria_ProductoRepositorio repositorio,
+                                             IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,9 +31,11 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Categoria_Producto>>> Get()
         {
-            return await context.Categoria_Producto.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
+
+       
 
         #region Método Post
         [HttpPost]
@@ -36,17 +43,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Categoria_Producto entidad = new Categoria_Producto();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Nombre_Categoria = entidadDTO.Nombre_Categoria;
-                //context.Categoria_Producto.Add(entidad);
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Categoria_Producto entidad = mapper.Map<Categoria_Producto>(entidadDTO);
 
 
+                return await repositorio.Insert(entidad);
 
-                await context.SaveChangesAsync();
-                return entidad.Id;
             }
             catch (Exception e)
             {
@@ -65,27 +77,27 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Categoria_Producto.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró el registro");
+                return NotFound("No se encontró la categoria buscada");
             }
 
             dammy.Nombre_Categoria = entidad.Nombre_Categoria;
-            
+           
+
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
-                context.Categoria_Producto.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
                 return Ok();
 
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
         }
@@ -95,22 +107,20 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Categoria_Producto.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
 
             if (!existe)
             {
-                return NotFound($"La categoria {id} no existe.");
+                return NotFound($"La categoría {id} no existe.");
             }
-
-            Categoria_Producto EntidadAborrar = new Categoria_Producto();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"La categoría {id} fue eliminado correctamente.");
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar la categoría");
+            }
         }
         #endregion
     }

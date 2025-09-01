@@ -24,9 +24,9 @@ namespace FabricaPastas.BD.Data.Entity
         //agregados atributos para manejar las fechas de inicio y fin de la promoción por usuario
         #region atributos 
         [Required(ErrorMessage = "La fecha de inicio de promo es obligatoria")]
-        public DateTime Fecha_Inicio_Promo { get; set; }
+        public DateOnly Fecha_Inicio_Promo { get; set; }
         [Required(ErrorMessage = "La fecha de fin de promo es obligatoria")]
-        public DateTime Fecha_Fin_Promo { get; set; }
+        public DateOnly Fecha_Fin_Promo { get; set; }
         #endregion
 
             

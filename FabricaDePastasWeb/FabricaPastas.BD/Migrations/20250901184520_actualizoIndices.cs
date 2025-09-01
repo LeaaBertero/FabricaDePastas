@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class actualizoEntityUsuario : Migration
+    public partial class actualizoIndices : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -200,8 +200,8 @@ namespace FabricaPastas.BD.Migrations
                     Promocion_Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
-                    Fecha_Inicio_Promo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_Fin_Promo = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Fecha_Inicio_Promo = table.Column<DateOnly>(type: "date", nullable: false),
+                    Fecha_Fin_Promo = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -367,39 +367,6 @@ namespace FabricaPastas.BD.Migrations
                 name: "Titulo_Descripcion_Fecha_Inicio_Fecha_Fin_Activa",
                 table: "Promocion",
                 columns: new[] { "Titulo", "Descripcion", "Fecha_Inicio", "Fecha_Fin", "Activa" });
-
-            migrationBuilder.CreateIndex(
-                name: "Nombre_Producto_Descuento_Porcentaje_Precio_Promocional",
-                table: "Promocion_Producto",
-                columns: new[] { "Nombre_Producto", "Descuento_Porcentaje", "Precio_Promocional" });
-
-            migrationBuilder.CreateIndex(
-                name: "Promocion_Producto_Id_UQ",
-                table: "Promocion_Producto",
-                column: "Promocion_Producto_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "Nombre_rol",
-                table: "Rol",
-                column: "Nombre_rol");
-
-            migrationBuilder.CreateIndex(
-                name: "Rol_Id_UQ",
-                table: "Rol",
-                column: "Rol_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "Descripcion",
-                table: "Tipo_Cliente",
-                column: "Descripcion");
-
-            migrationBuilder.CreateIndex(
-                name: "Tipo_Cliente_Id_UQ",
-                table: "Tipo_Cliente",
-                column: "Tipo_Cliente_Id",
-                unique: true);
         }
 
         /// <inheritdoc />

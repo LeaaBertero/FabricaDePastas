@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Pedido\" />
     <Folder Include="Pages\Producto\" />
     <Folder Include="Pages\Promocion\" />
   </ItemGroup>

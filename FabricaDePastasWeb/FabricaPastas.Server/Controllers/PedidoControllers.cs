@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Pedido")]
     public class PedidoControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IPedidoRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public PedidoControllers(Context context, IMapper mapper)
+        public PedidoControllers(IPedidoRepositorio repositorio, 
+                                 IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,7 +31,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Pedido>>> Get()
         {
-            return await context.Pedido.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
 
@@ -34,7 +39,7 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Pedido>> Get(int id)
         {
-            var dammy = await context.Pedido.FirstOrDefaultAsync(x => x.Id == id);
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
@@ -51,17 +56,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Pedido entidad = new Pedido();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Fecha_Pedido = entidadDTO.Fecha_Pedido;
-                //entidad.Fecha_Entrega = entidadDTO.Fecha_Entrega;
-                //entidad.Total = entidadDTO.Total;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Pedido entidad = mapper.Map<Pedido>(entidadDTO);
 
-                context.Pedido.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+
+                return await repositorio.Insert(entidad);
+
             }
             catch (Exception e)
             {
@@ -80,22 +90,24 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Pedido.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró el registro");
+                return NotFound("No se encontró el pedido buscado");
             }
 
             dammy.Fecha_Pedido = entidad.Fecha_Pedido;
+            dammy.Fecha_Entrega = entidad.Fecha_Entrega;
             dammy.Total = entidad.Total;
             
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
-                context.Pedido.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
+
                 return Ok();
 
             }
@@ -106,29 +118,5 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-
-        #region Método Delete
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var existe = await context.Pedido.AnyAsync(x => x.Id == id);
-
-            if (!existe)
-            {
-                return NotFound($"El pedido {id} no existe.");
-            }
-
-            Pedido EntidadAborrar = new Pedido();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"El pedido {id} fue eliminado correctamente.");
-        }
-        #endregion
-
     }
 }

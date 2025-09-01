@@ -1,0 +1,154 @@
+﻿@page "/api/Promocion_Usuario/Lista"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>promo usuario</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="text-center">Lista de promos de usuarios registrados del sistema</h1>
+    </header>
+
+    <main>
+
+         <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Promocion_Usuario/Crear">Cargar fecha promo</a>
+          </div>
+     @*    <div>
+            <p>Para registrarte, hace click en el botón</p>
+            <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
+        </div> *@
+
+        @*   <div class="bg-danger">
+            <a href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
+        </div> *@
+
+        <table>
+
+            <tr>
+                <th>Fecha inicio</th>
+                <th>Fecha fin</th>
+            </tr>
+
+            @if (Mensaje == null)
+            {
+                if (Lista_promoUsuarios == null)
+                {
+                    <p>Buscando....</p>
+                }
+                else if (Lista_promoUsuarios.Count == 0)
+                {
+                    <p>No existen promociones para usuarios </p>
+                }
+                else
+                {
+                    @foreach (var item in Lista_promoUsuarios)
+                    {
+                        <tr>
+
+                            <td>@item.Fecha_Inicio_Promo</td>
+                            <td>@item.Fecha_Fin_Promo</td>
+                            
+
+                            @* <td>
+                                <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
+                            </td> *@
+
+                            @* <td>
+                                <button class="btn btn-danger"
+                                        @onclick="() => Eliminar(item)">
+                                    Borrar
+                                </button>
+                            </td> *@
+
+                        </tr>
+
+                    }
+                }
+            }
+            else
+            {
+                <p> Error: @Mensaje</p>
+            }
+
+
+        </table>
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 La Nonna Personal</p>
+    </footer>
+
+</body>
+
+</html>
+
+@code {
+
+
+    List<Promocion_Usuario> Lista_promoUsuarios;
+    Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer usuarios
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Promocion_Usuario>>("api/Promocion_Usuario");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            Lista_promoUsuarios = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+    #endregion
+
+    // #region Eliminar usuario
+    // private async Task Eliminar(Promocion_Usuario usuarioBorrar)
+    // {
+    //     usuarioBorrar = usuario;
+
+
+    // }
+    // #endregion
+
+    private async Task Borrar()
+    {
+        var respuesta = await http.Delete($"api/Promocion_Usuario/{usuario.Id}");
+        if (respuesta.Error)
+        {
+            var body = "No se pudo borrar";
+        }
+
+        await Leer();
+    }
+}
+
+
+
+
+
+

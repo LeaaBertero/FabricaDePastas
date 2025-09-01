@@ -26,13 +26,13 @@
 
             <div class="form-group">
                 <label for="promocion_Producto">Promocion producto</label>
-                <input type="number" @bind="promocionProducto.Descuento_Porcentaje" class="form-control" />
+                <input type="number" step="0.01" @bind="promocionProducto.Descuento_Porcentaje" class="form-control" />
                 <ValidationMessage For="@(() => promocionProducto.Descuento_Porcentaje)" />
             </div>
 
             <div class="form-group">
                 <label for="precioPromocional">Precio promocional</label>
-                <input type="text" @bind="promocionProducto.Precio_Promocional" class="form-control" />
+                <input type="number" step="0.01" @bind="promocionProducto.Precio_Promocional" class="form-control" />
                 <ValidationMessage For="@(() => promocionProducto.Precio_Promocional)" />
             </div>
 

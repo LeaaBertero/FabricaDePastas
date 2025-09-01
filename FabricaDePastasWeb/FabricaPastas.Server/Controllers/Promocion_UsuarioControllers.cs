@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Promocion_Usuario")]
     public class Promocion_UsuarioControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IPromocion_UsuarioRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public Promocion_UsuarioControllers(Context context, IMapper mapper)
+        public Promocion_UsuarioControllers(IPromocion_UsuarioRepositorio repositorio, 
+                                            IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,7 +31,22 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Promocion_Usuario>>> Get()
         {
-            return await context.Promocion_Usuario.ToListAsync();
+            return await repositorio.Select();
+        }
+        #endregion
+
+        #region Método Get por {id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Promocion_Usuario>> Get(int id)
+        {
+            var dammy = await repositorio.SelectById(id);
+
+            if (dammy == null)
+            {
+                return NotFound();
+            }
+
+            return dammy;
         }
         #endregion
 
@@ -36,16 +56,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Promocion_Usuario entidad = new Promocion_Usuario();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Fecha_Inicio_Promo = entidadDTO.Fecha_Inicio_Promo;
-                //entidad.Fecha_Fin_Promo = entidadDTO.Fecha_Fin_Promo;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Promocion_Usuario entidad = mapper.Map<Promocion_Usuario>(entidadDTO);
 
-                context.Promocion_Usuario.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+
+                return await repositorio.Insert(entidad);
+
             }
             catch (Exception e)
             {
@@ -55,7 +81,6 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
-        //hacer un método PUT para actualizar las promociones
         #region Método Put
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Promocion_Usuario entidad)
@@ -65,22 +90,23 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Promocion_Usuario.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró el registro");
+                return NotFound("No se encontró el registro buscado");
             }
 
             dammy.Fecha_Inicio_Promo = entidad.Fecha_Inicio_Promo;
             dammy.Fecha_Fin_Promo = entidad.Fecha_Fin_Promo;
-           
+            
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
-                context.Promocion_Usuario.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
+
                 return Ok();
 
             }
@@ -96,22 +122,20 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Promocion_Usuario.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
 
             if (!existe)
             {
-                return NotFound($"La promoción del usuario {id} no existe.");
+                return NotFound($"La promocion del usuario {id} no existe.");
             }
-
-            Promocion_Usuario EntidadAborrar = new Promocion_Usuario();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"La promoción del usuario {id} fue eliminado correctamente.");
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar la promoción");
+            }
         }
         #endregion
     }

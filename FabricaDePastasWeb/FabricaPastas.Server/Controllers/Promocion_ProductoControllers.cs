@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,14 +12,18 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Promocion_Producto")]
     public class Promocion_ProductoControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IPromocion_ProductoRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public Promocion_ProductoControllers(Context context, IMapper mapper)
+        public Promocion_ProductoControllers(IPromocion_ProductoRepositorio repositorio,
+                                             IMapper mapper)
         {
-            this.context = context;
-            this.mapper = mapper;
+            this.repositorio = repositorio;
+            //this.context = context;
+            this.mapper = mapper;   
         }
         #endregion
 
@@ -26,9 +31,11 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Promocion_Producto>>> Get()
         {
-            return await context.Promocion_Producto.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
+
+
 
         #region Método Post
         [HttpPost]
@@ -36,16 +43,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Promocion_Producto entidad = new Promocion_Producto();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Descuento_Porcentaje = entidadDTO.Descuento_Porcentaje;
-                //entidad.Precio_Promocional = entidadDTO.Precio_Promocional;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Promocion_Producto entidad = mapper.Map<Promocion_Producto>(entidadDTO);
 
-                context.Promocion_Producto.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+
+                return await repositorio.Insert(entidad);
+
             }
             catch (Exception e)
             {
@@ -54,27 +67,27 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-      
+
+
+
         #region Método Delete
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Promocion_Producto.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
 
             if (!existe)
             {
-                return NotFound($"La promoción del producto {id} no existe.");
+                return NotFound($"La promocion del producto {id} no existe.");
             }
-
-            Promocion_Producto EntidadAborrar = new Promocion_Producto();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"La promoción {id} fue eliminado correctamente.");
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar la promoción del producto");
+            }
         }
         #endregion
     }

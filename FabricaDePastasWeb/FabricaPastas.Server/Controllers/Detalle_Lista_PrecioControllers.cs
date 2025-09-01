@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
+using FabricaPastas.Server.Repositorio;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ namespace FabricaPastas.Server.Controllers
     [Route("api/Detalle_Lista_Precio")]
     public class Detalle_Lista_PrecioControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly IDetalle_Lista_PrecioRepositorio repositorio;
+
+        //private readonly Context context;
         private readonly IMapper mapper;
 
-        #region constructor
-        public Detalle_Lista_PrecioControllers(Context context, IMapper mapper)
+         #region constructor
+        public Detalle_Lista_PrecioControllers(IDetalle_Lista_PrecioRepositorio repositorio, 
+                                               IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
+            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
@@ -26,9 +31,10 @@ namespace FabricaPastas.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Detalle_Lista_Precio>>> Get()
         {
-            return await context.Detalle_Lista_Precio.ToListAsync();
+            return await repositorio.Select();
         }
         #endregion
+
 
         #region Método Post
         [HttpPost]
@@ -36,17 +42,22 @@ namespace FabricaPastas.Server.Controllers
         {
             try
             {
-                //Detalle_Lista_Precio entidad = new Detalle_Lista_Precio();
+                //Usuario entidad = new Usuario();
 
-                //entidad.Precio_Personalizado = entidadDTO.Precio_Personalizado;
+                //entidad.Nombre = entidadDTO.Nombre;
+                //entidad.Apellido = entidadDTO.Apellido;
+                //entidad.Email = entidadDTO.Email;
+                //entidad.Contraseña = entidadDTO.Contraseña;
+                //entidad.Teléfono = entidadDTO.Teléfono;
+                //entidad.Dirección = entidadDTO.Dirección;
+                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
+                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
 
                 Detalle_Lista_Precio entidad = mapper.Map<Detalle_Lista_Precio>(entidadDTO);
 
 
+                return await repositorio.Insert(entidad);
 
-                context.Detalle_Lista_Precio.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
             }
             catch (Exception e)
             {
@@ -55,7 +66,7 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-       
+
         #region Método Put
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Detalle_Lista_Precio entidad)
@@ -65,27 +76,27 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
-            var dammy = await context.Detalle_Lista_Precio.
-                Where(e => e.Id == id).FirstOrDefaultAsync();
+            var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
             {
-                return NotFound("No se encontró el detalle de la lista de precio");
+                return NotFound("No se encontró el detalle de la lista de precio buscado");
             }
 
             dammy.Precio_Personalizado = entidad.Precio_Personalizado;
-          
+            
+
+            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
-                context.Detalle_Lista_Precio.Update(dammy);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, dammy);
+
                 return Ok();
 
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
         }
@@ -95,25 +106,26 @@ namespace FabricaPastas.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Detalle_Lista_Precio.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
 
             if (!existe)
             {
-                return NotFound($"El detalle de la lista de precio {id} no existe.");
+                return NotFound($"El detalle de la lista {id} no existe.");
             }
-
-            Detalle_Lista_Precio EntidadAborrar = new Detalle_Lista_Precio();
-
-            EntidadAborrar.Id = id;
-
-            context.Remove(EntidadAborrar);
-
-            await context.SaveChangesAsync();
-
-            return Ok($"El detalle de la lista de precio {id} fue eliminado correctamente.");
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("El detalle no se pudo eliminar");
+            }
         }
         #endregion
+
     }
 }
+
+
 
 
