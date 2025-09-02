@@ -1,64 +1,86 @@
-﻿@page "/api/ListaEstado_Pedido/Lista"
+﻿@page "/api/Estado_Pedido"
 @inject IHTTPServicio http;
+@inject HttpClient Http;
 @inject NavigationManager navigationManager;
+
+@* REHACER *@
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Editar Pedidos registrados</title>
+    <title>Lista Roles</title>
+    <meta charset="utf-8" />
 </head>
+
 
 <body>
 
     <header>
-        <h1 class="text-center">Lista pedidos registrados en el sistema</h1>
+
+        <h1 class="text-center">Seleccione el rol</h1>
+
+        <h2>Lista roles</h2>
+
+        @*  <select>
+            <option value="listaRoles">Administrador</option>
+        </select>
+
+        <div class="btn btn-info">
+            <a href="/administracion">Ingresar</a>
+        </div> *@
+
+
     </header>
 
     <main>
 
-      @*   <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Pedido/Crear">Realizar pedido</a>
-        </div> *@
-
         <table>
 
             <tr>
-                <th>Descripción</th>
-                
+                <th>Nombre de rol</th>
+
             </tr>
+
+            <select @bind="EstadoPedidoSeleccionado" class="form-select">
+                <option disabled selected value="">-- Seleccione un rol --</option>
+                @if (ListaEstadoPedido != null)
+                {
+                    foreach (var Estado_pedido in ListaEstadoPedido)
+                    {
+                        <option value="@Estado_pedido.Descripcion">@Estado_pedido.Descripcion</option>
+                    }
+                }
+                @if (!string.IsNullOrEmpty(EstadoPedidoSeleccionado))
+                {
+                    <p>Rol seleccionado: <strong>@EstadoPedidoSeleccionado</strong></p>
+                }
+            </select>
+
+            <button class="btn btn-primary" @onclick="IngresarConEstadoPedido">Ingresar</button>
+
+
 
             @if (Mensaje == null)
             {
-                if (Listaestado_pedido == null)
+                if (ListaEstadoPedido == null)
                 {
                     <p>Buscando....</p>
                 }
-                else if (Listaestado_pedido.Count == 0)
+                else if (ListaEstadoPedido.Count == 0)
                 {
-                    <p>No existen listas de pedidos </p>
+                    <p>No existen Estados de pedidos activos</p>
                 }
-                else
+                @*   else
                 {
-                    @foreach (var item in Listaestado_pedido)
+                    @foreach (var item in ListaRoles)
                     {
                         <tr>
-
-                            <td>@item.Descripcion</td>
-                          
-
-
-                            @*   <td>
-                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                                </td> *@
-
-
-
+                            <td>@item.Nombre_rol</td>
                         </tr>
 
                     }
-                }
+                } *@
             }
             else
             {
@@ -70,7 +92,6 @@
 
     </main>
 
-
     <footer>
         <p>&copy; 2025 La Nonna Personal</p>
     </footer>
@@ -81,34 +102,36 @@
 
 @code {
 
-    List<Estado_Pedido> Listaestado_pedido;
-    // Estado_Pedido estado_pedido;
+    private void IngresarConEstadoPedido()
+    {
+        if (!string.IsNullOrEmpty(EstadoPedidoSeleccionado))
+        {
+            navigationManager.NavigateTo($"/api/Pedido/Lista");
+        }
+    }
+    //selecciona el rol de usuario
+    private string EstadoPedidoSeleccionado;
+
+
+
+    private List<Estado_Pedido> ListaEstadoPedido;
 
     string Mensaje;
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
-        await Leer();
-    }
-
-    #region Leer usuarios
-    private async Task Leer()
-    {
-        var resp = await http.Get<List<Estado_Pedido>>("api/Estado_Pedido");
-
-        Mensaje = "";
-
-        if (!resp.Error)
+        try
         {
-            Listaestado_pedido = resp.Respuesta;
+            ListaEstadoPedido = await Http.GetFromJsonAsync<List<Estado_Pedido>>("/api/Estado_Pedido");
         }
-        else
+        catch (Exception ex)
         {
-            Mensaje = await resp.ObtenerError();
+            Console.WriteLine($"Error obteniendo Estado de pedidos: {ex.Message}");
         }
     }
-    #endregion
 
 }
+
+
+
+
