@@ -18,7 +18,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Promocion : EntityBase
     {
         #region Clave primaria
-        
+
+        [Key]
         public int Promocion_Id { get; set; }
         #endregion
 

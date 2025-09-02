@@ -4,84 +4,82 @@
 
 
 <!DOCTYPE html>
-<html>
+    <html>
 
-<head>
-    <title>Registro de usuarios</title>
+    <head>
+        <title>Registro de usuarios</title>
+    </head>
 
+    <body>
 
-</head>
+        <header>
 
-<body>
+            <h1 class="text-center">Registrate compleando todos los campos !</h1>
 
-    <header>
+            <EditForm Model="usuario" OnValidSubmit="Grabar">
+                <DataAnnotationsValidator />
 
-        <h1 class="text-center fondo">Registrate compleando todos los campos !</h1>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" placeholder="Nombre" @bind="usuario.Nombre" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Nombre)" />
+                </div>
 
-        <EditForm Model="usuario" OnValidSubmit="Grabar">
-            <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" placeholder="Apellido" @bind="usuario.Apellido" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Apellido)" />
+                </div>
 
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" placeholder="Nombre" @bind="usuario.Nombre" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Nombre)" />
-            </div>
+                <div class="form-group">
+                    <label for="e-mail">E-mail</label>
+                    <input type="email" placeholder="Correo electrónico" @bind="usuario.Email" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Email)" />
+                </div>
 
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" placeholder="Apellido" @bind="usuario.Apellido" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Apellido)" />
-            </div>
+                <div class="form-group">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" placeholder="Contrseña" @bind="usuario.Contraseña" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Contraseña)" />
+                </div>
 
-            <div class="form-group">
-                <label for="e-mail">E-mail</label>
-                <input type="email" placeholder="Correo electrónico" @bind="usuario.Email" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Email)" />
-            </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" placeholder="Telefono" @bind="usuario.Teléfono" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Teléfono)" />
+                </div>
 
-            <div class="form-group">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" placeholder="Contrseña" @bind="usuario.Contraseña" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Contraseña)" />
-            </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" placeholder="Dirección" @bind="usuario.Dirección" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Dirección)" />
+                </div>
 
-            <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="tel" placeholder="Telefono" @bind="usuario.Teléfono" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Teléfono)" />
-            </div>
-
-            <div class="form-group">
-                <label for="direccion">Dirección</label>
-                <input type="text" placeholder="Dirección" @bind="usuario.Dirección" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Dirección)" />
-            </div>
-
-            <div class="form-group">
-                <label for="direccion">Cuit / Cuil</label>
-                <input type="tel" placeholder="Cuit / Cuil" @bind="usuario.Cuit_Cuil" class="form-control" />
-                <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
-            </div>
+                <div class="form-group">
+                    <label for="direccion">Cuit / Cuil</label>
+                    <input type="tel" placeholder="Cuit / Cuil" @bind="usuario.Cuit_Cuil" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
+                </div>
 
 
-            <div>
-                <button class="btn btn-primary" type="submit">Registrar</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-            </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Registrar</button>
+                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                </div>
 
-        </EditForm>
+            </EditForm>
 
-    </header>
+        </header>
 
-    <main>
+        <main>
 
-    </main>
+        </main>
 
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
+        <footer>
+            <p>&copy; 2025 La Nonna Personal</p>
+        </footer>
 
-</body>
+    </body>
 
 </html>
 

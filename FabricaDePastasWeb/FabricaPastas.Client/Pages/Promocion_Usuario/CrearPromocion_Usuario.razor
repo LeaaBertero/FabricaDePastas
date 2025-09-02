@@ -22,13 +22,13 @@
             <div class="form-group">
                 <label for="descuento_pocercentaje">Fecha de inicio</label>
                 <input placeholder="Fecha de inicio" type="date"  
-                       @bind="promocion_usuario.Fecha_Inicio_Promo" step="7" class="form-control" />
+                       @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
                 <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
             </div>
             
             <div class="form-group">
                 <label for="descuento_pocercentaje">Fecha fin de promo</label>
-                <input placeholder="Fecha de inicio" step="7" type="date"
+                <input placeholder="Fecha de inicio" type="date"
                        @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
                 <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
             </div>

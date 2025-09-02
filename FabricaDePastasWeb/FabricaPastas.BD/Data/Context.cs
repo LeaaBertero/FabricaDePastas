@@ -37,8 +37,11 @@ namespace FabricaPastas.BD.Data
         #endregion
 
         #region código para evitar qel borrado en cascada OnModelCreating
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             var cascadeFKs = modelBuilder.Model.G­etEntityTypes()
                                             .SelectMany(t => t.GetForeignKeys())
                                             .Where(fk => !fk.IsOwnership

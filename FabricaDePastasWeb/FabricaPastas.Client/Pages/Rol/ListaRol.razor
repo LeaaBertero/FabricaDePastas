@@ -18,17 +18,17 @@
 
     <header>
 
-        <h1>Seleccione el rol</h1>
+        <h1 class="text-center">Seleccione el rol</h1>
         
         <h2>Lista roles</h2>
 
-        <select>
+       @*  <select>
             <option value="listaRoles">Administrador</option>
         </select>
 
         <div class="btn btn-info">
             <a href="/administracion">Ingresar</a>
-        </div>
+        </div> *@
 
 
     </header>
@@ -42,7 +42,24 @@
 
             </tr>
 
+            <select @bind="RolSeleccionado" class="form-select">
+                <option disabled selected value="">-- Seleccione un rol --</option>
+                @if (ListaRoles != null)
+                {
+                    foreach (var rol in ListaRoles)
+                    {
+                        <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
+                    }
+                }
+                @if (!string.IsNullOrEmpty(RolSeleccionado))
+                {
+                    <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
+                }
+            </select>
 
+            <button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button>
+
+          
 
             @if (Mensaje == null)
             {
@@ -54,7 +71,7 @@
                 {
                     <p>No existen roles de usuarios cargados</p>
                 }
-                else
+              @*   else
                 {
                     @foreach (var item in ListaRoles)
                     {
@@ -63,7 +80,7 @@
                         </tr>
 
                     }
-                }
+                } *@
             }
             else
             {
@@ -84,6 +101,19 @@
 </html>
 
 @code {
+
+    private void IngresarConRol()
+    {
+        if (!string.IsNullOrEmpty(RolSeleccionado))
+        {
+            navigationManager.NavigateTo($"/Listas");
+        }
+    }
+    //selecciona el rol de usuario
+    private string RolSeleccionado;
+
+
+
     private List<Rol> ListaRoles;
 
     string Mensaje;
@@ -92,7 +122,7 @@
     {
         try
         {
-            ListaRoles = await Http.GetFromJsonAsync<List<Rol>>("api/Rol");
+            ListaRoles = await Http.GetFromJsonAsync<List<Rol>>("/api/Rol");
         }
         catch (Exception ex)
         {

@@ -221,11 +221,11 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Pedido", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Pedido_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Pedido_Id"));
 
                     b.Property<int>("Estado_Pedido_Id")
                         .HasColumnType("int");
@@ -239,10 +239,10 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Forma_Pago_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Metodo_Entrega_Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Pedido_Id")
+                    b.Property<int>("Metodo_Entrega_Id")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Total")
@@ -251,7 +251,7 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Usuario_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Pedido_Id");
 
                     b.HasIndex(new[] { "Fecha_Pedido", "Total" }, "Fecha_Pedido_Total");
 
@@ -307,11 +307,11 @@ namespace FabricaPastas.BD.Migrations
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Promocion", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Promocion_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Promocion_Id"));
 
                     b.Property<bool>("Activa")
                         .HasColumnType("bit");
@@ -327,7 +327,7 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<DateOnly>("Fecha_Inicio")
                         .HasColumnType("date");
 
-                    b.Property<int>("Promocion_Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Titulo")
@@ -335,7 +335,7 @@ namespace FabricaPastas.BD.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Promocion_Id");
 
                     b.HasIndex(new[] { "Promocion_Id" }, "Promocion_Id_UQ")
                         .IsUnique();
