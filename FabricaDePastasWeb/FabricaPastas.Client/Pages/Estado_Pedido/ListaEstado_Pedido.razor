@@ -1,4 +1,4 @@
-﻿@page "/api/Estado_Pedido"
+﻿@page "/api/Estado_Pedido/Lista"
 @inject IHTTPServicio http;
 @inject HttpClient Http;
 @inject NavigationManager navigationManager;
@@ -18,9 +18,9 @@
 
     <header>
 
-        <h1 class="text-center">Seleccione el rol</h1>
+        <h1 class="text-center">Estado de pedido</h1>
 
-        <h2>Lista roles</h2>
+        <h2>Lista de estados</h2>
 
         @*  <select>
             <option value="listaRoles">Administrador</option>
@@ -43,7 +43,7 @@
             </tr>
 
             <select @bind="EstadoPedidoSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un rol --</option>
+                <option disabled selected value="">-- Seleccione estado --</option>
                 @if (ListaEstadoPedido != null)
                 {
                     foreach (var Estado_pedido in ListaEstadoPedido)
@@ -55,9 +55,15 @@
                 {
                     <p>Rol seleccionado: <strong>@EstadoPedidoSeleccionado</strong></p>
                 }
+
+            
             </select>
 
-            <button class="btn btn-primary" @onclick="IngresarConEstadoPedido">Ingresar</button>
+            @* modificar cualquier cosa la referencia *@
+            <div>
+                <a class="btn btn-outline-secondary btn-sm" href="/api/Pedido/Lista">Ver lista de pedidos</a> 
+            </div>
+            @* <button class="btn btn-primary" @onclick="IngresarConEstadoPedido">Ingresar</button> *@
 
 
 
@@ -106,7 +112,7 @@
     {
         if (!string.IsNullOrEmpty(EstadoPedidoSeleccionado))
         {
-            navigationManager.NavigateTo($"/api/Pedido/Lista");
+            navigationManager.NavigateTo($"/api/Estado_Pedido/Lista");
         }
     }
     //selecciona el rol de usuario

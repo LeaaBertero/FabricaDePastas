@@ -3,99 +3,48 @@
 @inject HttpClient Http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Lista Roles</title>
-    <meta charset="utf-8" />
-</head>
+<h1>Seleccione el tipo de cliente</h1>
 
+<select @bind="TipoClienteSeleccionado" class="form-select">
+    <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
+    @if (ListaTipoCliente != null)
+    {
+        foreach (var TipoCliente in ListaTipoCliente)
+        {
+            <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
+        }
+    }
+</select>
 
-<body>
+@if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+{
+    <p>Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong></p>
+}
 
-    <header>
-        <h1>Seleccione el tipo de cliente</h1>
-    </header>
+<button class="btn btn-primary" @onclick="IngresarConTipoCliente">Ingresar</button>
 
-    <main>
+@if (Mensaje == null)
+{
+    if (ListaTipoCliente == null)
+    {
+        <p>Buscando...</p>
+    }
+    else if (ListaTipoCliente.Count == 0)
+    {
+        <p>No existen tipos de cliente</p>
+    }
+}
+else
+{
+    <p>Error: @Mensaje</p>
+}
 
-        <table>
-
-            <tr>
-                <th>Descripción</th>
-            </tr>
-
-            <select @bind="TipoClienteSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un rol --</option>
-                @if (ListaTipoCliente != null)
-                {
-                    foreach (var TipoCliente in ListaTipoCliente)
-                    {
-                        <option value="@TipoCliente.Descripcion">@TipoCliente.Descripcion</option>
-                    }
-                }
-                @if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
-                {
-                    <p>Rol seleccionado: <strong>@TipoClienteSeleccionado</strong></p>
-                }
-            </select>
-
-            <button class="btn btn-primary" @onclick="IngresarConTipoCliente">Ingresar</button>
-
-
-            @if (Mensaje == null)
-            {
-                if (ListaTipoCliente == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (ListaTipoCliente.Count == 0)
-                {
-                    <p>No existen tipos de cliente</p>
-                }
-              @*   else
-                {
-                    @foreach (var item in ListaTipo_Clientes)
-                    {
-                        <tr>
-                            <td>@item.Descripcion</td>
-                        </tr>
-
-                    }
-                } *@
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-          
-
-
-        </table>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
 
 
 
 @code {
 
-    private void IngresarConTipoCliente()
-    {
-        if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
-        {
-            navigationManager.NavigateTo($"/Listas");
-        }
-    }
     //selecciona el rol de usuario
     private string TipoClienteSeleccionado;
 
@@ -117,8 +66,15 @@
         }
     }
 
-
-
-
-
+    private void IngresarConTipoCliente()
+    {
+        if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+        {
+            navigationManager.NavigateTo($"/api/Categoria_Producto/Lista");
+        }
+    }
 }
+
+
+
+

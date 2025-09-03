@@ -3,100 +3,66 @@
 @inject HttpClient Http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Lista Roles</title>
-    <meta charset="utf-8" />
-</head>
 
 
-<body>
 
-    <header>
 
-        <h1 class="text-center">Seleccione el rol</h1>
+    <h1 class="text-center">Seleccione el rol</h1>
         
-        <h2>Lista roles</h2>
+    <h2>Lista roles</h2>
 
-       @*  <select>
-            <option value="listaRoles">Administrador</option>
-        </select>
-
-        <div class="btn btn-info">
-            <a href="/administracion">Ingresar</a>
-        </div> *@
+      
 
 
-    </header>
 
-    <main>
+    <select @bind="RolSeleccionado" class="form-select">
+        <option disabled selected value="">-- Seleccione un rol --</option>
+        @if (ListaRoles != null)
+        {
+            foreach (var rol in ListaRoles)
+            {
+                <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
+            }
+        }
+        @if (!string.IsNullOrEmpty(RolSeleccionado))
+        {
+            <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
+        }
+    </select>
 
-        <table>
-
-            <tr>
-                <th>Nombre de rol</th>
-
-            </tr>
-
-            <select @bind="RolSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un rol --</option>
-                @if (ListaRoles != null)
-                {
-                    foreach (var rol in ListaRoles)
-                    {
-                        <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
-                    }
-                }
-                @if (!string.IsNullOrEmpty(RolSeleccionado))
-                {
-                    <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
-                }
-            </select>
-
-            <button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button>
+    <button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button>
 
           
 
-            @if (Mensaje == null)
+    @if (Mensaje == null)
+    {
+        if (ListaRoles == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (ListaRoles.Count == 0)
+        {
+            <p>No existen roles de usuarios cargados</p>
+        }
+        @*   else
+        {
+            @foreach (var item in ListaRoles)
             {
-                if (ListaRoles == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (ListaRoles.Count == 0)
-                {
-                    <p>No existen roles de usuarios cargados</p>
-                }
-              @*   else
-                {
-                    @foreach (var item in ListaRoles)
-                    {
-                        <tr>
-                            <td>@item.Nombre_rol</td>
-                        </tr>
+                <tr>
+                    <td>@item.Nombre_rol</td>
+                </tr>
 
-                    }
-                } *@
             }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
+        } *@
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
 
 
-        </table>
+      
 
-    </main>
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
 
 @code {
 
