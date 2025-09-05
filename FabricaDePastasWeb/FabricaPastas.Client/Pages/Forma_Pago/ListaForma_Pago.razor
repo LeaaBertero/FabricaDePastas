@@ -1,4 +1,4 @@
-﻿@page "/api/Forma_Pago/Lista"
+﻿@* @page "/api/Forma_Pago/Lista"
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -18,10 +18,6 @@
 
     <main>
 
-      @*   <div>
-            <p>Formas de pago</p>
-            <a class="btn btn-primary" href="/api/Pedido/Crear">Pagos</a>
-        </div> *@
 
         <table>
 
@@ -51,10 +47,7 @@
                            
 
 
-                            @*   <td>
-                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                                </td> *@
-
+                            
 
 
                         </tr>
@@ -85,7 +78,7 @@
 
 
     List<Forma_Pago> Lista_forma_pago;
-    // Usuario usuario;
+    
 
     string Mensaje;
 
@@ -113,11 +106,100 @@
         }
     }
     #endregion
+}
+ *@
+@page "/api/Forma_Pago/Lista"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
 
 
 
+
+
+<h1 class="text-center">-- Seleccione la forma de pago -- </h1>
+
+
+<select @bind="FormaPagoSeleccionado" class="form-select">
+    <option disabled selected value="">-- Seleccione la forma de pago --</option>
+    @if (ListaFormaPago != null)
+    {
+        foreach (var FormaPago in ListaFormaPago)
+        {
+            <option value="@FormaPago.Metodo">@FormaPago.Metodo</option>
+        }
+    }
+    @if (!string.IsNullOrEmpty(FormaPagoSeleccionado))
+    {
+        <p>Rol seleccionado: <strong>@FormaPagoSeleccionado</strong></p>
+    }
+</select>
+
+@* <button class="btn btn-primary" @onclick="IngresarFormaPago">Ingresar</button> *@
+
+
+
+@if (Mensaje == null)
+{
+    if (ListaFormaPago == null)
+    {
+        <p>Buscando....</p>
+    }
+    else if (ListaFormaPago.Count == 0)
+    {
+        <p>No existen roles de usuarios cargados</p>
+    }
+    
+}
+else
+{
+    <p> Error: @Mensaje</p>
+}
+
+
+
+
+
+@code {
+
+    private void IngresarFormaPago()
+    {
+        if (!string.IsNullOrEmpty(FormaPagoSeleccionado))
+        {
+            navigationManager.NavigateTo($"/Forma_Pago/Lista");
+        }
+    }
+    //selecciona el rol de usuario
+    private string FormaPagoSeleccionado;
+
+
+
+    private List<Forma_Pago> ListaFormaPago;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListaFormaPago = await Http.GetFromJsonAsync<List<Forma_Pago>>("/api/Forma_Pago");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error obteniendo Formas de pago: {ex.Message}");
+        }
+    }
 
 }
+
+
+
+
+
+
+
+
+
 
 
 

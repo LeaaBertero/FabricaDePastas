@@ -5,6 +5,27 @@
 
     <head>
         <title>Home</title>
+
+        <style>
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+                background-color: #333;
+                padding: 10px;
+            }
+
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            nav ul li a:hover {
+                color: #ffcc00;
+            }
+        </style>
+
     </head>
     
     <body>
@@ -13,7 +34,7 @@
      @*    <div>
             <p>Para registrarte, hace click en el botón</p>
             <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
-        </div> *@
+           </div> *@
 
         <div class="btn btn-info">
             <a href="/api/Usuario/Registro/Login">Iniciar sesión</a>
@@ -22,6 +43,27 @@
         <header>
             <h1>Bienvendido a nuestra página principal</h1>
             <h2>La nonna Pastas Web</h2>
+
+            <nav>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/api/Usuario/Registro/Crear">Registrate!</a></li>
+                    <li><a href="#">Tipo de cliente</a></li>
+                    <li><a href="#">Rol</a></li>
+                    <li><a href="#">Promoción usuario</a></li>
+                    <li><a href="#">Promoción producto</a></li>
+                    <li><a href="#">Promociones</a></li>
+                    <li><a href="#">Productos</a></li>
+                    <li><a href="#">Pedidos</a></li>
+                    <li><a href="#">Método de entrega</a></li>
+                    <li><a href="#">Iniciar sesión</a></li>
+                    <li><a href="#">Forma de pago</a></li>
+                    <li><a href="#">Estado de pedido</a></li>
+                    <li><a href="#">Detalle de pedido</a></li>
+                    <li><a href="#">Detalle de lista de precios</a></li>
+                    <li><a href="#">Categoria de productos</a></li>
+                </ul>
+            </nav>
         </header>
 
         
