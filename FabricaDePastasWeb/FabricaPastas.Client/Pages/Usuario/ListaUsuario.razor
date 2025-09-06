@@ -98,6 +98,11 @@
 
 </html>
 
+
+
+
+
+
 @code {
 
 
@@ -131,25 +136,48 @@
     }
     #endregion
 
+
+
+    // #region Eliminar usuario
+    // private async Task Eliminar(Usuario usuarioBorrar)
+    // {
+
+    //     usuarioBorrar = usuario;
+
+
+    // }
+    // #endregion
+
+    // private async Task Borrar()
+    // {
+    //     var respuesta = await http.Delete($"api/Usuario/{usuario.Id}");
+    //     if (respuesta.Error)
+    //     {
+    //         var body = "No se pudo borrar";
+    //     }
+
+    //     await Leer();
+    // }
+
+
+    //se unifico el borrar y el eliminar usuario en uno solo.
     #region Eliminar usuario
     private async Task Eliminar(Usuario usuarioBorrar)
     {
-        usuarioBorrar = usuario;
+        var respuesta = await http.Delete($"api/Usuario/{usuarioBorrar.Id}");
 
-
+        if (respuesta.Error)
+        {
+            Mensaje = "No se pudo borrar el usuario";
+        }
+        else
+        {
+            await Leer(); 
+        }
     }
     #endregion
 
-    private async Task Borrar()
-    {
-        var respuesta = await http.Delete($"api/Usuario/{usuario.Id}");
-        if (respuesta.Error)
-        {
-            var body = "No se pudo borrar";
-        }
 
-        await Leer();
-    }
 }
 
 
