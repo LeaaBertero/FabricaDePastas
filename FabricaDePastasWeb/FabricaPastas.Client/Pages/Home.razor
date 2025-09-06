@@ -10,7 +10,7 @@
             nav ul {
                 list-style: none;
                 display: flex;
-                gap: 20px;
+                gap: 2px;
                 background-color: #333;
                 padding: 10px;
             }
@@ -36,9 +36,9 @@
             <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
            </div> *@
 
-        <div class="btn btn-info">
+      @*   <div class="btn btn-info">
             <a href="/api/Usuario/Registro/Login">Iniciar sesión</a>
-        </div>
+        </div> *@
 
         <header>
             <h1>Bienvendido a nuestra página principal</h1>
@@ -47,21 +47,21 @@
             <nav>
                 <ul>
                     <li><a href="/">Inicio</a></li>
+                    <li><a href="/api/Usuario/Registro/Login">Iniciar sesión</a></li>
                     <li><a href="/api/Usuario/Registro/Crear">Registrate!</a></li>
-                    <li><a href="#">Tipo de cliente</a></li>
-                    <li><a href="#">Rol</a></li>
-                    <li><a href="#">Promoción usuario</a></li>
-                    <li><a href="#">Promoción producto</a></li>
-                    <li><a href="#">Promociones</a></li>
-                    <li><a href="#">Productos</a></li>
-                    <li><a href="#">Pedidos</a></li>
-                    <li><a href="#">Método de entrega</a></li>
-                    <li><a href="#">Iniciar sesión</a></li>
-                    <li><a href="#">Forma de pago</a></li>
-                    <li><a href="#">Estado de pedido</a></li>
+                    @* <li><a href="#">Tipo de cliente</a></li> *@
+                    @* <li><a href="#">Rol</a></li> *@
+                    @* <li><a href="/api/Promocion_Usuario/Crear">Promoción usuario</a></li> *@
+                    @* <li><a href="/api/Promocion_Producto/Crear">Promoción producto</a></li> *@
+                    <li><a href="/api/Promocion/Crear">Promociones</a></li>
+                    <li><a href="/api/Producto/Crear">Productos</a></li>
+                    <li><a href="/api/Pedido/Crear">Pedidos</a></li>
+                    <li><a href="/api/Metodo_Entrega/Lista">Método de entrega</a></li>
+                    <li><a href="/api/Forma_Pago/Lista">Forma de pago</a></li>
+                 @*    <li><a href="#">Estado de pedido</a></li>
                     <li><a href="#">Detalle de pedido</a></li>
-                    <li><a href="#">Detalle de lista de precios</a></li>
-                    <li><a href="#">Categoria de productos</a></li>
+                    <li><a href="#">Detalle de lista de precios</a></li> *@
+                    <li><a href="/api/Categoria_Producto/Crear">Categoria de productos</a></li>
                 </ul>
             </nav>
         </header>

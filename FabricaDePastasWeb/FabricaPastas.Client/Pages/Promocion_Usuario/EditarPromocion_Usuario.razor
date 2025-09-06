@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label for="FechaInicioPromo">FechaInicioPromo</label>
-                <input type="date" @bind="EditarPromocion_usuario.Fecha_Fin_Promo" class="form-control" />
+                <input type="date" @bind="EditarPromocion_usuario.Fecha_Inicio_Promo" class="form-control" />
                 <ValidationMessage For="@(() => EditarPromocion_usuario.Fecha_Inicio_Promo)" />
             </div>
 
@@ -97,9 +97,9 @@
         navigationManager.NavigateTo("/api/Promocion_Usuario");
     }
 
-    // private void Cancelar()
-    // {
-    //     navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
-    // }
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Promocion_Usuario/Lista");
+    }
 
 }

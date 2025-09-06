@@ -1,0 +1,80 @@
+﻿@page "/api/Metodo_Entrega/Lista"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+<h1>Método de entrega</h1>
+
+<select @bind="MetodoEntregaSeleccionado" class="form-select">
+    <option disabled selected value="">-- Seleccione el método de entrega --</option>
+    @if (ListaMetodoEntrega != null)
+    {
+        foreach (var MetodoEntrega in ListaMetodoEntrega)
+        {
+            <option value="@MetodoEntrega.Metodo_Entrega_Id">@MetodoEntrega.Descripcion</option>
+        }
+    }
+</select>
+
+@if (!string.IsNullOrEmpty(MetodoEntregaSeleccionado))
+{
+    <p>Cliente seleccionado: <strong>@MetodoEntregaSeleccionado</strong></p>
+}
+
+@* <button class="btn btn-primary" @onclick="IngresarConMetodoEntrega">Ingresar</button> *@
+
+@if (Mensaje == null)
+{
+    if (ListaMetodoEntrega == null)
+    {
+        <p>Buscando...</p>
+    }
+    else if (ListaMetodoEntrega.Count == 0)
+    {
+        <p>No existen tipos de cliente</p>
+    }
+}
+else
+{
+    <p>Error: @Mensaje</p>
+}
+
+
+
+
+@code {
+
+    //selecciona el rol de usuario
+    private string MetodoEntregaSeleccionado;
+
+    private List<Metodo_Entrega> ListaMetodoEntrega;
+
+    // private List<Tipo_Cliente> ListaTipoClientes;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListaMetodoEntrega = await Http.GetFromJsonAsync<List<Metodo_Entrega>>("api/Metodo_Entrega");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error obteniendo metodos de entrega: {ex.Message}");
+        }
+    }
+
+    private void IngresarConMetodoEntrega()
+    {
+        if (!string.IsNullOrEmpty(MetodoEntregaSeleccionado))
+        {
+            navigationManager.NavigateTo($"/api/Metodo_Entrega/Lista");
+        }
+    }
+}
+
+
+
+
