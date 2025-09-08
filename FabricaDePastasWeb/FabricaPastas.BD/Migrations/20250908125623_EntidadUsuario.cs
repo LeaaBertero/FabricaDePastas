@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class ActualizoTipoCliente : Migration
+    public partial class EntidadUsuario : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -95,7 +95,8 @@ namespace FabricaPastas.BD.Migrations
                     Lista_Precio_Id = table.Column<int>(type: "int", nullable: false),
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Fecha_Desde = table.Column<DateOnly>(type: "date", nullable: false),
-                    Fecha_Hasta = table.Column<DateOnly>(type: "date", nullable: false)
+                    Fecha_Hasta = table.Column<DateOnly>(type: "date", nullable: false),
+                    Archivo_Lista_Precio = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,6 +247,7 @@ namespace FabricaPastas.BD.Migrations
                     Tipo_Cliete_Id = table.Column<int>(type: "int", nullable: false),
                     Rol_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    NombreUsuario = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Contraseña = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),

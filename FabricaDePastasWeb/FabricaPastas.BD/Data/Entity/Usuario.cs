@@ -25,6 +25,9 @@ namespace FabricaPastas.BD.Data.Entity
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Nombre { get; set; }
+        [Required(ErrorMessage = "El campo Nombre de usuario es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? NombreUsuario { get; set; }
 
         [Required(ErrorMessage = "El campo Apellido es obligatorio")]
         [MaxLength(150, ErrorMessage = "Máximo número de caracteres {1}")]

@@ -171,6 +171,10 @@ namespace FabricaPastas.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Archivo_Lista_Precio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateOnly>("Fecha_Desde")
                         .HasColumnType("date");
 
@@ -484,6 +488,11 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NombreUsuario")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");

@@ -44,6 +44,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="contraseña">Nombre de usuario</label>
+                    <input type="text" placeholder="Nombre de usuario" @bind="usuario.NombreUsuario" class="form-control" />
+                    <ValidationMessage For="@(() => usuario.NombreUsuario)" />
+                </div>
+
+                <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <input type="tel" placeholder="Telefono" @bind="usuario.Teléfono" class="form-control" />
                     <ValidationMessage For="@(() => usuario.Teléfono)" />

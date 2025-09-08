@@ -1,0 +1,57 @@
+﻿@page "/api/Lista_Precio/Crear"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<h3>CrearLista_Precio</h3>
+
+<h1 class="text-center">Acá podes cargar la lista de precios</h1>
+
+<EditForm Model="lista_precio" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="FechaDesde">Fecha desde</label>
+        <input type="date" @bind="lista_precio.Fecha_Desde" class="form-control" />
+        <ValidationMessage For="@(() => lista_precio.Fecha_Desde)" />
+    </div>
+
+    <div class="form-group">
+        <label for="FechaHasta">Fecha hasta</label>
+        <input type="date"  @bind="lista_precio.Fecha_Hasta" class="form-control" />
+        <ValidationMessage For="@(() => lista_precio.Fecha_Hasta)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Archivo">Archivo</label>
+        <input type="file" @bind="lista_precio.Archivo_Lista_Precio" class="form-control" />
+        <ValidationMessage For="@(() => lista_precio.Archivo_Lista_Precio)" />
+    </div>
+
+    
+
+
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
+
+</EditForm>
+
+@code {
+    private Lista_Precio lista_precio = new Lista_Precio();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Lista_Precio>("api/Lista_Precio", lista_precio);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Lista_Precio/Lista");
+    }
+}

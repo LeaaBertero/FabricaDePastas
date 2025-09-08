@@ -1,19 +1,18 @@
-﻿@page "/api/Usuario/Lista"
+﻿@page "/api/Lista_Precio/Lista"
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
-
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Editar cateoriaLista de usuarios registrados</title>
+    <title>Modificar / Actualizar lista de precio</title>
 </head>
 
 <body>
 
     <header>
-        <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
+        <h1 class="text-center">Lista de precios</h1>
     </header>
 
     <main>
@@ -34,50 +33,38 @@
         <table>
 
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nombre de usuario</th>
-                <th>E-mail</th>
-                <th>Contraseña</th>
-                <th>Nro Teléfono</th>
+                <th>Fecha desde</th>
+                <th>Fecha hasta</th>
+                <th>Archivo lista de precio</th>
+                
             </tr>
 
             @if (Mensaje == null)
             {
-                if (ListaUsuarios == null)
+                if (Lista_Precio == null)
                 {
                     <p>Buscando....</p>
                 }
-                else if (ListaUsuarios.Count == 0)
+                else if (Lista_Precio.Count == 0)
                 {
-                    <p>No existen usuarios </p>
+                    <p>No existen listas de precio</p>
                 }
                 else
                 {
-                    @foreach (var item in ListaUsuarios)
+                    @foreach (var item in Lista_Precio)
                     {
                         <tr>
-
-                            <td>@item.Nombre</td>
-                            <td>@item.Apellido</td>
-                            <td>@item.Email</td>
-                            <td>@item.NombreUsuario</td>
-                            <td>@item.Contraseña</td>
-                            <td>@item.Teléfono</td>
-
-                            <td>
-                                <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                            </td>
+                            <td>@item.Fecha_Desde</td>
+                            <td>@item.Fecha_Hasta</td>
+                            <td>@item.Archivo_Lista_Precio</td>
 
                             <td>
                                 <button class="btn btn-danger"
-                                        @onclick= "()=> Eliminar(item)">
+                                        @onclick="() => Eliminar(item)">
                                     Borrar
                                 </button>
                             </td>
-
                         </tr>
-
                     }
                 }
             }
@@ -85,6 +72,7 @@
             {
                 <p> Error: @Mensaje</p>
             }
+
 
 
         </table>
@@ -107,9 +95,9 @@
 
 @code {
 
+    private List<Lista_Precio> Lista_Precio;
 
-    private List<Usuario> ListaUsuarios;
-    Usuario usuario;
+    Lista_Precio listaPrecio;
 
     string Mensaje;
 
@@ -123,13 +111,13 @@
     #region Leer usuarios
     private async Task Leer()
     {
-        var resp = await http.Get<List<Usuario>>("api/Usuario");
+        var resp = await http.Get<List<Lista_Precio>>("api/Lista_Precio");
 
         string Mensaje = "";
 
         if (!resp.Error)
         {
-            ListaUsuarios = resp.Respuesta;
+            Lista_Precio = resp.Respuesta;
         }
         else
         {
@@ -140,50 +128,23 @@
 
 
 
-    // #region Eliminar usuario
-    // private async Task Eliminar(Usuario usuarioBorrar)
-    // {
 
-    //     usuarioBorrar = usuario;
-
-
-    // }
-    // #endregion
-
-    // private async Task Borrar()
-    // {
-    //     var respuesta = await http.Delete($"api/Usuario/{usuario.Id}");
-    //     if (respuesta.Error)
-    //     {
-    //         var body = "No se pudo borrar";
-    //     }
-
-    //     await Leer();
-    // }
 
 
     //se unifico el borrar y el eliminar usuario en uno solo.
-    #region Eliminar usuario
-    private async Task Eliminar(Usuario usuarioBorrar)
+    #region Eliminar Lista_Precio
+    private async Task Eliminar(Lista_Precio ListaPrecioBorrar)
     {
-        var respuesta = await http.Delete($"api/Usuario/{usuarioBorrar.Id}");
+        var respuesta = await http.Delete($"api/Lista_Precio/{ListaPrecioBorrar.Id}");
 
         if (respuesta.Error)
         {
-            Mensaje = "No se pudo borrar el usuario";
+            Mensaje = "No se pudo borrar La lista de precio";
         }
         else
         {
-            await Leer(); 
+            await Leer();
         }
     }
     #endregion
-
-
 }
-
-
-
-
-
-
