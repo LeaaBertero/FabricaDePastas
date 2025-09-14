@@ -57,7 +57,7 @@
 
                     <div>
                         <button class="btn btn-primary" type="submit">Registrar</button>
-                        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+                        <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
                     </div>
 
 
@@ -90,6 +90,7 @@
         {
             var body = httpRespuesta.HttpResponseMessage;
         }
+        navigationManager.NavigateTo("/api/Producto/Lista");
     }
 
     private void Cancelar()

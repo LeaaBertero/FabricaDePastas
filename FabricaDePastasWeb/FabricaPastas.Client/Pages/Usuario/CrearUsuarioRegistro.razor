@@ -92,6 +92,7 @@
 @code {
     private Usuario usuario = new Usuario();
 
+
     private async Task Grabar()
     {
         var httpRespuesta = await http.Post<Usuario>("api/Usuario", usuario);
@@ -100,6 +101,9 @@
         {
             var body = httpRespuesta.HttpResponseMessage;
         }
+
+
+        navigationManager.NavigateTo("/api/Usuario/Lista");
     }
 
     private void Cancelar()

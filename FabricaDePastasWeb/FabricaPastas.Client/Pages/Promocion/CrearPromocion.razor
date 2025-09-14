@@ -94,10 +94,12 @@
         {
             var body = httpRespuesta.HttpResponseMessage;
         }
+        navigationManager.NavigateTo("api/Promocion/Lista");
+
     }
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/ListaUsuario"); //que vaya a la lista de promocioes (hacer!!)
+        navigationManager.NavigateTo("api/Promocion/Lista"); //que vaya a la lista de promocioes (hacer!!)
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/api/Usuario/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -16,7 +17,7 @@
         <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
     </header>
 
-    <main>
+    
 
         @*  <div>
                 <p>Para registrarte, hace click en el botón</p>
@@ -89,7 +90,17 @@
 
         </table>
 
-    </main>
+    <Confirmacion @ref="confirmacion"
+              Titulo="CUIDADO"
+              textCancelar="Salir"
+              onCancel="@Cancelar"
+              onConfirm="@Borrar"> 
+              <h5>Está por borrar el tipo de documento</h5>
+              <br />
+              <p>Está seguro?</p>
+</Confirmacion>
+
+
 
 
     <footer>
@@ -106,12 +117,14 @@
 
 
 @code {
-
+    Confirmacion confirmacion;
 
     private List<Usuario> ListaUsuarios;
     Usuario usuario;
 
     string Mensaje;
+
+    Usuario? usuarioBorrar = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -163,9 +176,59 @@
 
 
     //se unifico el borrar y el eliminar usuario en uno solo.
-    #region Eliminar usuario
-    private async Task Eliminar(Usuario usuarioBorrar)
+
+    // private async Task Eliminar(Usuario usuario)
+    // {
+    //     usuarioBorrar = usuario;
+    //     confirmacion.Ver();
+    // }
+
+    // private void Cancelar()
+    // {
+    //     confirmacion.Ocultar();
+    //     usuarioBorrar = null;
+    // }
+
+    // #region Eliminar usuario
+    // private async Task Borrar(Usuario usuarioBorrar)
+    // {
+    //     var respuesta = await http.Delete($"api/Usuario/{usuarioBorrar.Id}");
+
+    //     if (respuesta.Error)
+    //     {
+    //         Mensaje = "No se pudo borrar el usuario";
+    //     }
+    //     else
+    //     {
+    //         await Leer(); 
+    //     }
+    // }
+    // #endregion
+    // variable que ya tenías
+
+    // cuando el usuario hace click en "Borrar" -> guardás el usuario y mostrás modal
+    private async Task Eliminar(Usuario usuario)
     {
+        usuarioBorrar = usuario;
+        confirmacion.Ver();
+    }
+
+    // cancelar: oculta modal y limpia selección
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        usuarioBorrar = null;
+    }
+
+    // CORREGIDO: método sin parámetros invocado por onConfirm="@Borrar"
+    private async Task Borrar()
+    {
+        if (usuarioBorrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
         var respuesta = await http.Delete($"api/Usuario/{usuarioBorrar.Id}");
 
         if (respuesta.Error)
@@ -174,10 +237,13 @@
         }
         else
         {
-            await Leer(); 
+            await Leer();
         }
+
+        // limpiar y cerrar modal
+        usuarioBorrar = null;
+        confirmacion.Ocultar();
     }
-    #endregion
 
 
 }
