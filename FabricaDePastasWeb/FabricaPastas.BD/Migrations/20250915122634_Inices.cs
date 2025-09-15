@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Iini : Migration
+    public partial class Inices : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -261,21 +261,9 @@ namespace FabricaPastas.BD.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "Categoria_Producto_Id_UQ",
-                table: "Categoria_Producto",
-                column: "Categoria_Producto_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "Nombre_Categoria",
                 table: "Categoria_Producto",
                 column: "Nombre_Categoria");
-
-            migrationBuilder.CreateIndex(
-                name: "Detalle_Lista_Id_UQ",
-                table: "Detalle_Lista_Precio",
-                column: "Detalle_Lista_Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "Precio_Personalizado",
@@ -288,27 +276,9 @@ namespace FabricaPastas.BD.Migrations
                 columns: new[] { "Cantidad", "Precio_Unitario" });
 
             migrationBuilder.CreateIndex(
-                name: "Detalle_Pedido_Id_UQ",
-                table: "Detalle_Pedido",
-                column: "Detalle_Pedido_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "Descripcion",
                 table: "Estado_Pedido",
                 column: "Descripcion");
-
-            migrationBuilder.CreateIndex(
-                name: "Estado_Pedido_Id_UQ",
-                table: "Estado_Pedido",
-                column: "Estado_Pedido_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "Forma_Pago_Id_UQ",
-                table: "Forma_Pago",
-                column: "Forma_Pago_Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "Metodo",
@@ -321,21 +291,9 @@ namespace FabricaPastas.BD.Migrations
                 columns: new[] { "Fecha_Desde", "Fecha_Hasta" });
 
             migrationBuilder.CreateIndex(
-                name: "Lista_Precio_Id_UQ",
-                table: "Lista_Precio",
-                column: "Lista_Precio_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "Descripcion",
                 table: "Metodo_entrega",
                 column: "Descripcion");
-
-            migrationBuilder.CreateIndex(
-                name: "Metodo_Entrega_Id_UQ",
-                table: "Metodo_entrega",
-                column: "Metodo_Entrega_Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "Fecha_Pedido_Total",
@@ -343,27 +301,9 @@ namespace FabricaPastas.BD.Migrations
                 columns: new[] { "Fecha_Pedido", "Total" });
 
             migrationBuilder.CreateIndex(
-                name: "Pedido_Id",
-                table: "Pedido",
-                column: "Pedido_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock",
                 table: "Producto",
                 columns: new[] { "Nombre", "Descripcion", "PrecioBase", "Imagen_Url", "Stock" });
-
-            migrationBuilder.CreateIndex(
-                name: "Producto_Id_UQ",
-                table: "Producto",
-                column: "Producto_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "Promocion_Id_UQ",
-                table: "Promocion",
-                column: "Promocion_Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "Titulo_Descripcion_Fecha_Inicio_Fecha_Fin_Activa",

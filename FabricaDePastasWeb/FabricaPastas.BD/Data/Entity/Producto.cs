@@ -11,7 +11,7 @@ namespace FabricaPastas.BD.Data.Entity
 {
 
     #region Indices
-    [Index(nameof(Producto_Id), Name = "Producto_Id_UQ", IsUnique = true)]
+    //[Index(nameof(Producto_Id), Name = "Producto_Id_UQ", IsUnique = true)]
     [Index(nameof(Nombre), nameof(Descripcion), nameof(PrecioBase), nameof(Imagen_Url), nameof(Stock),
     Name = "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock", IsUnique = false)]
     #endregion

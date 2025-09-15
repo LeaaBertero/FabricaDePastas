@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250915115922_Iini")]
-    partial class Iini
+    [Migration("20250915122634_Inices")]
+    partial class Inices
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Categoria_Producto_Id" }, "Categoria_Producto_Id_UQ")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "Nombre_Categoria" }, "Nombre_Categoria");
 
                     b.ToTable("Categoria_Producto");
@@ -72,9 +69,6 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Detalle_Lista_Id" }, "Detalle_Lista_Id_UQ")
-                        .IsUnique();
 
                     b.HasIndex(new[] { "Precio_Personalizado" }, "Precio_Personalizado");
 
@@ -108,9 +102,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasIndex(new[] { "Cantidad", "Precio_Unitario" }, "Cantidad_Precio_Unitario");
 
-                    b.HasIndex(new[] { "Detalle_Pedido_Id" }, "Detalle_Pedido_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Detalle_Pedido");
                 });
 
@@ -134,9 +125,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasIndex(new[] { "Descripcion" }, "Descripcion");
 
-                    b.HasIndex(new[] { "Estado_Pedido_Id" }, "Estado_Pedido_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Estado_Pedido");
                 });
 
@@ -157,9 +145,6 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Forma_Pago_Id" }, "Forma_Pago_Id_UQ")
-                        .IsUnique();
 
                     b.HasIndex(new[] { "Metodo" }, "Metodo");
 
@@ -194,9 +179,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasIndex(new[] { "Fecha_Desde", "Fecha_Hasta" }, "Fecha_Desde_Fecha_Hasta");
 
-                    b.HasIndex(new[] { "Lista_Precio_Id" }, "Lista_Precio_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Lista_Precio");
                 });
 
@@ -219,9 +201,6 @@ namespace FabricaPastas.BD.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "Descripcion" }, "Descripcion");
-
-                    b.HasIndex(new[] { "Metodo_Entrega_Id" }, "Metodo_Entrega_Id_UQ")
-                        .IsUnique();
 
                     b.ToTable("Metodo_entrega");
                 });
@@ -261,9 +240,6 @@ namespace FabricaPastas.BD.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "Fecha_Pedido", "Total" }, "Fecha_Pedido_Total");
-
-                    b.HasIndex(new[] { "Pedido_Id" }, "Pedido_Id")
-                        .IsUnique();
 
                     b.ToTable("Pedido");
                 });
@@ -306,9 +282,6 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasIndex(new[] { "Nombre", "Descripcion", "PrecioBase", "Imagen_Url", "Stock" }, "Nombre_Descripcion_PrecioBase_Imagen_Url_Stock");
 
-                    b.HasIndex(new[] { "Producto_Id" }, "Producto_Id_UQ")
-                        .IsUnique();
-
                     b.ToTable("Producto");
                 });
 
@@ -343,9 +316,6 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Promocion_Id" }, "Promocion_Id_UQ")
-                        .IsUnique();
 
                     b.HasIndex(new[] { "Titulo", "Descripcion", "Fecha_Inicio", "Fecha_Fin", "Activa" }, "Titulo_Descripcion_Fecha_Inicio_Fecha_Fin_Activa");
 

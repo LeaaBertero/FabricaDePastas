@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace FabricaPastas.BD.Data.Entity
 {
     #region Indices
-    [Index(nameof(Estado_Pedido_Id), Name = "Estado_Pedido_Id_UQ", IsUnique = true)]
+    //[Index(nameof(Estado_Pedido_Id), Name = "Estado_Pedido_Id_UQ", IsUnique = true)]
     [Index(nameof(Descripcion),
     Name = "Descripcion", IsUnique = false)]
     #endregion
