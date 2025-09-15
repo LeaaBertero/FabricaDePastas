@@ -19,8 +19,8 @@ namespace FabricaPastas.BD.Data.Entity
     public class Tipo_Cliente : EntityBase
     {
 
-        [JsonPropertyName("id")]
-        public int Id { get; set; }
+        //[JsonPropertyName("id")]
+        //public int Id { get; set; }
 
         #region Clave primaria
         //[Key]

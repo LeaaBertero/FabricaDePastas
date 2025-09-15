@@ -1,4 +1,4 @@
-﻿@page "/PantallaUsuarios"
+﻿@page "/LoginUUsuarios"
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -12,16 +12,25 @@
         <body>
         
             <header>
+                
                 <h1>usuarios</h1>
 
                 <div>
-            <a class="btn btn-outline-secondary btn-sm" href="/api/Usuario/Login">Iniciar sesión</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="/LoginUsuarios">Iniciar sesión</a>
                 </div>
 
+             @*    <form method="POST" action="/login">
+                    <input type="text" name="username" required />
+                    <input type="password" name="password" required />
+                    <button type="submit">Iniciar sesión</button>
+                </form> *@
+
             </header>
+
             <main>
 
             </main>
+            
             <footer>
 
             </footer>

@@ -19,7 +19,7 @@ namespace FabricaPastas.BD.Data.Entity
     {
         #region Clave primaria
 
-        [Key]
+        //[Key]
         public int Promocion_Id { get; set; }
         #endregion
 

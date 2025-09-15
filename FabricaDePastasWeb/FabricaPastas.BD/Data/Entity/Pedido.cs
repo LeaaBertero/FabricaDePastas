@@ -18,7 +18,7 @@ namespace FabricaPastas.BD.Data.Entity
     {
 
         #region Clave Primaria
-        [Key]
+        //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Pedido_Id { get; set; }
         #endregion

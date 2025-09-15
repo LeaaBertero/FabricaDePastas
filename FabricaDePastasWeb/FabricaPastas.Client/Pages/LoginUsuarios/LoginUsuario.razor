@@ -1,4 +1,4 @@
-﻿@page "/api/Usuario/Login"
+﻿@* @page "/api/Usuario/Login"
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -72,4 +72,53 @@
     }
 
 
+}
+ *@
+
+
+
+@page "/LoginUsuarios"
+@inject IHTTPServicio http
+@inject NavigationManager navigationManager
+
+<EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Usuario</label>
+        <InputText @bind-Value="usuarioLogin.NombreUsuario" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Contraseña</label>
+        <InputText @bind-Value="usuarioLogin.Contraseña" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+</EditForm>
+
+@code {
+   
+    
+    private CrearLoginDTO usuarioLogin = new CrearLoginDTO();
+
+    private async Task IniciarSesion()
+    {
+        // var httpRespuesta = await http.Post<Usuario>("/api/Usuario/Login", usuarioLogin );
+        var httpRespuesta = await http.Post<CrearLoginDTO>("/api/Usuario/Login", usuarioLogin);
+        
+
+        if (!httpRespuesta.Error && httpRespuesta.HttpResponseMessage.IsSuccessStatusCode)
+        {
+            // Si querés guardar el token, lo hacés acá
+            // Por ahora redirigimos al dashboard
+            navigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            // Acá podrías mostrar un mensaje de error
+            Console.WriteLine("Login fallido");
+        }
+    }
 }
