@@ -3,95 +3,104 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <div>
+    <p>Para registrarte, hace click en el botón</p>
+    <a class="btn btn-primary" href="/api/Promocion_Usuario/Crear">Cargar fecha promo</a>
+</div>
+    
 
-<head>
-    <title>promo usuario</title>
-</head>
+<table>
 
-<body>
+    <tr>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+    </tr>
 
-    <header>
-        <h1 class="text-center">Lista de promos de usuarios registrados del sistema</h1>
-    </header>
-
-    <main>
-
-         <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Promocion_Usuario/Crear">Cargar fecha promo</a>
-          </div>
-     @*    <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
-        </div> *@
-
-        @*   <div class="bg-danger">
-            <a href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
-        </div> *@
-
-        <table>
-
-            <tr>
-                <th>Fecha inicio</th>
-                <th>Fecha fin</th>
-            </tr>
-
-            @if (Mensaje == null)
+    @if (Mensaje == null)
+    {
+        if (Lista_promoUsuarios == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (Lista_promoUsuarios.Count == 0)
+        {
+            <p>No existen promociones para usuarios </p>
+        }
+        else
+        {
+            @foreach (var item in Lista_promoUsuarios)
             {
-                if (Lista_promoUsuarios == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (Lista_promoUsuarios.Count == 0)
-                {
-                    <p>No existen promociones para usuarios </p>
-                }
-                else
-                {
-                    @foreach (var item in Lista_promoUsuarios)
-                    {
-                        <tr>
+                <tr>
 
-                            <td>@item.Fecha_Inicio_Promo</td>
-                            <td>@item.Fecha_Fin_Promo</td>
+                    <td>@item.Fecha_Inicio_Promo</td>
+                    <td>@item.Fecha_Fin_Promo</td>
                             
 
-                            @* <td>
-                                <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                            </td> *@
+                           
 
-                            @* <td>
-                                <button class="btn btn-danger"
-                                        @onclick="() => Eliminar(item)">
-                                    Borrar
-                                </button>
-                            </td> *@
+                </tr>
 
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+
+
+</table> *@
+
+<h1 class="text-center mb-4 text-success fw-bold">🎁 Promociones para usuarios</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Para registrarte, hacé click en el botón:</p>
+        <a class="btn btn-primary" href="/api/Promocion_Usuario/Crear">➕ Cargar fecha promo</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Lista_promoUsuarios == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando promociones...</div>
+        }
+        else if (Lista_promoUsuarios.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen promociones para usuarios</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>📅 Fecha inicio</th>
+                            <th>📅 Fecha fin</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Lista_promoUsuarios)
+                        {
+                            <tr>
+                                <td>@item.Fecha_Inicio_Promo.ToShortDateString()</td>
+                                <td>@item.Fecha_Fin_Promo.ToShortDateString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-                    }
-                }
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-
-        </table>
-
-    </main>
-
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
+    
 
 @code {
 

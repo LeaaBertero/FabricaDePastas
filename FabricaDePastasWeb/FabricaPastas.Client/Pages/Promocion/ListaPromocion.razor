@@ -2,87 +2,128 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-    <html>
-        
-        <head>
-            <title>Lista de promociones</title>
-        </head>
-        
-        <body>
 
-            <header>
-                <h1>Lista de promociones</h1>
-            </header>
+@* <div>
+    <p>Promoción !</p>
+    <a class="btn btn-success" href="/api/Promocion/Crear">Cargar promoción</a>
+</div>
 
-            <main>
+<table>
 
-              @*   <div>
-                    <p>Para registrarte, hace click en el botón</p>
-                    <a class="btn btn-primary" href="/api/Promocion/Crear">Nuevo promoción</a>
-                </div> *@
-
-                <div>
-                    <p>Promoción !</p>
-                    <a class="btn btn-primary" href="/api/Promocion/Crear">Nueva promo !</a>
-                </div>
-
-                <table>
-
-                    <tr>
-                        <th>Título</th>
-                        <th>Descripción</th>
-                        <th>Fecha inicio</th>
-                        <th>Fecha fin</th>
-                        <th>Activa</th>
+    <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+        <th>Activa</th>
                 
+    </tr>
+
+    @if (Mensaje == null)
+    {
+            if (ListaPromo == null)
+            {
+                <p>Buscando....</p>
+            }
+            else if (ListaPromo.Count == 0)
+            {
+                <p>No existen promociones activas </p>
+            }
+            else
+            {
+                @foreach (var item in ListaPromo)
+                {
+                    <tr>
+                        <td>@item.Titulo</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.Fecha_Inicio</td>
+                        <td>@item.Fecha_Fin</td>
+                        <td>@item.Activa</td>
+                        <td>
+                            <a class="btn btn-primary" href="/api/Promocion/Editar/@item.Id">Editar</a>  
+                        </td>
                     </tr>
 
-                    @if (Mensaje == null)
-                    {
-                            if (ListaPromo == null)
-                            {
-                                <p>Buscando....</p>
-                            }
-                            else if (ListaPromo.Count == 0)
-                            {
-                                <p>No existen promociones activas </p>
-                            }
-                            else
-                            {
-                                @foreach (var item in ListaPromo)
-                                {
-                                    <tr>
-                                        <td>@item.Titulo</td>
-                                        <td>@item.Descripcion</td>
-                                        <td>@item.Fecha_Inicio</td>
-                                        <td>@item.Fecha_Fin</td>
-                                        <td>@item.Activa</td>
-                                        <td>
-                                            <a class="btn btn-primary" href="/api/Promocion/Editar/@item.Id">Editar</a>  @* hacer el editar de promocion *@
-                                        </td>
-                                    </tr>
+                }
+            }
+        }
+        else
+        {
+            <p> Error: @Mensaje</p>
+        }
 
-                                }
-                            }
-                        }
-                        else
+
+</table> *@
+
+<h1 class="text-center mb-4">🎉 Promociones activas</h1>
+
+<div class="container mb-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-bold text-success">¡Promoción disponible!</p>
+        <a class="btn btn-success" href="/api/Promocion/Crear">➕ Cargar promoción</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (ListaPromo == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando promociones...</div>
+        }
+        else if (ListaPromo.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen promociones activas</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Fecha inicio</th>
+                            <th>Fecha fin</th>
+                            <th>Activa</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ListaPromo)
                         {
-                            <p> Error: @Mensaje</p>
+                            <tr>
+                                <td>@item.Titulo</td>
+                                <td>@item.Descripcion</td>
+                                <td>@item.Fecha_Inicio.ToShortDateString()</td>
+                                <td>@item.Fecha_Fin.ToShortDateString()</td>
+                                <td>
+                                    @if (item.Activa)
+                                    {
+                                        <span class="badge bg-success">Sí</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">No</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary btn-sm" href="/api/Promocion/Editar/@item.Id">✏️ Editar</a>
+                                </td>
+                            </tr>
                         }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-
-                    </table>
-
-            </main>
-            
-            <footer>
-
-            </footer>
-    
-        </body>
-    
-    </html>
+           
 
 @code {
     List<Promocion> ListaPromo;

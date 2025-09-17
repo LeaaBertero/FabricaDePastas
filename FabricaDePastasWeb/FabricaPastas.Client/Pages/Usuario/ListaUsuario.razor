@@ -4,113 +4,149 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <table>
 
-<head>
-    <title>Editar cateoriaLista de usuarios registrados</title>
-</head>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Nombre de usuario</th>
+        <th>E-mail</th>
+        <th>Contraseña</th>
+        <th>Nro Teléfono</th>
+    </tr>
 
-<body>
+    @if (Mensaje == null)
+    {
+        if (ListaUsuarios == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (ListaUsuarios.Count == 0)
+        {
+            <p>No existen usuarios </p>
+        }
+        else
+        {
+            @foreach (var item in ListaUsuarios)
+            {
+                <tr>
 
-    <header>
-        <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
-    </header>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.Email</td>
+                    <td>@item.NombreUsuario</td>
+                    <td>@item.Contraseña</td>
+                    <td>@item.Teléfono</td>
+
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-danger"
+                                @onclick= "()=> Eliminar(item)">
+                            Borrar
+                        </button>
+                    </td>
+
+                </tr>
+
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+
+
+</table>
+
+<Confirmacion @ref="confirmacion"
+            Titulo="Alerta !!"
+            textCancelar="Cancelar"
+            onCancel="@Cancelar"
+            onConfirm="@Eliminar"> 
+            <h3>Está por eliminar un usuario, desea continuar?</h3>
+</Confirmacion> *@
+
+<h1 class="text-center mb-4">👥 Lista de usuarios registrados</h1>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (ListaUsuarios == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando usuarios...</div>
+        }
+        else if (ListaUsuarios.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen usuarios registrados</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Contraseña</th>
+                            <th>Teléfono</th>
+                            <th class="text-center">Modificar</th>
+                            <th class="text-center">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ListaUsuarios)
+                        {
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@item.Apellido</td>
+                                <td>@item.NombreUsuario</td>
+                                <td>@item.Email</td>
+                                <td>@item.Contraseña</td>
+                                <td>@item.Teléfono</td>
+                                <td class="text-center">
+                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">✏️ Modificar</a>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
+
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Alerta"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">Está por eliminar un usuario. ¿Desea continuar?</h5>
+</Confirmacion>
 
     
 
-        @*  <div>
-                <p>Para registrarte, hace click en el botón</p>
-                <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
-            </div> *@
-      @*   <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
-        </div> *@
+     
 
-      @*   <div class="bg-danger">
-            <a href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
-        </div> *@
-
-        <table>
-
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nombre de usuario</th>
-                <th>E-mail</th>
-                <th>Contraseña</th>
-                <th>Nro Teléfono</th>
-            </tr>
-
-            @if (Mensaje == null)
-            {
-                if (ListaUsuarios == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (ListaUsuarios.Count == 0)
-                {
-                    <p>No existen usuarios </p>
-                }
-                else
-                {
-                    @foreach (var item in ListaUsuarios)
-                    {
-                        <tr>
-
-                            <td>@item.Nombre</td>
-                            <td>@item.Apellido</td>
-                            <td>@item.Email</td>
-                            <td>@item.NombreUsuario</td>
-                            <td>@item.Contraseña</td>
-                            <td>@item.Teléfono</td>
-
-                            <td>
-                                <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                            </td>
-
-                            <td>
-                                <button class="btn btn-danger"
-                                        @onclick= "()=> Eliminar(item)">
-                                    Borrar
-                                </button>
-                            </td>
-
-                        </tr>
-
-                    }
-                }
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-
-        </table>
-
-    <Confirmacion @ref="confirmacion"
-              Titulo="CUIDADO"
-              textCancelar="Salir"
-              onCancel="@Cancelar"
-              onConfirm="@Borrar"> 
-              <h5>Está por borrar el tipo de documento</h5>
-              <br />
-              <p>Está seguro?</p>
-</Confirmacion>
+             
+             
 
 
 
 
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
-
+    
 
 
 
@@ -206,7 +242,7 @@
     // #endregion
     // variable que ya tenías
 
-    // cuando el usuario hace click en "Borrar" -> guardás el usuario y mostrás modal
+    // cuando el usuario hace click en "Borrar" -> muestra el la centana emergente al usuario, para que confirme
     private async Task Eliminar(Usuario usuario)
     {
         usuarioBorrar = usuario;
@@ -221,7 +257,7 @@
     }
 
     // CORREGIDO: método sin parámetros invocado por onConfirm="@Borrar"
-    private async Task Borrar()
+    private async Task Eliminar()
     {
         if (usuarioBorrar == null)
         {

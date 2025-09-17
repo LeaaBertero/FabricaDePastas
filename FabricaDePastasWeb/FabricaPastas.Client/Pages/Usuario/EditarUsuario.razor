@@ -2,96 +2,87 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Editar usuario</title>
-</head>
+@* 
+<EditForm Model="Modificarusuario" OnValidSubmit="Grabar">
 
-<body>
+    <DataAnnotationsValidator />
+           
 
-    <header>
-        <h1>Editar usuario</h1>
-    </header>
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" @bind="Modificarusuario.Nombre" class="form-control" />
+        <ValidationMessage For="@(() => Modificarusuario.Nombre)" />
+    </div>
 
-    <main>
+    <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" @bind="Modificarusuario.Apellido" class="form-control" />
+        <ValidationMessage For="@(() => Modificarusuario.Apellido)" />
+    </div>
 
-        <EditForm Model="Modificarusuario" OnValidSubmit="Grabar">
+    <div class="form-group">
+        <label for="e-mail">E-mail</label>
+        <input type="email" @bind="Modificarusuario.Email" class="form-control" />
+        <ValidationMessage For="@(() => Modificarusuario.Email)" />
+    </div>
 
-            <DataAnnotationsValidator />
-            @* <ValidationSummary /> *@
+    <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" @bind="Modificarusuario.Contraseña" class="form-control" />
+        <ValidationMessage For="@(() => Modificarusuario.Contraseña)" />
+    </div>
 
-            @*  <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <InputText placeholder="Nombre"  id="nombre" class="form-control" @bind-Value="usuario.Nombre" />
-                        <ValidationMessage For="@(() => usuario.Nombre)" />
-                    </div>
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <InputText placeholder="Apellido"  id="apellido" class="form-control" @bind-Value="usuario.Apellido" />
-                        <ValidationMessage For="@(() => usuario.Apellido)" />
-                    </div> *@
+           
 
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" @bind="Modificarusuario.Nombre" class="form-control" />
+
+    <div>
+        <button class="btn btn-success" type="submit">Actualizar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
+
+
+</EditForm> *@
+
+<h1 class="text-center mb-4 text-success fw-bold">🧑‍💻 Modificar usuario</h1>
+
+<EditForm Model="Modificarusuario" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" @bind="Modificarusuario.Nombre" class="form-control" placeholder="Ej: Leandro" />
                 <ValidationMessage For="@(() => Modificarusuario.Nombre)" />
             </div>
 
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" @bind="Modificarusuario.Apellido" class="form-control" />
+            <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" @bind="Modificarusuario.Apellido" class="form-control" placeholder="Ej: Rodríguez" />
                 <ValidationMessage For="@(() => Modificarusuario.Apellido)" />
             </div>
 
-            <div class="form-group">
-                <label for="e-mail">E-mail</label>
-                <input type="email" @bind="Modificarusuario.Email" class="form-control" />
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" id="email" @bind="Modificarusuario.Email" class="form-control" placeholder="Ej: lean@example.com" />
                 <ValidationMessage For="@(() => Modificarusuario.Email)" />
             </div>
 
-            <div class="form-group">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" @bind="Modificarusuario.Contraseña" class="form-control" />
+            <div class="mb-3">
+                <label for="contraseña" class="form-label">Contraseña</label>
+                <input type="password" id="contraseña" @bind="Modificarusuario.Contraseña" class="form-control" placeholder="••••••••" />
                 <ValidationMessage For="@(() => Modificarusuario.Contraseña)" />
             </div>
 
-            @*  <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                <input type="tel" @bind="Modificarusuario.Teléfono" class="form-control" />
-                <ValidationMessage For="@(() => Modificarusuario.Teléfono)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                <input type="text" @bind="Modificarusuario.Dirección" class="form-control" />
-                <ValidationMessage For="@(() => Modificarusuario.Dirección)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="direccion">Cuit / Cuil</label>
-                <input type="number" @bind="Modificarusuario.Cuit_Cuil" class="form-control" />
-                <ValidationMessage For="@(() => Modificarusuario.Cuit_Cuil)" />
-                </div> *@
-
-
-            <div>
-                <button class="btn btn-success" type="submit">Actualizar</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+            <div class="text-center mt-4">
+                <button class="btn btn-success me-2" type="submit">✅ Actualizar</button>
+                <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
             </div>
+        </div>
+    </div>
+</EditForm>
 
-
-        </EditForm>
-
-    </main>
-
-    <footer>
-    </footer>
-
-</body>
-
-</html>
 
 
 @code {

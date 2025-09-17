@@ -3,65 +3,76 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <h1 class="text-center">Promocion de los productos</h1>
 
-<head>
-    <title>Promocion producto</title>
-</head>
+<EditForm Model="promocion_producto" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-<body>
+    <div class="form-group">
+        <label for="descuento_pocercentaje">Nombre de producto</label>
+        <input placeholder="Nombre del producto" type="text" step="0.01" min="0"
+                @bind="promocion_producto.Nombre_Producto" class="form-control" />
+        <ValidationMessage For="@(() => promocion_producto.Nombre_Producto)" />
+    </div>
 
-    <header>
+    <div class="form-group">
+        <label for="descuento_pocercentaje">Descuento porcentaje</label>
+        <input placeholder="Descuento en porcentaje" type="number" step="0.01" min="0"
+                @bind="promocion_producto.Descuento_Porcentaje" class="form-control" />
+        <ValidationMessage For="@(() => promocion_producto.Descuento_Porcentaje)" />
+    </div>
 
-        <h1 class="text-center">Promocion de los productos</h1>
-
-        <EditForm Model="promocion_producto" OnValidSubmit="Grabar">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label for="descuento_pocercentaje">Nombre de producto</label>
-                <input placeholder="Nombre del producto" type="text" step="0.01" min="0"
-                       @bind="promocion_producto.Nombre_Producto" class="form-control" />
-                <ValidationMessage For="@(() => promocion_producto.Nombre_Producto)" />
-            </div>
-
-            <div class="form-group">
-                <label for="descuento_pocercentaje">Descuento porcentaje</label>
-                <input placeholder="Descuento en porcentaje" type="number" step="0.01" min="0"
-                       @bind="promocion_producto.Descuento_Porcentaje" class="form-control" />
-                <ValidationMessage For="@(() => promocion_producto.Descuento_Porcentaje)" />
-            </div>
-
-            <div class="form-group">
-                <label for="apellido">Precio promocional</label>
-                <input placeholder="Precio promocional" type="number" step="0.01" min="0"
-                       @bind="promocion_producto.Precio_Promocional" class="form-control" />
-                <ValidationMessage For="@(() => promocion_producto.Precio_Promocional)" />
-            </div>
+    <div class="form-group">
+        <label for="apellido">Precio promocional</label>
+        <input placeholder="Precio promocional" type="number" step="0.01" min="0"
+                @bind="promocion_producto.Precio_Promocional" class="form-control" />
+        <ValidationMessage For="@(() => promocion_producto.Precio_Promocional)" />
+    </div>
 
             
 
-            <div>
-                <button class="btn btn-primary" type="submit">Crear promo !</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-            </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Crear promo !</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-        </EditForm>
+</EditForm> *@
 
-    </header>
+<h1 class="text-center mb-4">Promoción de los productos</h1>
 
-    <main>
+<EditForm Model="promocion_producto" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-    </main>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="nombreProducto" class="form-label">Nombre del producto</label>
+            <input type="text" id="nombreProducto" placeholder="Nombre del producto"
+                   @bind="promocion_producto.Nombre_Producto" class="form-control" />
+            <ValidationMessage For="@(() => promocion_producto.Nombre_Producto)" />
+        </div>
 
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
+        <div class="col-md-3">
+            <label for="descuentoPorcentaje" class="form-label">Descuento (%)</label>
+            <input type="number" id="descuentoPorcentaje" placeholder="Ej: 15.00" step="0.01" min="0"
+                   @bind="promocion_producto.Descuento_Porcentaje" class="form-control" />
+            <ValidationMessage For="@(() => promocion_producto.Descuento_Porcentaje)" />
+        </div>
 
-</body>
+        <div class="col-md-3">
+            <label for="precioPromocional" class="form-label">Precio promocional</label>
+            <input type="number" id="precioPromocional" placeholder="Ej: 999.99" step="0.01" min="0"
+                   @bind="promocion_producto.Precio_Promocional" class="form-control" />
+            <ValidationMessage For="@(() => promocion_producto.Precio_Promocional)" />
+        </div>
 
-</html>
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">🎯 Crear promoción</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
+
+    
 
 @code {
     private Promocion_Producto promocion_producto = new Promocion_Producto();
@@ -78,6 +89,8 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/api/Promocion_Producto/Lista");
     }
+
+
 }

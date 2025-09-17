@@ -3,57 +3,60 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <h1 class="text-center">Promocion de los productos</h1>
 
-<head>
-    <title>Promocion producto</title>
-</head>
+<EditForm Model="promocion_usuario" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-<body>
-
-    <header>
-
-        <h1 class="text-center">Promocion de los productos</h1>
-
-        <EditForm Model="promocion_usuario" OnValidSubmit="Grabar">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label for="descuento_pocercentaje">Fecha de inicio</label>
-                <input placeholder="Fecha de inicio" type="date"  
-                       @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
-                <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
-            </div>
+    <div class="form-group">
+        <label for="descuento_pocercentaje">Fecha de inicio</label>
+        <input placeholder="Fecha de inicio" type="date"  
+                @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
+        <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
+    </div>
             
-            <div class="form-group">
-                <label for="descuento_pocercentaje">Fecha fin de promo</label>
-                <input placeholder="Fecha de inicio" type="date"
-                       @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
-                <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
-            </div>
+    <div class="form-group">
+        <label for="descuento_pocercentaje">Fecha fin de promo</label>
+        <input placeholder="Fecha de inicio" type="date"
+                @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
+        <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
+    </div>
 
      
-            <div>
-                <button class="btn btn-primary" type="submit">Cargar promo !</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-            </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Cargar promo !</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-        </EditForm>
+</EditForm> *@
 
-    </header>
+<h1 class="text-center mb-4">Promoción de los productos</h1>
 
-    <main>
+<EditForm Model="promocion_usuario" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-    </main>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="fechaInicio" class="form-label">Fecha de inicio</label>
+            <input type="date" id="fechaInicio" placeholder="Fecha de inicio"
+                   @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
+            <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
+        </div>
 
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
+        <div class="col-md-6">
+            <label for="fechaFin" class="form-label">Fecha fin de promoción</label>
+            <input type="date" id="fechaFin" placeholder="Fecha fin"
+                   @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
+            <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
+        </div>
 
-</body>
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">🎯 Cargar promoción</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
 
-</html>
 
 @code {
     private Promocion_Usuario promocion_usuario = new Promocion_Usuario();
@@ -70,6 +73,6 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/api/Promocion_Usuario/Lista");
     }
 }

@@ -3,85 +3,128 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
+@* <div>
+    <p>Para registrarte, hace click en el botón</p>
+    <a class="btn btn-primary" href="/api/Producto/Crear">Cargar producto</a>
+</div>
 
-    <html>
+<table>
 
-        <head>
-            <title>Lista de Productos en stock</title>
-        </head>
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio base</th>
+        <th>Imagen</th>
+        <th>Stock</th>
+    </tr>
 
-        <body>
+    @if (Mensaje == null)
+    {
+        if (Lista_producto == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (Lista_producto.Count == 0)
+        {
+            <p>No existen productos cargados </p>
+        }
+        else
+        {
+            @foreach (var item in Lista_producto)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Descripcion</td>
+                    <td>@item.PrecioBase</td>
+                    <td>@item.Imagen_Url</td>
+                    <td>@item.Stock</td>
 
-            <header>
-                <h1 class="text-center">Lista de Productos registrados en stock</h1>
-            </header>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar producto</a>
+                    </td>
 
-            <main>
+                </tr>
 
-                <div>
-                    <p>Para registrarte, hace click en el botón</p>
-                    <a class="btn btn-primary" href="/api/Producto/Crear">Cargar producto</a>
-                </div>
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
 
-                <table>
 
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio base</th>
-                        <th>Imagen</th>
-                        <th>Stock</th>
-                    </tr>
+</table> *@
 
-                    @if (Mensaje == null)
-                    {
-                        if (Lista_producto == null)
+<h1 class="text-center mb-4 text-success fw-bold">🛒 Productos disponibles</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Para registrar un nuevo producto, hacé click en el botón:</p>
+        <a class="btn btn-primary" href="/api/Producto/Crear">➕ Cargar producto</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Lista_producto == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando productos...</div>
+        }
+        else if (Lista_producto.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen productos cargados</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>📦 Nombre</th>
+                            <th>📝 Descripción</th>
+                            <th>💰 Precio base</th>
+                            <th>🖼️ Imagen</th>
+                            <th>📦 Stock</th>
+                            <th class="text-center">✏️ Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Lista_producto)
                         {
-                            <p>Buscando....</p>
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@item.Descripcion</td>
+                                <td>$@item.PrecioBase</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Imagen_Url))
+                                    {
+                                        <img src="@item.Imagen_Url" alt="Imagen del producto" class="img-thumbnail" style="max-width: 100px;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Sin imagen</span>
+                                    }
+                                </td>
+                                <td>@item.Stock</td>
+                                <td class="text-center">
+                                    <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar</a>
+                                </td>
+                            </tr>
                         }
-                        else if (Lista_producto.Count == 0)
-                        {
-                            <p>No existen productos cargados </p>
-                        }
-                        else
-                        {
-                            @foreach (var item in Lista_producto)
-                            {
-                                <tr>
-                                    <td>@item.Nombre</td>
-                                    <td>@item.Descripcion</td>
-                                    <td>@item.PrecioBase</td>
-                                    <td>@item.Imagen_Url</td>
-                                    <td>@item.Stock</td>
-
-                                    <td>
-                                        <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar producto</a>
-                                    </td>
-
-                                </tr>
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <p> Error: @Mensaje</p>
-                    }
-
-
+                    </tbody>
                 </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-            </main>
-
-
-            <footer>
-                <p>&copy; 2025 La Nonna Personal</p>
-            </footer>
-
-        </body>
-
-    </html>
+           
 
 @code {
 

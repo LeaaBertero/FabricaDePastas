@@ -3,48 +3,44 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <h1 class=" text-center">Acá podes cargar la categoría de productos</h1>
 
-    <head>
-        <title>Categoria de productos</title>
-    </head>
+<EditForm Model="categoria_producto" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-    <body>
+    <div class="form-group">
+        <label for="nombreCategoria">Nombre de categoría</label>
+        <input type="text" @bind="categoria_producto.Nombre_Categoria" class="form-control" />
+        <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
+    </div>
 
-        <header>
-
-            <h1 class=" text-center">Acá podes cargar la categoría de productos</h1>
-
-            <EditForm Model="categoria_producto" OnValidSubmit="Grabar">
-                <DataAnnotationsValidator />
-
-                <div class="form-group">
-                    <label for="nombreCategoria">Nombre de categoría</label>
-                    <input type="text" @bind="categoria_producto.Nombre_Categoria" class="form-control" />
-                    <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
-                </div>
-
-                <div>
-                    <button class="btn btn-primary" type="submit">Crear categoría</button>
-                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Crear categoría</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
                 
-            </EditForm>
+</EditForm> *@
 
-        </header>
+<h1 class="text-center mb-4">📂 Carga de categoría de productos</h1>
 
-        <main>
+<EditForm Model="categoria_producto" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-        </main>
+    <div class="row justify-content-center g-3">
+        <div class="col-md-6">
+            <label for="nombreCategoria" class="form-label">Nombre de categoría</label>
+            <input type="text" id="nombreCategoria" @bind="categoria_producto.Nombre_Categoria"
+                   class="form-control" placeholder="Ej: Bebidas, Snacks, Limpieza..." />
+            <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
+        </div>
 
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">✅ Crear categoría</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
 
-    </body>
-
-</html>
 
 @code {
     private Categoria_Producto categoria_producto = new Categoria_Producto();

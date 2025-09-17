@@ -3,50 +3,50 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-    <html>
 
-    <head>
-        <title>Registro de usuarios</title>
-    </head>
 
-    <body>
+@* <h1 class=" text-center">Detalle lista de precios</h1>
 
-        <header>
+<p>Indique el precio del producto</p>
 
-            <h1 class=" text-center">Detalle lista de precios</h1>
+<EditForm Model="detalle_listaPrecio" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-            <p>Indique el precio del producto</p>
+    <div class="form-group">
+        <label for="precio_personalizado">Precio personalizado</label>
+        <input type="number" @bind="detalle_listaPrecio.Precio_Personalizado" />
+        <ValidationMessage For="@(() => detalle_listaPrecio.Precio_Personalizado)" />
+    </div>
 
-            <EditForm Model="detalle_listaPrecio" OnValidSubmit="Grabar">
-                <DataAnnotationsValidator />
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-                <div class="form-group">
-                    <label for="precio_personalizado">Precio personalizado</label>
-                    <input type="number" @bind="detalle_listaPrecio.Precio_Personalizado" />
-                    <ValidationMessage For="@(() => detalle_listaPrecio.Precio_Personalizado)" />
-                </div>
+</EditForm> *@
 
-                <div>
-                    <button class="btn btn-primary" type="submit">Registrar</button>
-                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                </div>
+<h1 class="text-center mb-3">🧾 Detalle de lista de precios</h1>
+<p class="text-center text-muted mb-4">Indique el precio personalizado del producto</p>
 
-            </EditForm>
+<EditForm Model="detalle_listaPrecio" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-        </header>
+    <div class="row justify-content-center g-3">
+        <div class="col-md-6">
+            <label for="precio_personalizado" class="form-label">Precio personalizado</label>
+            <input type="number" id="precio_personalizado" @bind="detalle_listaPrecio.Precio_Personalizado"
+                   class="form-control" step="0.01" min="0" placeholder="Ej: 1299.99" />
+            <ValidationMessage For="@(() => detalle_listaPrecio.Precio_Personalizado)" />
+        </div>
 
-        <main>
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">💾 Registrar</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
 
-        </main>
-
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
-
-    </body>
-
-</html>
+        
 
 @code {
     private Detalle_Lista_Precio detalle_listaPrecio = new Detalle_Lista_Precio();

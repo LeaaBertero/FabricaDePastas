@@ -23,6 +23,11 @@
             @* <ValidationSummary /> *@
 
 
+            <div class="form-group">
+                <label for="nombre_Producto">Nombre del producto</label>
+                <input type="text" @bind="promocionProducto.Nombre_Producto" class="form-control" />
+                <ValidationMessage For="@(() => promocionProducto.Nombre_Producto)" />
+            </div>
 
             <div class="form-group">
                 <label for="promocion_Producto">Promocion producto</label>

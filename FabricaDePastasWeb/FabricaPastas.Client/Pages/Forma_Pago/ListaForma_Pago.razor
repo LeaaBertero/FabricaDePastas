@@ -108,6 +108,7 @@
     #endregion
 }
  *@
+
 @page "/api/Forma_Pago/Lista"
 @inject IHTTPServicio http;
 @inject HttpClient Http;
@@ -117,7 +118,7 @@
 
 
 
-<h1 class="text-center">-- Seleccione la forma de pago -- </h1>
+@* <h1 class="text-center">-- Seleccione la forma de pago -- </h1>
 
 
 <select @bind="FormaPagoSeleccionado" class="form-select">
@@ -133,7 +134,39 @@
     {
         <p>Rol seleccionado: <strong>@FormaPagoSeleccionado</strong></p>
     }
-</select>
+</select> *@
+
+<h1 class="text-center mb-4">💳 Seleccione la forma de pago</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <label for="FormaPagoSeleccionado" class="form-label">Opciones disponibles</label>
+            <select id="FormaPagoSeleccionado" @bind="FormaPagoSeleccionado" class="form-select">
+                <option disabled selected value="">-- Seleccione una forma de pago --</option>
+                @if (ListaFormaPago != null)
+                {
+                    foreach (var FormaPago in ListaFormaPago)
+                    {
+                        <option value="@FormaPago.Metodo">@FormaPago.Metodo</option>
+                    }
+                }
+            </select>
+
+            @if (!string.IsNullOrEmpty(FormaPagoSeleccionado))
+            {
+                <div class="alert alert-info mt-3 text-center">
+                    Forma de pago seleccionada: <strong>@FormaPagoSeleccionado</strong>
+                </div>
+            }
+
+           @*  <div class="text-center mt-4">
+                <button class="btn btn-success me-2" @onclick="ConfirmarPago">✅ Confirmar</button>
+                <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+            </div> *@
+        </div>
+    </div>
+</div>
 
 @* <button class="btn btn-primary" @onclick="IngresarFormaPago">Ingresar</button> *@
 

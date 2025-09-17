@@ -37,8 +37,6 @@ namespace FabricaPastas.BD.Data
         #endregion
 
         #region código para evitar qel borrado en cascada OnModelCreating
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -52,8 +50,22 @@ namespace FabricaPastas.BD.Data
             }
 
             base.OnModelCreating(modelBuilder);
+
+
+            #region Has_Precision
+            modelBuilder.Entity<Promocion_Producto>()
+            .Property(p => p.Descuento_Porcentaje)
+            .HasColumnType("decimal(18,2)");
+                    
+            modelBuilder.Entity<Promocion_Producto>()
+                .Property(p => p.Precio_Promocional)
+                .HasColumnType("decimal(18,2)");
+            #endregion
+
         }
         #endregion
+
+
     }
 }
 

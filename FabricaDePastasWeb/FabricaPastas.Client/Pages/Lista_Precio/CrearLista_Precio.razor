@@ -2,9 +2,9 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<h3>CrearLista_Precio</h3>
 
-<h1 class="text-center">Acá podes cargar la lista de precios</h1>
+
+@* <h1 class="text-center">Acá podes cargar la lista de precios</h1>
 
 <EditForm Model="lista_precio" OnValidSubmit="Grabar">
     <DataAnnotationsValidator />
@@ -35,6 +35,37 @@
         <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
     </div>
 
+</EditForm> *@
+
+<h1 class="text-center mb-4">📄 Carga de lista de precios</h1>
+
+<EditForm Model="lista_precio" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="FechaDesde" class="form-label">Fecha desde</label>
+            <input type="date" id="FechaDesde" @bind="lista_precio.Fecha_Desde" class="form-control" />
+            <ValidationMessage For="@(() => lista_precio.Fecha_Desde)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="FechaHasta" class="form-label">Fecha hasta</label>
+            <input type="date" id="FechaHasta" @bind="lista_precio.Fecha_Hasta" class="form-control" />
+            <ValidationMessage For="@(() => lista_precio.Fecha_Hasta)" />
+        </div>
+
+        <div class="col-md-12">
+            <label for="Archivo" class="form-label">Archivo de precios</label>
+            <input type="file" id="Archivo" @bind="lista_precio.Archivo_Lista_Precio" class="form-control" />
+            <ValidationMessage For="@(() => lista_precio.Archivo_Lista_Precio)" />
+        </div>
+
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">💾 Registrar</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
 </EditForm>
 
 @code {

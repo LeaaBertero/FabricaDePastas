@@ -4,33 +4,65 @@
 @inject NavigationManager navigationManager;
 
 
-
-
-
-    <h1 class="text-center">Seleccione el rol</h1>
+@* <h1 class="text-center">Seleccione el rol</h1>
         
-    <h2>Lista roles</h2>
+<h2>Lista roles</h2>
 
       
 
 
 
-    <select @bind="RolSeleccionado" class="form-select">
-        <option disabled selected value="">-- Seleccione un rol --</option>
-        @if (ListaRoles != null)
+<select @bind="RolSeleccionado" class="form-select">
+    <option disabled selected value="">-- Seleccione un rol --</option>
+    @if (ListaRoles != null)
+    {
+        foreach (var rol in ListaRoles)
         {
-            foreach (var rol in ListaRoles)
-            {
-                <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
-            }
+            <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
         }
-        @if (!string.IsNullOrEmpty(RolSeleccionado))
-        {
-            <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
-        }
-    </select>
+    }
+    @if (!string.IsNullOrEmpty(RolSeleccionado))
+    {
+        <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
+    }
+</select>
 
-    <button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button>
+<button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button> *@
+
+<h1 class="text-center mb-4">🧑‍💼 Seleccione el rol</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <label for="RolSeleccionado" class="form-label">Lista de roles disponibles</label>
+            <select id="RolSeleccionado" @bind="RolSeleccionado" class="form-select">
+                <option disabled selected value="">-- Seleccione un rol --</option>
+                @if (ListaRoles != null)
+                {
+                    foreach (var rol in ListaRoles)
+                    {
+                        <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
+                    }
+                }
+            </select>
+
+            @if (!string.IsNullOrEmpty(RolSeleccionado))
+            {
+                <div class="alert alert-info mt-3 text-center">
+                    Rol seleccionado: <strong>@RolSeleccionado</strong>
+                </div>
+            }
+
+            <div class="text-center mt-4">
+                <button class="btn btn-success me-2" @onclick="IngresarConRol">✅ Ingresar</button>
+                @* <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
           
 
@@ -65,7 +97,7 @@
 
 
 @code {
-
+    //navega a la pagina de listas segun el rol seleccionado
     private void IngresarConRol()
     {
         if (!string.IsNullOrEmpty(RolSeleccionado))

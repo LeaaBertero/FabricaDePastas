@@ -3,59 +3,61 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <h1 class=" text-center">Carga de productos (Stock)</h1>
 
-<head>
-    <title>Registro de productos</title>
-</head>
+<EditForm Model="detallePedido" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-<body>
+    <div class="form-group">
+        <label for="Cantidad">Cantidad</label>
+        <input type="number" @bind="detallePedido.Cantidad" class="form-control" />
+        <ValidationMessage For="@(() => detallePedido.Cantidad)" />
+    </div>
 
-    <header>
-
-        <h1 class=" text-center">Carga de productos (Stock)</h1>
-
-        <EditForm Model="detallePedido" OnValidSubmit="Grabar">
-            <DataAnnotationsValidator />
-
-            <div class="form-group">
-                <label for="Cantidad">Cantidad</label>
-                <input type="number" @bind="detallePedido.Cantidad" class="form-control" />
-                <ValidationMessage For="@(() => detallePedido.Cantidad)" />
-            </div>
-
-            <div class="form-group">
-                <label for="precioUnitario">Precio unitario</label>
-                <input type="number" @bind="detallePedido.Precio_Unitario"  class="form-control" />
-                <ValidationMessage For="@(() => detallePedido.Precio_Unitario)" />
-            </div>
+    <div class="form-group">
+        <label for="precioUnitario">Precio unitario</label>
+        <input type="number" @bind="detallePedido.Precio_Unitario"  class="form-control" />
+        <ValidationMessage For="@(() => detallePedido.Precio_Unitario)" />
+    </div>
 
            
 
-            <div>
-                <button class="btn btn-primary" type="submit">Registrar</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-            </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
 
-        </EditForm>
+</EditForm> *@
+
+<h1 class="text-center mb-4">📦 Carga de productos (Stock)</h1>
+
+<EditForm Model="detallePedido" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="Cantidad" class="form-label">Cantidad</label>
+            <input type="number" id="Cantidad" @bind="detallePedido.Cantidad" class="form-control" min="1" step="1" placeholder="Ej: 10" />
+            <ValidationMessage For="@(() => detallePedido.Cantidad)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="precioUnitario" class="form-label">Precio unitario</label>
+            <input type="number" id="precioUnitario" @bind="detallePedido.Precio_Unitario" class="form-control" step="0.01" min="0" placeholder="Ej: 999.99" />
+            <ValidationMessage For="@(() => detallePedido.Precio_Unitario)" />
+        </div>
+
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">💾 Registrar</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
 
 
 
-    </header>
-
-    <main>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
+   
 
 @code {
     private Detalle_Pedido detallePedido = new Detalle_Pedido();

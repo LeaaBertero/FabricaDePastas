@@ -3,81 +3,102 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
+@* <div>
+    <p>Para registrarte, hace click en el botón</p>
+    <a class="btn btn-primary" href="/api/Detalle_Pedido/Crear">Cargar detalle pedido</a>
+</div>
 
-<html>
+<table>
 
-<head>
-    <title>Lista de Productos en stock</title>
-</head>
-
-<body>
-
-    <header>
-        <h1 class="text-center">Lista de Productos registrados en stock</h1>
-    </header>
-
-    <main>
-
-        <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Detalle_Pedido/Crear">Cargar detalle pedido</a>
-        </div>
-
-        <table>
-
-            <tr>
-                <th>Cantidad</th>
-                <th>Precio unitario</th>
+    <tr>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
             
-            </tr>
+    </tr>
 
-            @if (Mensaje == null)
+    @if (Mensaje == null)
+    {
+        if (Listadetalle_peddo == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (Listadetalle_peddo.Count == 0)
+        {
+            <p>No existen detalle de pedidos cargados </p>
+        }
+        else
+        {
+            @foreach (var item in Listadetalle_peddo)
             {
-                if (Listadetalle_peddo == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (Listadetalle_peddo.Count == 0)
-                {
-                    <p>No existen detalle de pedidos cargados </p>
-                }
-                else
-                {
-                    @foreach (var item in Listadetalle_peddo)
-                    {
-                        <tr>
-                            <td>@item.Cantidad</td>
-                            <td>@item.Precio_Unitario</td>
+                <tr>
+                    <td>@item.Cantidad</td>
+                    <td>@item.Precio_Unitario</td>
                           
 
-                            @* <td class="d-grid gap-2 col-6 mx-auto">
-                                <a class="btn btn-warning btn-sm"
-                                   href="/api/Producto/Editar/@item.Id">Modificar producto</a>
-                            </td> *@
+                 
+                </tr>
+
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+
+
+</table> *@
+
+<h1 class="text-center mb-4 text-warning fw-bold">📋 Detalle de pedidos</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Para registrar un nuevo detalle, hacé click en el botón:</p>
+        <a class="btn btn-primary" href="/api/Detalle_Pedido/Crear">➕ Cargar detalle pedido</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Listadetalle_peddo == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando detalles de pedidos...</div>
+        }
+        else if (Listadetalle_peddo.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen detalles de pedidos cargados</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>🔢 Cantidad</th>
+                            <th>💲 Precio unitario</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Listadetalle_peddo)
+                        {
+                            <tr>
+                                <td>@item.Cantidad</td>
+                                <td>$@item.Precio_Unitario</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-                    }
-                }
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-
-        </table>
-
-    </main>
-
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
+   
 
 @code {
 

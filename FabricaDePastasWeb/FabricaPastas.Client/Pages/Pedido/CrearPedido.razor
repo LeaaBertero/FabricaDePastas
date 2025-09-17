@@ -3,65 +3,71 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <h1 class="text-center fondo">Fecha de pedidos y costos</h1>
 
-    <head>
-        <title>Pedido</title>
+<EditForm Model="pedido" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
+    <div class="form-group">
+        <label for="Fechapedido">Fecha pedido</label>
+        <input type="date" @bind="pedido.Fecha_Pedido" class="form-control" />
+        <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+    </div>
 
-    </head>
+    <div class="form-group">
+        <label for="Fechapedido">Fecha entrega</label>
+        <input type="date" @bind="pedido.Fecha_Entrega" class="form-control" />
+        <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
+    </div>
 
-    <body>
-
-        <header>
-
-            <h1 class="text-center fondo">Fecha de pedidos y costos</h1>
-
-            <EditForm Model="pedido" OnValidSubmit="Grabar">
-                <DataAnnotationsValidator />
-
-                <div class="form-group">
-                    <label for="Fechapedido">Fecha pedido</label>
-                    <input type="date" @bind="pedido.Fecha_Pedido" class="form-control" />
-                    <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="Fechapedido">Fecha entrega</label>
-                    <input type="date" @bind="pedido.Fecha_Entrega" class="form-control" />
-                    <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="total">Total</label>
-                    <input type="number" @bind="pedido.Total" class="form-control" />
-                    <ValidationMessage For="@(() => pedido.Total)" />
-                </div>
+    <div class="form-group">
+        <label for="total">Total</label>
+        <input type="number" @bind="pedido.Total" class="form-control" />
+        <ValidationMessage For="@(() => pedido.Total)" />
+    </div>
 
            
 
 
-                <div>
-                    <button class="btn btn-primary" type="submit">Registrar</button>
-                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-            </EditForm>
+</EditForm> *@
 
-        </header>
+<h1 class="text-center mb-4">📅 Fecha de pedidos y costos</h1>
 
-        <main>
+<EditForm Model="pedido" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-        </main>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="Fechapedido" class="form-label">Fecha del pedido</label>
+            <input type="date" id="Fechapedido" @bind="pedido.Fecha_Pedido" class="form-control" />
+            <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+        </div>
 
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
+        <div class="col-md-6">
+            <label for="FechaEntrega" class="form-label">Fecha de entrega</label>
+            <input type="date" id="FechaEntrega" @bind="pedido.Fecha_Entrega" class="form-control" />
+            <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
+        </div>
 
-    </body>
+        <div class="col-md-6">
+            <label for="Total" class="form-label">Costo total</label>
+            <input type="number" id="Total" @bind="pedido.Total" class="form-control" step="0.01" min="0" placeholder="Ej: 1500.00" />
+            <ValidationMessage For="@(() => pedido.Total)" />
+        </div>
 
-</html>
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">💾 Registrar pedido</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
+
+       
 
 @code {
     private Pedido pedido = new Pedido();

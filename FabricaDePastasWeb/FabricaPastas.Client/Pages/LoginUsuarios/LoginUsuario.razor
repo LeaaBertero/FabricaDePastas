@@ -81,7 +81,7 @@
 @inject IHTTPServicio http
 @inject NavigationManager navigationManager
 
-<EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion">
+@* <EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -96,6 +96,34 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Ingresar</button>
+</EditForm> *@
+
+<h1 class="text-center mb-4">🔐 Iniciar sesión</h1>
+
+<EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion" class="container">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="NombreUsuario" class="form-label">Usuario</label>
+                <InputText id="NombreUsuario" @bind-Value="usuarioLogin.NombreUsuario" class="form-control" placeholder="Ej: lean.dev" />
+                <ValidationMessage For="@(() => usuarioLogin.NombreUsuario)" />
+            </div>
+
+            <div class="mb-3">
+                <label for="Contraseña" class="form-label">Contraseña</label>
+                <InputText id="Contraseña" @bind-Value="usuarioLogin.Contraseña" type="password" class="form-control" placeholder="••••••••" />
+                <ValidationMessage For="@(() => usuarioLogin.Contraseña)" />
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success me-2">✅ Ingresar</button>
+                @* <button type="button" class="btn btn-outline-secondary" @onclick="Cancelar">Cancelar</button> *@
+            </div>
+        </div>
+    </div>
 </EditForm>
 
 @code {
@@ -113,7 +141,7 @@
         {
             // Si querés guardar el token, lo hacés acá
             // Por ahora redirigimos al dashboard
-            navigationManager.NavigateTo("/dashboard");
+            navigationManager.NavigateTo("/api/Tipo_Cliente");
         }
         else
         {

@@ -2,91 +2,112 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Modificar / Actualizar lista de precio</title>
-</head>
+@* <table>
 
-<body>
-
-    <header>
-        <h1 class="text-center">Lista de precios</h1>
-    </header>
-
-    <main>
-
-        @*  <div>
-                <p>Para registrarte, hace click en el botón</p>
-                <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
-            </div> *@
-      @*   <div>
-            <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Usuario/Registro/Crear">Registrate</a>
-        </div> *@
-
-      @*   <div class="bg-danger">
-            <a href="/api/Usuario/Registro/Crear">Nuevo usuario</a>
-        </div> *@
-
-        <table>
-
-            <tr>
-                <th>Fecha desde</th>
-                <th>Fecha hasta</th>
-                <th>Archivo lista de precio</th>
+    <tr>
+        <th>Fecha desde</th>
+        <th>Fecha hasta</th>
+        <th>Archivo lista de precio</th>
                 
-            </tr>
+    </tr>
 
-            @if (Mensaje == null)
+    @if (Mensaje == null)
+    {
+        if (Lista_Precio == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (Lista_Precio.Count == 0)
+        {
+            <p>No existen listas de precio</p>
+        }
+        else
+        {
+            @foreach (var item in Lista_Precio)
             {
-                if (Lista_Precio == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (Lista_Precio.Count == 0)
-                {
-                    <p>No existen listas de precio</p>
-                }
-                else
-                {
-                    @foreach (var item in Lista_Precio)
-                    {
+                <tr>
+                    <td>@item.Fecha_Desde</td>
+                    <td>@item.Fecha_Hasta</td>
+                    <td>@item.Archivo_Lista_Precio</td>
+
+                    <td>
+                        <button class="btn btn-danger"
+                                @onclick="() => Eliminar(item)">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+
+
+
+</table>
+ *@
+
+<h1 class="text-center mb-4 text-info fw-bold">📄 Listas de precios vigentes</h1>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Lista_Precio == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando listas de precio...</div>
+        }
+        else if (Lista_Precio.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen listas de precio registradas</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td>@item.Fecha_Desde</td>
-                            <td>@item.Fecha_Hasta</td>
-                            <td>@item.Archivo_Lista_Precio</td>
-
-                            <td>
-                                <button class="btn btn-danger"
-                                        @onclick="() => Eliminar(item)">
-                                    Borrar
-                                </button>
-                            </td>
+                            <th>📅 Fecha desde</th>
+                            <th>📅 Fecha hasta</th>
+                            <th>📁 Archivo</th>
+                            <th class="text-center">🗑️ Acción</th>
                         </tr>
-                    }
-                }
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-
-
-        </table>
-
-    </main>
-
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Lista_Precio)
+                        {
+                            <tr>
+                                <td>@item.Fecha_Desde</td>
+                                <td>@item.Fecha_Hasta</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Archivo_Lista_Precio))
+                                    {
+                                        <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwDxLT-K1oiw4QjD5ci6tdLtZii5Ho6z9I5g&s" target="_blank" class="btn btn-outline-primary btn-sm">📥 Ver archivo</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Sin archivo</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">Eliminar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
+   
 
 
 

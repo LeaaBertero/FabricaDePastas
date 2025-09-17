@@ -2,86 +2,96 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-    <html>
-    
-        <head>
-            <title>Promoción</title>
-        </head>
-    
-        <body>
-        
-            <header>
-                <h1>Promoción de productos</h1>
 
-                <EditForm Model="promocion" OnValidSubmit="Grabar">
-                    <DataAnnotationsValidator />
 
-                    @* <ValidationSummary /> *@
+@* <h1>Promoción de productos</h1>
 
-                    @*  <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <InputText placeholder="Nombre"  id="nombre" class="form-control" @bind-Value="usuario.Nombre" />
-                            <ValidationMessage For="@(() => usuario.Nombre)" />
-                        </div>
-                        <div class="form-group">
-                            <label for="apellido">Apellido</label>
-                            <InputText placeholder="Apellido"  id="apellido" class="form-control" @bind-Value="usuario.Apellido" />
-                            <ValidationMessage For="@(() => usuario.Apellido)" />
-                        </div> *@
+<EditForm Model="promocion" OnValidSubmit="Grabar">
+<DataAnnotationsValidator />
 
-                    <div class="form-group">
-                        <label for="Titulo">Titulo de la promoción</label>
-                        <input type="text" @bind="promocion.Titulo" class="form-control" />
-                        <ValidationMessage For="@(() => promocion.Titulo)" />
-                    </div>
+    <div class="form-group">
+        <label for="Titulo">Titulo de la promoción</label>
+        <input type="text" @bind="promocion.Titulo" class="form-control" />
+        <ValidationMessage For="@(() => promocion.Titulo)" />
+    </div>
 
-                    <div class="form-group">
-                        <label for="Descripcion">descripción de la promoción</label>
-                        <input type="text" @bind="promocion.Descripcion" class="form-control" />
-                        <ValidationMessage For="@(() => promocion.Descripcion)" />
-                    </div>
+    <div class="form-group">
+        <label for="Descripcion">descripción de la promoción</label>
+        <input type="text" @bind="promocion.Descripcion" class="form-control" />
+        <ValidationMessage For="@(() => promocion.Descripcion)" />
+    </div>
 
-                    <div class="form-group">
-                        <label for="Fecha_Inicio">Fecha de inicio</label>
-                        <input type="date" @bind="promocion.Fecha_Inicio" class="form-control" />
-                        <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
-                    </div>
+    <div class="form-group">
+        <label for="Fecha_Inicio">Fecha de inicio</label>
+        <input type="date" @bind="promocion.Fecha_Inicio" class="form-control" />
+        <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
+    </div>
 
-                    <div class="form-group">
-                        <label for="Fecha_Fin">Fecha finalización</label>
-                        <input type="date" @bind="promocion.Fecha_Fin" class="form-control" />
-                        <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
-                    </div>
+    <div class="form-group">
+        <label for="Fecha_Fin">Fecha finalización</label>
+        <input type="date" @bind="promocion.Fecha_Fin" class="form-control" />
+        <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
+    </div>
 
-                    <div class="form-group">
-                        <label for="Activa">¿Está activo?</label>
-                        <input type="checkbox" @bind="promocion.Activa" class="form-check-input" />
-                        <ValidationMessage For="@(() => promocion.Activa)" />
-                    </div>
+    <div class="form-group">
+        <label for="Activa">¿Está activo?</label>
+        <input type="checkbox" @bind="promocion.Activa" class="form-check-input" />
+        <ValidationMessage For="@(() => promocion.Activa)" />
+    </div>
 
                     
-                    <div>
-                        <button class="btn btn-primary" type="submit">Registrar</button>
-                        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                    </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-                  
-                </EditForm>
+</EditForm> *@
 
-            </header>
+<h1 class="text-center mb-4">Promoción de productos</h1>
 
-            <main>
+<EditForm Model="promocion" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-            </main>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="Titulo" class="form-label">Título de la promoción</label>
+            <input type="text" id="Titulo" @bind="promocion.Titulo" class="form-control" placeholder="Ej: 2x1 en bebidas" />
+            <ValidationMessage For="@(() => promocion.Titulo)" />
+        </div>
 
-            <footer>
-                <p>&copy; 2023 La Nonna Pastas</p>
-            </footer>
-    
-        </body>
+        <div class="col-md-6">
+            <label for="Descripcion" class="form-label">Descripción</label>
+            <input type="text" id="Descripcion" @bind="promocion.Descripcion" class="form-control" placeholder="Ej: Válido hasta agotar stock" />
+            <ValidationMessage For="@(() => promocion.Descripcion)" />
+        </div>
 
-    </html>
+        <div class="col-md-6">
+            <label for="Fecha_Inicio" class="form-label">Fecha de inicio</label>
+            <input type="date" id="Fecha_Inicio" @bind="promocion.Fecha_Inicio" class="form-control" />
+            <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="Fecha_Fin" class="form-label">Fecha de finalización</label>
+            <input type="date" id="Fecha_Fin" @bind="promocion.Fecha_Fin" class="form-control" />
+            <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
+        </div>
+
+        <div class="col-12">
+            <div class="form-check">
+                <input type="checkbox" id="Activa" @bind="promocion.Activa" class="form-check-input" />
+                <label for="Activa" class="form-check-label">¿Está activa?</label>
+            </div>
+            <ValidationMessage For="@(() => promocion.Activa)" />
+        </div>
+
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">✅ Registrar promoción</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
+
 
 @code {
     private Promocion promocion = new Promocion();

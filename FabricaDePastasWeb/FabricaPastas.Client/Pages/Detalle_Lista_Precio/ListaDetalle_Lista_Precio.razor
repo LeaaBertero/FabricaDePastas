@@ -3,80 +3,101 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-    <html>
+@* <div>
+    <p>Para registrarte, hace click en el botón</p>
+    <a class="btn btn-primary" href="/api/Detalle_Lista_Precio/Crear">cargar detalle lista de precio</a>
+</div>
 
-    <head>
-        <title>Editar cateoriaLista de usuarios registrados</title>
-    </head>
+<table>
 
-    <body>
+<tr>
+    <th>Detalle lista de precio</th>
+</tr>
 
-        <header>
-            <h1 class="text-center">Lista de usuarios registrados del sistema</h1>
-        </header>
-
-        <main>
-
-            <div>
-                <p>Para registrarte, hace click en el botón</p>
-                <a class="btn btn-primary" href="/api/Detalle_Lista_Precio/Crear">cargar detalle lista de precio</a>
-            </div>
-
-            <table>
-
-                <tr>
-                    <th>Detalle lista de precio</th>
-                </tr>
-
-                @if (Mensaje == null)
-                {
-                    if (ListaDetalleLista_precio == null)
-                    {
-                        <p>Buscando....</p>
-                    }
-                    else if (ListaDetalleLista_precio.Count == 0)
-                    {
-                        <p>No ningún detalle de lista de precios </p>
-                    }
-                    else
-                    {
-                        @foreach (var item in ListaDetalleLista_precio)
-                        {
+@if (Mensaje == null)
+{
+    if (ListaDetalleLista_precio == null)
+    {
+        <p>Buscando....</p>
+    }
+    else if (ListaDetalleLista_precio.Count == 0)
+    {
+        <p>No ningún detalle de lista de precios </p>
+    }
+    else
+    {
+        @foreach (var item in ListaDetalleLista_precio)
+        {
                             
-                            <tr>
+            <tr>
 
-                                <td>@item.Precio_Personalizado</td>
+                <td>@item.Precio_Personalizado</td>
                                 
+            </tr>
 
-                              @*   <td>
-                                    <a class="btn btn-warning btn-sm" href="/#/@item.Id">Modificar</a>
-                                </td> *@
+               
 
  
+
+        }
+    }
+}
+else
+{
+    <p> Error: @Mensaje</p>
+}
+
+
+</table> *@
+
+<h1 class="text-center mb-4 text-primary fw-bold">📑 Detalle de lista de precios</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Para registrar un nuevo detalle, hacé click en el botón:</p>
+        <a class="btn btn-primary" href="/api/Detalle_Lista_Precio/Crear">➕ Cargar detalle</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (ListaDetalleLista_precio == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando detalles de precios...</div>
+        }
+        else if (ListaDetalleLista_precio.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No hay detalles de lista de precios cargados</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>💲 Precio personalizado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ListaDetalleLista_precio)
+                        {
+                            <tr>
+                                <td>$@item.Precio_Personalizado</td>
                             </tr>
-
                         }
-                    }
-                }
-                else
-                {
-                    <p> Error: @Mensaje</p>
-                }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-
-            </table>
-
-        </main>
-
-
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
-
-    </body>
-
-</html>
+       
 
 @code {
 

@@ -3,85 +3,108 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-    <html>
+@* <div>
+<p>Para registrarte, hace click en el botón</p>
+<a class="btn btn-primary" href="/api/Pedido/Crear">Registrar fecha de pedido</a>
+</div>
 
-    <head>
-        <title>Editar Pedidos registrados</title>
-    </head>
+<table>
 
-    <body>
-
-        <header>
-            <h1 class="text-center">Lista pedidos registrados en el sistema</h1>
-        </header>
-
-        <main>
-
-            <div>
-                <p>Para registrarte, hace click en el botón</p>
-            <a class="btn btn-primary" href="/api/Pedido/Crear">Registrar fecha de pedido</a>
-            </div>
-
-            <table>
-
-                <tr>
-                    <th>Fecha pedido</th>
-                    <th>Fecha entrega</th>
-                    <th>Total</th>
+<tr>
+    <th>Fecha pedido</th>
+    <th>Fecha entrega</th>
+    <th>Total</th>
                    
-                </tr>
+</tr>
 
-                @if (Mensaje == null)
-                {
-                    if (Lista_pedidos == null)
-                    {
-                        <p>Buscando....</p>
-                    }
-                    else if (Lista_pedidos.Count == 0)
-                    {
-                        <p>No existen listas de pedidos </p>
-                    }
-                    else
-                    {
-                        @foreach (var item in Lista_pedidos)
-                        {
-                            <tr>
+@if (Mensaje == null)
+{
+    if (Lista_pedidos == null)
+    {
+        <p>Buscando....</p>
+    }
+    else if (Lista_pedidos.Count == 0)
+    {
+        <p>No existen listas de pedidos </p>
+    }
+    else
+    {
+        @foreach (var item in Lista_pedidos)
+        {
+            <tr>
 
-                                <td>@item.Fecha_Pedido</td>
-                                <td>@item.Fecha_Entrega</td>
-                                <td>@item.Total</td>
+                <td>@item.Fecha_Pedido</td>
+                <td>@item.Fecha_Entrega</td>
+                <td>@item.Total</td>
                                 
-
-                              @*   <td>
-                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                                </td> *@
 
                               
 
+            </tr>
+
+        }
+    }
+}
+else
+{
+    <p> Error: @Mensaje</p>
+}
+
+
+</table> *@
+
+<h1 class="text-center mb-4 text-primary fw-bold">📦 Registro de pedidos</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Para registrar un nuevo pedido, hacé click en el botón:</p>
+        <a class="btn btn-primary" href="/api/Pedido/Crear">➕ Registrar fecha de pedido</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Lista_pedidos == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando pedidos...</div>
+        }
+        else if (Lista_pedidos.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen listas de pedidos</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>📅 Fecha pedido</th>
+                            <th>🚚 Fecha entrega</th>
+                            <th>💰 Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Lista_pedidos)
+                        {
+                            <tr>
+                                <td>@item.Fecha_Pedido.ToShortDateString()</td>
+                                <td>@item.Fecha_Entrega.ToShortDateString()</td>
+                                <td>$@item.Total</td>
                             </tr>
-
                         }
-                    }
-                }
-                else
-                {
-                    <p> Error: @Mensaje</p>
-                }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-
-            </table>
-
-        </main>
-
-
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
-
-    </body>
-
-    </html>
+      
 
 @code {
 

@@ -3,91 +3,129 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-    <html>
 
-    <head>
-        <title>Registro de usuarios</title>
-    </head>
+@* <h1 class="text-center">Registrate compleando todos los campos !</h1>
 
-    <body>
+<EditForm Model="usuario" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
 
-        <header>
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" placeholder="Nombre" @bind="usuario.Nombre" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Nombre)" />
+    </div>
 
-            <h1 class="text-center">Registrate compleando todos los campos !</h1>
+    <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" placeholder="Apellido" @bind="usuario.Apellido" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Apellido)" />
+    </div>
 
-            <EditForm Model="usuario" OnValidSubmit="Grabar">
-                <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="e-mail">E-mail</label>
+        <input type="email" placeholder="Correo electrónico" @bind="usuario.Email" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Email)" />
+    </div>
 
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" placeholder="Nombre" @bind="usuario.Nombre" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Nombre)" />
-                </div>
+    <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" placeholder="Contrseña" @bind="usuario.Contraseña" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Contraseña)" />
+    </div>
 
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" placeholder="Apellido" @bind="usuario.Apellido" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Apellido)" />
-                </div>
+    <div class="form-group">
+        <label for="contraseña">Nombre de usuario</label>
+        <input type="text" placeholder="Nombre de usuario" @bind="usuario.NombreUsuario" class="form-control" />
+        <ValidationMessage For="@(() => usuario.NombreUsuario)" />
+    </div>
 
-                <div class="form-group">
-                    <label for="e-mail">E-mail</label>
-                    <input type="email" placeholder="Correo electrónico" @bind="usuario.Email" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Email)" />
-                </div>
+    <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" placeholder="Telefono" @bind="usuario.Teléfono" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Teléfono)" />
+    </div>
 
-                <div class="form-group">
-                    <label for="contraseña">Contraseña</label>
-                    <input type="password" placeholder="Contrseña" @bind="usuario.Contraseña" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Contraseña)" />
-                </div>
+    <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input type="text" placeholder="Dirección" @bind="usuario.Dirección" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Dirección)" />
+    </div>
 
-                <div class="form-group">
-                    <label for="contraseña">Nombre de usuario</label>
-                    <input type="text" placeholder="Nombre de usuario" @bind="usuario.NombreUsuario" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.NombreUsuario)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" placeholder="Telefono" @bind="usuario.Teléfono" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Teléfono)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input type="text" placeholder="Dirección" @bind="usuario.Dirección" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Dirección)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="direccion">Cuit / Cuil</label>
-                    <input type="tel" placeholder="Cuit / Cuil" @bind="usuario.Cuit_Cuil" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
-                </div>
+    <div class="form-group">
+        <label for="direccion">Cuit / Cuil</label>
+        <input type="tel" placeholder="Cuit / Cuil" @bind="usuario.Cuit_Cuil" class="form-control" />
+        <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
+    </div>
 
 
-                <div>
-                    <button class="btn btn-primary" type="submit">Registrar</button>
-                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
+    </div>
 
-            </EditForm>
+</EditForm> *@
 
-        </header>
+<h1 class="text-center mb-4 text-primary fw-bold">📝 Registrate en nuestra web</h1>
 
-        <main>
+<EditForm Model="usuario" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-        </main>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" @bind="usuario.Nombre" class="form-control" placeholder="Ej: Leandro" />
+            <ValidationMessage For="@(() => usuario.Nombre)" />
+        </div>
 
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
+        <div class="col-md-6">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" id="apellido" @bind="usuario.Apellido" class="form-control" placeholder="Ej: Rodríguez" />
+            <ValidationMessage For="@(() => usuario.Apellido)" />
+        </div>
 
-    </body>
+        <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" id="email" @bind="usuario.Email" class="form-control" placeholder="Ej: lean@example.com" />
+            <ValidationMessage For="@(() => usuario.Email)" />
+        </div>
 
-</html>
+        <div class="col-md-6">
+            <label for="contraseña" class="form-label">Contraseña</label>
+            <input type="password" id="contraseña" @bind="usuario.Contraseña" class="form-control" placeholder="••••••••" />
+            <ValidationMessage For="@(() => usuario.Contraseña)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
+            <input type="text" id="nombreUsuario" @bind="usuario.NombreUsuario" class="form-control" placeholder="Ej: lean.dev" />
+            <ValidationMessage For="@(() => usuario.NombreUsuario)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" id="telefono" @bind="usuario.Teléfono" class="form-control" placeholder="Ej: 3511234567" />
+            <ValidationMessage For="@(() => usuario.Teléfono)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" id="direccion" @bind="usuario.Dirección" class="form-control" placeholder="Ej: Av. Siempre Viva 123" />
+            <ValidationMessage For="@(() => usuario.Dirección)" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="cuitCuil" class="form-label">CUIT / CUIL</label>
+            <input type="tel" id="cuitCuil" @bind="usuario.Cuit_Cuil" class="form-control" placeholder="Ej: 20-12345678-9" />
+            <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
+        </div>
+
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        </div>
+    </div>
+</EditForm>
+
 
 @code {
     private Usuario usuario = new Usuario();

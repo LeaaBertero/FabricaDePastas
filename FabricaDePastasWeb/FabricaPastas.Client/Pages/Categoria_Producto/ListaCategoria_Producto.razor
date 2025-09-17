@@ -3,80 +3,107 @@
 @inject NavigationManager navigationManager;
 
 
-<!DOCTYPE html>
-<html>
+@* <div>
+    <p>Nueva categoría</p>
+    <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">Crear categoria</a>
+</div>
 
-    <head>
-        <title>Lista de categorías</title>
-    </head>
+<table>
 
-    <body>
+    <tr>
+        <th>Nombre de cateoría</th>
+    </tr>
 
-        <header>
-            <h1 class="text-center">Lista de Categorias</h1>
-        </header>
-
-        <main>
-
-            <div>
-                <p>Nueva categoría</p>
-                <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">Crear categoria</a>
-            </div>
-
-            <table>
-
+    @if (Mensaje == null)
+    {
+        if (Lista_categoria == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if (Lista_categoria.Count == 0)
+        {
+            <p>No existen categorias cargadas </p>
+        }
+        else
+        {
+            @foreach (var item in Lista_categoria)
+            {
                 <tr>
-                    <th>Nombre de cateoría</th>
-                </tr>
 
-                @if (Mensaje == null)
-                {
-                    if (Lista_categoria == null)
-                    {
-                        <p>Buscando....</p>
-                    }
-                    else if (Lista_categoria.Count == 0)
-                    {
-                        <p>No existen categorias cargadas </p>
-                    }
-                    else
-                    {
-                        @foreach (var item in Lista_categoria)
-                        {
-                            <tr>
-
-                                <td>@item.Nombre_Categoria</td>
+                    <td>@item.Nombre_Categoria</td>
                                
 
-                                <td>
-                                    <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
-                                </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
+                    </td>
 
                                 
 
+                </tr>
+
+            }
+        }
+    }
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
+
+
+</table> *@
+
+<h1 class="text-center mb-4 text-success fw-bold">📂 Categorías de productos</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-semibold">Nueva categoría disponible:</p>
+        <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">➕ Crear categoría</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Mensaje == null)
+    {
+        @if (Lista_categoria == null)
+        {
+            <div class="alert alert-secondary text-center">🔄 Buscando categorías...</div>
+        }
+        else if (Lista_categoria.Count == 0)
+        {
+            <div class="alert alert-warning text-center">⚠️ No existen categorías cargadas</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>🏷️ Nombre de categoría</th>
+                            <th class="text-center">✏️ Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Lista_categoria)
+                        {
+                            <tr>
+                                <td>@item.Nombre_Categoria</td>
+                                <td class="text-center">
+                                    <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
+                                </td>
                             </tr>
-
                         }
-                    }
-                }
-                else
-                {
-                    <p> Error: @Mensaje</p>
-                }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+    }
+</div>
 
-
-            </table>
-
-        </main>
-
-
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
-
-    </body>
-
-</html>
+      
 
 @code {
 
