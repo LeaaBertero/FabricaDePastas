@@ -131,10 +131,10 @@
         await Leer();
     }
 
-    #region Leer usuarios
+    #region Leer promociones de productos
     private async Task Leer()
     {
-        var resp = await http.Get<List<Promocion_Producto>>("api/Promocion_Producto");
+        var resp = await http.Get<List<Promocion_Producto>>("/api/Promocion_Producto");
 
         string Mensaje = "";
 
