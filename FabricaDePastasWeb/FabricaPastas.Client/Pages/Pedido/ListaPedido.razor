@@ -81,6 +81,7 @@ else
                         <tr>
                             <th>📅 Fecha pedido</th>
                             <th>🚚 Fecha entrega</th>
+                            <th>Observaciones Cáctering</th>
                             <th>💰 Total</th>
                         </tr>
                     </thead>
@@ -90,6 +91,7 @@ else
                             <tr>
                                 <td>@item.Fecha_Pedido.ToShortDateString()</td>
                                 <td>@item.Fecha_Entrega.ToShortDateString()</td>
+                                <td>@item.Observaciones_Catering?.ToString()</td>
                                 <td>$@item.Total</td>
                             </tr>
                         }

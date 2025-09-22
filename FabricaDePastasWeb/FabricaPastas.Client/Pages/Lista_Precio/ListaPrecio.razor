@@ -3,53 +3,7 @@
 @inject NavigationManager navigationManager;
 
 
-@* <table>
 
-    <tr>
-        <th>Fecha desde</th>
-        <th>Fecha hasta</th>
-        <th>Archivo lista de precio</th>
-                
-    </tr>
-
-    @if (Mensaje == null)
-    {
-        if (Lista_Precio == null)
-        {
-            <p>Buscando....</p>
-        }
-        else if (Lista_Precio.Count == 0)
-        {
-            <p>No existen listas de precio</p>
-        }
-        else
-        {
-            @foreach (var item in Lista_Precio)
-            {
-                <tr>
-                    <td>@item.Fecha_Desde</td>
-                    <td>@item.Fecha_Hasta</td>
-                    <td>@item.Archivo_Lista_Precio</td>
-
-                    <td>
-                        <button class="btn btn-danger"
-                                @onclick="() => Eliminar(item)">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-            }
-        }
-    }
-    else
-    {
-        <p> Error: @Mensaje</p>
-    }
-
-
-
-</table>
- *@
 
 <h1 class="text-center mb-4 text-info fw-bold">📄 Listas de precios vigentes</h1>
 
@@ -82,10 +36,11 @@
                             <tr>
                                 <td>@item.Fecha_Desde</td>
                                 <td>@item.Fecha_Hasta</td>
+                                <td>@item.Archivo_Lista_Precio</td>
                                 <td>
                                     @if (!string.IsNullOrEmpty(item.Archivo_Lista_Precio))
                                     {
-                                        <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwDxLT-K1oiw4QjD5ci6tdLtZii5Ho6z9I5g&s" target="_blank" class="btn btn-outline-primary btn-sm">📥 Ver archivo</a>
+                                        <a href="https://www.google.com/" target="_blank" class="btn btn-outline-primary btn-sm">📥 Ver archivo</a>
                                     }
                                     else
                                     {
@@ -108,10 +63,6 @@
     }
 </div>
    
-
-
-
-
 
 
 @code {
@@ -146,10 +97,6 @@
         }
     }
     #endregion
-
-
-
-
 
 
     //se unifico el borrar y el eliminar usuario en uno solo.

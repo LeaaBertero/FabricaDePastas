@@ -37,6 +37,9 @@ namespace FabricaPastas.BD.Data.Entity
         [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
         public DateOnly Fecha_Entrega { get; set; } //agregado para el método de entrega
 
+        
+        public string? Observaciones_Catering { get; set; } //Descripción del catering (opcional)
+
         public decimal Total { get; set; }
 
         //#region Tablas relacionadas (Uno a muchos) - Listas

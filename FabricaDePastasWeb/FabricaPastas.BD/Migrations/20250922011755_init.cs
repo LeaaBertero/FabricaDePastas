@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class ActualizoBD : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace FabricaPastas.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Imagen_Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,6 +131,7 @@ namespace FabricaPastas.BD.Migrations
                     Metodo_Entrega_Id = table.Column<int>(type: "int", nullable: false),
                     Fecha_Pedido = table.Column<DateOnly>(type: "date", nullable: false),
                     Fecha_Entrega = table.Column<DateOnly>(type: "date", nullable: false),
+                    Observaciones_Catering = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>

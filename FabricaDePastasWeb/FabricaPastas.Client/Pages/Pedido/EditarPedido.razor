@@ -35,6 +35,12 @@
             </div>
             
             <div class="form-group">
+                <label for="FechaEntrega">Fecha entrega</label>
+                <input type="text" @bind="Editar_pedido.Observaciones_Catering" class="form-control" />
+                <ValidationMessage For="@(() => Editar_pedido.Observaciones_Catering)" />
+            </div>
+            
+            <div class="form-group">
                 <label for="Nombrecategoria">Nombre categoría|</label>
                 <input type="number" @bind="Editar_pedido.Total" class="form-control" />
                 <ValidationMessage For="@(() => Editar_pedido.Total)" />

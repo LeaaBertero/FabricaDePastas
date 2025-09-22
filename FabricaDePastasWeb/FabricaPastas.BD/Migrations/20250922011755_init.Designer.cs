@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250915233319_ActualizoBD")]
-    partial class ActualizoBD
+    [Migration("20250922011755_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,10 @@ namespace FabricaPastas.BD.Migrations
 
                     b.Property<int>("Categoria_Producto_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Imagen_Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre_Categoria")
                         .IsRequired()
@@ -227,6 +231,9 @@ namespace FabricaPastas.BD.Migrations
 
                     b.Property<int>("Metodo_Entrega_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Observaciones_Catering")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pedido_Id")
                         .HasColumnType("int");

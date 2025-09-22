@@ -3,57 +3,7 @@
 @inject NavigationManager navigationManager;
 
 
-@* <div>
-    <p>Promoción !</p>
-    <a class="btn btn-success" href="/api/Promocion/Crear">Cargar promoción</a>
-</div>
 
-<table>
-
-    <tr>
-        <th>Título</th>
-        <th>Descripción</th>
-        <th>Fecha inicio</th>
-        <th>Fecha fin</th>
-        <th>Activa</th>
-                
-    </tr>
-
-    @if (Mensaje == null)
-    {
-            if (ListaPromo == null)
-            {
-                <p>Buscando....</p>
-            }
-            else if (ListaPromo.Count == 0)
-            {
-                <p>No existen promociones activas </p>
-            }
-            else
-            {
-                @foreach (var item in ListaPromo)
-                {
-                    <tr>
-                        <td>@item.Titulo</td>
-                        <td>@item.Descripcion</td>
-                        <td>@item.Fecha_Inicio</td>
-                        <td>@item.Fecha_Fin</td>
-                        <td>@item.Activa</td>
-                        <td>
-                            <a class="btn btn-primary" href="/api/Promocion/Editar/@item.Id">Editar</a>  
-                        </td>
-                    </tr>
-
-                }
-            }
-        }
-        else
-        {
-            <p> Error: @Mensaje</p>
-        }
-
-
-</table> *@
 
 <h1 class="text-center mb-4">🎉 Promociones activas</h1>
 

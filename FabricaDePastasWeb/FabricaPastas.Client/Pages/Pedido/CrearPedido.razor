@@ -55,6 +55,12 @@
         </div>
 
         <div class="col-md-6">
+            <label for="FechaEntrega" class="form-label">Observaciones_Catering</label>
+            <input type="text" id="FechaEntrega" @bind="pedido.Observaciones_Catering" class="form-control" />
+            <ValidationMessage For="@(() => pedido.Observaciones_Catering)" />
+        </div>
+
+        <div class="col-md-6">
             <label for="Total" class="form-label">Costo total</label>
             <input type="number" id="Total" @bind="pedido.Total" class="form-control" step="0.01" min="0" placeholder="Ej: 1500.00" />
             <ValidationMessage For="@(() => pedido.Total)" />

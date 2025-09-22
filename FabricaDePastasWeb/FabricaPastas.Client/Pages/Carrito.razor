@@ -1,0 +1,27 @@
+﻿@page "/Carrito"
+@using FabricaPastas.Client.Shared
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+<h3>Carrito</h3>
+
+@code {
+    public class Carritoservice
+    {
+        private List<CarritoDTO> _items = new();
+
+        public void AgregarProducto(CarritoDTO item)
+        {
+            var existente = _items.FirstOrDefault(x => x.IdProducto == item.IdProducto);
+            if (existente != null)
+                existente.Cantidad += item.Cantidad;
+            else
+                _items.Add(item);
+        }
+
+        public List<CarritoDTO> ObtenerItems() => _items;
+
+        public decimal Total => _items.Sum(x => x.Subtotal);
+    }
+}

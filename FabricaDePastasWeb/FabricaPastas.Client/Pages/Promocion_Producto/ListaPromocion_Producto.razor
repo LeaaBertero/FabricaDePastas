@@ -3,61 +3,6 @@
 @inject NavigationManager navigationManager;
 
 
-@* <div>
-    <p>Para registrarte, hace click en el botón</p>
-    <a class="btn btn-primary" href="/api/Promocion_Producto/Crear">Crear promocion de producto</a>
-</div>
-
-<table>
-
-    <tr>
-        <th>Nombre producto</th>
-        <th>Descuento porcentaje</th>
-        <th>Precio promocional</th>
-
-    </tr>
-
-    @if (Mensaje == null)
-    {
-        if (ListaPromo_prod == null)
-        {
-            <p>Buscando....</p>
-        }
-        else if (ListaPromo_prod.Count == 0)
-        {
-            <p>No existen promociones de productos </p>
-        }
-        else
-        {
-            @foreach (var item in ListaPromo_prod)
-            {
-                <tr>
-
-                    <td>@item.Nombre_Producto</td>
-                    <td>@item.Descuento_Porcentaje</td>
-                    <td>@item.Precio_Promocional</td>
-
-
-
-                    <td>
-                        <a class="btn btn-warning btn-sm" href="/api/Promocion_Producto/Editar/@item.Id">Editar</a>
-                    </td>
-
-                           
-
-
-                </tr>
-
-            }
-        }
-    }
-    else
-    {
-        <p> Error: @Mensaje</p>
-    }
-
-
-</table> *@
 
 <h1 class="text-center mb-4 text-primary fw-bold">🛍️ Promociones de productos</h1>
 

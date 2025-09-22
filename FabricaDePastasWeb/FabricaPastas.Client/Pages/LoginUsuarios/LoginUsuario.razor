@@ -1,102 +1,8 @@
-﻿@* @page "/api/Usuario/Login"
-@inject IHTTPServicio http;
-@inject NavigationManager navigationManager;
-
-
-<!DOCTYPE html>
-    <html>
-
-    <head>
-        <title>Registro de usuarios</title>
-    </head>
-
-    <body>
-
-        <header>
-
-            <h1 class=" text-center">Ingresá usuario y contraseña para acceder al sistema</h1>
-
-            <EditForm Model="usuario" OnValidSubmit="Grabar">
-                <DataAnnotationsValidator />
-
-                <div class="form-group">
-                    <label for="e-mail">E-mail</label>
-                    <input type="email" @bind="usuario.NombreUsuario" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.NombreUsuario)" />
-                </div>
-
-                <div class="form-group">
-                    <label for="contraseña">Contraseña</label>
-                    <input type="password" @bind="usuario.Contraseña" class="form-control" />
-                    <ValidationMessage For="@(() => usuario.Contraseña)" />
-                </div>
-
-                
-                <div>
-                    <button class="btn btn-primary" type="submit">Ingresar</button>
-                    <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-                </div>
-
-            </EditForm>
-
-        </header>
-
-        <main>
-
-        </main>
-
-        <footer>
-            <p>&copy; 2025 La Nonna Personal</p>
-        </footer>
-
-    </body>
-
-</html>
-
-@code {
-    private Usuario usuario = new Usuario();
-
-    private async Task Grabar()
-    {
-        var httpRespuesta = await http.Post<Usuario>("/", usuario);
-
-        if (httpRespuesta.Error)
-        {
-            var body = httpRespuesta.HttpResponseMessage;
-        }
-    }
-
-    private void Cancelar()
-    {
-        navigationManager.NavigateTo("/");
-    }
-
-
-}
- *@
-
-
-
-@page "/LoginUsuarios"
+﻿@page "/LoginUsuarios"
 @inject IHTTPServicio http
+@inject HttpClient Http;
 @inject NavigationManager navigationManager
 
-@* <EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Usuario</label>
-        <InputText @bind-Value="usuarioLogin.NombreUsuario" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label>Contraseña</label>
-        <InputText @bind-Value="usuarioLogin.Contraseña" type="password" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Ingresar</button>
-</EditForm> *@
 
 <h1 class="text-center mb-4">🔐 Iniciar sesión</h1>
 
@@ -108,7 +14,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="NombreUsuario" class="form-label">Usuario</label>
-                <InputText id="NombreUsuario" @bind-Value="usuarioLogin.NombreUsuario" class="form-control" placeholder="Ej: lean.dev" />
+                <InputText id="NombreUsuario" @bind-Value="usuarioLogin.NombreUsuario" class="form-control" placeholder="Ej: user@user.com" />
                 <ValidationMessage For="@(() => usuarioLogin.NombreUsuario)" />
             </div>
 
@@ -118,16 +24,65 @@
                 <ValidationMessage For="@(() => usuarioLogin.Contraseña)" />
             </div>
 
+            <select id="TipoClienteSeleccionado" @bind="TipoClienteSeleccionado" class="form-select">
+                <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
+                @if (ListaTipoCliente != null)
+                {
+                    foreach (var TipoCliente in ListaTipoCliente)
+                    {
+                        <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
+                    }
+                }
+            </select>
+
+
+            @if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+            {
+                <div class="alert alert-info mt-3 text-center">
+                    Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong>
+                </div>
+            }
+
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success me-2">✅ Ingresar</button>
                 @* <button type="button" class="btn btn-outline-secondary" @onclick="Cancelar">Cancelar</button> *@
             </div>
         </div>
     </div>
+
+
 </EditForm>
 
 @code {
    
+    //selecciona el rol de usuario
+    private string TipoClienteSeleccionado;
+
+    private List<Tipo_Cliente> ListaTipoCliente;
+
+    // private List<Tipo_Cliente> ListaTipoClientes;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListaTipoCliente = await Http.GetFromJsonAsync<List<Tipo_Cliente>>("api/Tipo_Cliente");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error obteniendo tipos de cliente: {ex.Message}");
+        }
+    }
+
+    private void IngresarConTipoCliente()
+    {
+        if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+        {
+            navigationManager.NavigateTo($"/api/Categoria_Producto/Lista");
+        }
+    }
     
     private CrearLoginDTO usuarioLogin = new CrearLoginDTO();
 

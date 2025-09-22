@@ -105,7 +105,7 @@
 
     private async Task Grabar()
     {
-        //tDocumento.Personas = new List<Persona>();
+        
 
         var httpRespuesta = await http.Put<Promocion>($"api/Promocion/{PromocionId}", promocion);
         if (httpRespuesta.Error)

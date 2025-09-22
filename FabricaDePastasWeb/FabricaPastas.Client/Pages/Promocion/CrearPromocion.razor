@@ -4,48 +4,7 @@
 
 
 
-@* <h1>Promoción de productos</h1>
 
-<EditForm Model="promocion" OnValidSubmit="Grabar">
-<DataAnnotationsValidator />
-
-    <div class="form-group">
-        <label for="Titulo">Titulo de la promoción</label>
-        <input type="text" @bind="promocion.Titulo" class="form-control" />
-        <ValidationMessage For="@(() => promocion.Titulo)" />
-    </div>
-
-    <div class="form-group">
-        <label for="Descripcion">descripción de la promoción</label>
-        <input type="text" @bind="promocion.Descripcion" class="form-control" />
-        <ValidationMessage For="@(() => promocion.Descripcion)" />
-    </div>
-
-    <div class="form-group">
-        <label for="Fecha_Inicio">Fecha de inicio</label>
-        <input type="date" @bind="promocion.Fecha_Inicio" class="form-control" />
-        <ValidationMessage For="@(() => promocion.Fecha_Inicio)" />
-    </div>
-
-    <div class="form-group">
-        <label for="Fecha_Fin">Fecha finalización</label>
-        <input type="date" @bind="promocion.Fecha_Fin" class="form-control" />
-        <ValidationMessage For="@(() => promocion.Fecha_Fin)" />
-    </div>
-
-    <div class="form-group">
-        <label for="Activa">¿Está activo?</label>
-        <input type="checkbox" @bind="promocion.Activa" class="form-check-input" />
-        <ValidationMessage For="@(() => promocion.Activa)" />
-    </div>
-
-                    
-    <div>
-        <button class="btn btn-primary" type="submit">Registrar</button>
-        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-    </div>
-
-</EditForm> *@
 
 <h1 class="text-center mb-4">Promoción de productos</h1>
 
