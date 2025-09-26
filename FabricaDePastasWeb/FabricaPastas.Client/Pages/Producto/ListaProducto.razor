@@ -1,4 +1,5 @@
 ﻿@page "/api/Producto/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -110,6 +111,7 @@
                                 <td>@item.Stock</td>
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar</a>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Eliminar</button> @* Botón eliminar *@
                                 </td>
                             </tr>
                         }
@@ -124,9 +126,22 @@
     }
 </div>
 
+@* Modal de confirmación (igual que en usuarios) *@
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Alerta"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">Está por eliminar un producto. ¿Desea continuar?</h5>
+</Confirmacion>
+
            
 
 @code {
+
+    Confirmacion confirmacion;
+
+    Producto productoBorrar;
 
     List<Producto> Lista_producto;
 
@@ -154,6 +169,47 @@
             Mensaje = await resp.ObtenerError();
         }
     }
+
+    //  Muestra el modal de confirmación
+    private void Eliminar(Producto producto)
+    {
+        productoBorrar = producto;
+        confirmacion.Ver();
+    }
+
+    //  Cancelar cerrar modal sin borrar
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        productoBorrar = null;
+    }
+
+    //  Confirmar  eliminar
+    private async Task Eliminar()
+    {
+        if (productoBorrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        var respuesta = await http.Delete($"api/Producto/{productoBorrar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "❌ No se pudo borrar el producto";
+        }
+        else
+        {
+            await Leer(); // refresca lista
+        }
+
+        productoBorrar = null;
+        confirmacion.Ocultar();
+    }
+}
+
+
 }
 
 

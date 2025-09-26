@@ -1,56 +1,7 @@
 ﻿@page "/api/Categoria_Producto/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
-
-
-@* <div>
-    <p>Nueva categoría</p>
-    <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">Crear categoria</a>
-</div>
-
-<table>
-
-    <tr>
-        <th>Nombre de cateoría</th>
-    </tr>
-
-    @if (Mensaje == null)
-    {
-        if (Lista_categoria == null)
-        {
-            <p>Buscando....</p>
-        }
-        else if (Lista_categoria.Count == 0)
-        {
-            <p>No existen categorias cargadas </p>
-        }
-        else
-        {
-            @foreach (var item in Lista_categoria)
-            {
-                <tr>
-
-                    <td>@item.Nombre_Categoria</td>
-                               
-
-                    <td>
-                        <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
-                    </td>
-
-                                
-
-                </tr>
-
-            }
-        }
-    }
-    else
-    {
-        <p> Error: @Mensaje</p>
-    }
-
-
-</table> *@
 
 <h1 class="text-center mb-4 text-success fw-bold">📂 Categorías de productos</h1>
 
@@ -79,7 +30,8 @@
                     <thead class="table-light">
                         <tr>
                             <th>🏷️ Nombre de categoría</th>
-                            <th class="text-center">✏️ Acción</th>
+                            <th>🖼️ Imagen (URL)</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,9 +39,19 @@
                         {
                             <tr>
                                 <td>@item.Nombre_Categoria</td>
-                                <td>@item.Imagen_Url</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Imagen_Url))
+                                    {
+                                        <a href="@item.Imagen_Url" target="_blank">@item.Imagen_Url</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Sin imagen</span>
+                                    }
+                                </td>
                                 <td class="text-center">
-                                    <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a>
+                                    <a class="btn btn-warning btn-sm me-2" href="/api/Categoria_Producto/Editar/@item.Id">✏️ Modificar</a>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => PrepararEliminar(item)">🗑️ Borrar</button>
                                 </td>
                             </tr>
                         }
@@ -104,30 +66,31 @@
     }
 </div>
 
-      
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Alerta"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Borrar">
+    <h5 class="text-danger text-center">Está por eliminar una categoría. ¿Desea continuar?</h5>
+</Confirmacion>
 
 @code {
+    Confirmacion confirmacion;
 
-
-    List<Categoria_Producto> Lista_categoria;
-    
-    
+    private List<Categoria_Producto> Lista_categoria = new();  // inicializada para evitar null ref
+    private Categoria_Producto? Categoriaborrar = null;
 
     string Mensaje;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         await Leer();
     }
 
-    #region Leer usuarios
     private async Task Leer()
     {
         var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto");
-
-        string Mensaje = "";
 
         if (!resp.Error)
         {
@@ -138,13 +101,46 @@
             Mensaje = await resp.ObtenerError();
         }
     }
-    #endregion
 
-   
+    // Al hacer click en Borrar guardamos item y mostramos modal
+    private void PrepararEliminar(Categoria_Producto categoria)
+    {
+        Categoriaborrar = categoria;
+        confirmacion.Ver();
+    }
 
-   
+    // Cancelar: cerrar modal y limpiar selección
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        Categoriaborrar = null;
+    }
+
+    // Método invocado por onConfirm (sin parámetros)
+    private async Task Borrar()
+    {
+        if (Categoriaborrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        // CORRECCIÓN: incluir la barra antes del id
+        var respuesta = await http.Delete($"api/Categoria_Producto/{Categoriaborrar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "No se pudo borrar la categoría";
+        }
+        else
+        {
+            await Leer();
+        }
+
+        Categoriaborrar = null;
+        confirmacion.Ocultar();
+    }
 }
-
 
 
 

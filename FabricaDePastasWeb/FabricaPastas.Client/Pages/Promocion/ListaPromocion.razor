@@ -1,4 +1,5 @@
 ﻿@page "/api/Promocion/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -60,6 +61,10 @@
                                 <td class="text-center">
                                     <a class="btn btn-primary btn-sm" href="/api/Promocion/Editar/@item.Id">✏️ Editar</a>
                                 </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
+                                </td>
+
                             </tr>
                         }
                     </tbody>
@@ -73,9 +78,25 @@
     }
 </div>
 
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Alerta"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">Está por eliminar una promocion. ¿Desea continuar?</h5>
+</Confirmacion>
+
            
 
 @code {
+
+    Confirmacion confirmacion;
+
+    Promocion promocion;
+
+    Promocion? promocionBorrar = null;
+
+
     List<Promocion> ListaPromo;
 
     string Mensaje;
@@ -102,4 +123,45 @@
             Mensaje = await resp.ObtenerError();
         }
     }
+
+    private async Task Eliminar(Promocion promocion)
+    {
+        promocionBorrar = promocion;
+        confirmacion.Ver();
+    }
+
+    // cancelar: oculta modal y limpia selección
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        promocionBorrar = null;
+    }
+
+    // CORREGIDO: método sin parámetros invocado por onConfirm="@Borrar"
+    private async Task Eliminar()
+    {
+        if (promocionBorrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        var respuesta = await http.Delete($"api/Promocion/{promocionBorrar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "No se pudo borrar la promocion";
+        }
+        else
+        {
+            await Leer();
+        }
+
+        // limpiar y cerrar modal
+        promocionBorrar = null;
+        confirmacion.Ocultar();
+    }
+
+
+
 }

@@ -1,9 +1,80 @@
 ﻿@page "/api/Lista_Precio/Editar/{Lista_PrecioId:int}"
-@inject IHTTPServicio http;
-@inject NavigationManager navigationManage
+@inject IHTTPServicio http
+@inject NavigationManager navigationManager
 
-<h3>EditarListaPrecio</h3>
+<h3 class="text-center text-primary fw-bold">✏️ Editar Lista de Precio</h3>
+
+@if (listaPrecio == null)
+{
+    <div class="alert alert-info text-center">🔄 Cargando datos de la lista de precio...</div>
+}
+else
+{
+    <EditForm Model="listaPrecio" OnValidSubmit="GuardarCambios">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">📅 Fecha Desde</label>
+            <InputDate @bind-Value="listaPrecio.Fecha_Desde" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">📅 Fecha Hasta</label>
+            <InputDate @bind-Value="listaPrecio.Fecha_Hasta" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">📁 Archivo Lista de Precio</label>
+            <InputText @bind-Value="listaPrecio.Archivo_Lista_Precio" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">💾 Guardar cambios</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="Volver">↩️ Cancelar</button>
+    </EditForm>
+}
 
 @code {
-    // terminar el codigo para modoficar la lista de precios
+    [Parameter] public int Lista_PrecioId { get; set; }
+
+    private Lista_Precio listaPrecio;
+    private string mensajeError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        var resp = await http.Get<Lista_Precio>($"api/Lista_Precio/{Lista_PrecioId}");
+
+        if (!resp.Error)
+        {
+            listaPrecio = resp.Respuesta;
+        }
+        else
+        {
+            mensajeError = await resp.ObtenerError();
+        }
+    }
+
+    private async Task GuardarCambios()
+    {
+        var resp = await http.Put($"api/Lista_Precio/{Lista_PrecioId}", listaPrecio);
+
+        if (!resp.Error)
+        {
+            navigationManager.NavigateTo("/api/Lista_Precio/Lista");
+        }
+        else
+        {
+            mensajeError = await resp.ObtenerError();
+        }
+    }
+
+    private void Volver()
+    {
+        navigationManager.NavigateTo("/api/Lista_Precio/Lista");
+    }
 }

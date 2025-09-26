@@ -69,6 +69,38 @@ namespace FabricaPastas.Server.Controllers
         #endregion
 
         #region Método Put
+        //[HttpPut("{id:int}")]
+        //public async Task<ActionResult> Put(int id, [FromBody] Categoria_Producto entidad)
+        //{
+        //    if (id != entidad.Id)
+        //    {
+        //        return BadRequest("Datos incorrectos");
+        //    }
+
+        //    var dammy = await repositorio.SelectById(id);
+
+        //    if (dammy == null)
+        //    {
+        //        return NotFound("No se encontró la categoria buscada");
+        //    }
+
+        //    dammy.Nombre_Categoria = entidad.Nombre_Categoria;
+
+
+        //    //dammy.Fecha_Registro = entidad.Fecha_Registro;
+
+        //    try
+        //    {
+        //        await repositorio.Update(id, dammy);
+
+        //        return Ok();
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(e.Message);
+        //    }
+        //}
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Categoria_Producto entidad)
         {
@@ -85,22 +117,21 @@ namespace FabricaPastas.Server.Controllers
             }
 
             dammy.Nombre_Categoria = entidad.Nombre_Categoria;
-           
-
-            //dammy.Fecha_Registro = entidad.Fecha_Registro;
+            dammy.Imagen_Url = entidad.Imagen_Url; // agregar esta línea
 
             try
             {
                 await repositorio.Update(id, dammy);
-
                 return Ok();
-
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
+
+
+
         #endregion
 
         #region Método Delete

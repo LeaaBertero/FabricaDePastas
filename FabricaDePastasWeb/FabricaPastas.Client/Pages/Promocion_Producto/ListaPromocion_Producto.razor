@@ -1,4 +1,5 @@
 ﻿@page "/api/Promocion_Producto/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
@@ -34,6 +35,7 @@
                             <th>💸 Descuento (%)</th>
                             <th>💰 Precio promocional</th>
                             <th class="text-center">✏️ Acción</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +47,10 @@
                                 <td>$@item.Precio_Promocional</td>
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-sm" href="/api/Promocion_Producto/Editar/@item.Id">Editar</a>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(item)">Eliminar</button>
                                 </td>
+
+
                             </tr>
                         }
                     </tbody>
@@ -59,9 +64,18 @@
     }
 </div>
 
- 
+ <Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Confirmar eliminación"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">¿Seguro que desea eliminar esta promoción?</h5>
+</Confirmacion>
 
 @code {
+
+    Confirmacion confirmacion;   // agregado
+    Promocion_Producto PromoAEliminar;   // agregado
 
 
     List<Promocion_Producto> ListaPromo_prod;
@@ -91,8 +105,49 @@
         {
             Mensaje = await resp.ObtenerError();
         }
+
+
     }
     #endregion
+
+
+    // preparar la confirmación
+    private void ConfirmarEliminar(Promocion_Producto promo)
+    {
+        PromoAEliminar = promo;
+        confirmacion.Ver();
+    }
+
+    // cancelar eliminación
+    private void Cancelar()
+    {
+        PromoAEliminar = null;
+        confirmacion.Ocultar();
+    }
+
+    // ejecutar eliminación
+    private async Task Eliminar()
+    {
+        if (PromoAEliminar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        var respuesta = await http.Delete($"/api/Promocion_Producto/{PromoAEliminar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "❌ No se pudo eliminar la promoción";
+        }
+        else
+        {
+            await Leer(); // refrescar lista
+        }
+
+        PromoAEliminar = null;
+        confirmacion.Ocultar();
+    }
 
 
 }
