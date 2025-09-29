@@ -81,6 +81,7 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
+
         #region Método Put
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Pedido entidad)
@@ -90,6 +91,7 @@ namespace FabricaPastas.Server.Controllers
                 return BadRequest("Datos incorrectos");
             }
 
+            // Obtenemos el pedido existente
             var dammy = await repositorio.SelectById(id);
 
             if (dammy == null)
@@ -97,26 +99,61 @@ namespace FabricaPastas.Server.Controllers
                 return NotFound("No se encontró el pedido buscado");
             }
 
+            // Actualizamos todas las propiedades que queremos permitir modificar
             dammy.Fecha_Pedido = entidad.Fecha_Pedido;
             dammy.Fecha_Entrega = entidad.Fecha_Entrega;
             dammy.Total = entidad.Total;
-            
-            //dammy.Fecha_Registro = entidad.Fecha_Registro;
+            dammy.Observaciones_Catering = entidad.Observaciones_Catering;
 
             try
             {
                 await repositorio.Update(id, dammy);
-
-
                 return Ok();
-
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
         }
         #endregion
+
+
+        //#region Método Put
+        //[HttpPut("{id:int}")]
+        //public async Task<ActionResult> Put(int id, [FromBody] Pedido entidad)
+        //{
+        //    if (id != entidad.Id)
+        //    {
+        //        return BadRequest("Datos incorrectos");
+        //    }
+
+        //    var dammy = await repositorio.SelectById(id);
+
+        //    if (dammy == null)
+        //    {
+        //        return NotFound("No se encontró el pedido buscado");
+        //    }
+
+        //    dammy.Fecha_Pedido = entidad.Fecha_Pedido;
+        //    dammy.Fecha_Entrega = entidad.Fecha_Entrega;
+        //    dammy.Total = entidad.Total;
+
+        //    //dammy.Fecha_Registro = entidad.Fecha_Registro;
+
+        //    try
+        //    {
+        //        await repositorio.Update(id, dammy);
+
+
+        //        return Ok();
+
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        return BadRequest(e.Message);
+        //    }
+        //}
+        //#endregion
     }
 }
