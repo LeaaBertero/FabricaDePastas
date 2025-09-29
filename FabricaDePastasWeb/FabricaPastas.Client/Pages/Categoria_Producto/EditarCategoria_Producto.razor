@@ -17,7 +17,9 @@
 
         <div class="col-md-6">
             <label for="imagenCategoria" class="form-label">Imagen</label>
-            <InputFile OnChange="SubirArchivo" class="form-control" />
+            <!-- ✅ quitamos la subida de archivo en editar -->
+            <input type="text" id="imagenCategoria" @bind="EditarCategoriaproducto.Imagen_Url"
+                   class="form-control" placeholder="URL de la imagen" />
             @if (!string.IsNullOrEmpty(EditarCategoriaproducto.Imagen_Url))
             {
                 <img src="@EditarCategoriaproducto.Imagen_Url" class="img-thumbnail mt-2" style="max-height:100px;" />
@@ -58,34 +60,26 @@
 
     private async Task Grabar()
     {
-        var httpRespuesta = await http.Put<Categoria_Producto>($"api/Categoria_Producto/{Categoria_ProductoId}", EditarCategoriaproducto);
+        EditarCategoriaproducto.Id = Categoria_ProductoId;
+
+        var httpRespuesta = await http.Put<Categoria_Producto>(
+            $"api/Categoria_Producto/{Categoria_ProductoId}",
+            EditarCategoriaproducto
+        );
+
         if (httpRespuesta.Error)
         {
-            var body = httpRespuesta.HttpResponseMessage;
+            var body = await httpRespuesta.HttpResponseMessage.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error en PUT: {body}");
         }
-        navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+        else
+        {
+            navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+        }
     }
 
     private void Cancelar()
     {
         navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
-    }
-
-    // Método para subir archivo de imagen
-    private async Task SubirArchivo(InputFileChangeEventArgs e)
-    {
-        var archivo = e.File;
-        if (archivo != null)
-        {
-            // Convertir a base64 para mostrar inmediatamente (opcional)
-            var buffer = new byte[archivo.Size];
-            await archivo.OpenReadStream().ReadAsync(buffer);
-            var base64 = Convert.ToBase64String(buffer);
-            EditarCategoriaproducto.Imagen_Url = $"data:{archivo.ContentType};base64,{base64}";
-
-            // Si tienes API para subir archivo y guardar URL, aquí harías POST
-            // var respuesta = await http.SubirArchivo(archivo);
-            // EditarCategoriaproducto.Imagen_Url = respuesta.Url;
-        }
     }
 }

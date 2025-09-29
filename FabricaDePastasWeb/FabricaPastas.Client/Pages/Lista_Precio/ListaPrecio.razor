@@ -1,9 +1,7 @@
 ﻿@page "/api/Lista_Precio/Lista"
+@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
-
-
-
 
 <h1 class="text-center mb-4 text-info fw-bold">📄 Listas de precios vigentes</h1>
 
@@ -57,7 +55,8 @@
 
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-sm" href="/api/Lista_Precio/Editar/@item.Id">Modificar</a>
-                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">Eliminar</button>
+                                    <!-- cambio: ahora abre la confirmación en lugar de eliminar directo -->
+                                    <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(item)">Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -71,31 +70,36 @@
         <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
     }
 </div>
-   
+
+<!-- Confirmación (popup de advertencia) -->
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Advertencia"
+              textCancelar="Cancelar"
+              onCancel="Cancelar"
+              onConfirm="Borrar">
+    <h5>Está por eliminar una lista de precio</h5>
+    <p>¿Está seguro que desea continuar?</p>
+</Confirmacion>
 
 
 @code {
 
     private List<Lista_Precio> Lista_Precio;
-
-    Lista_Precio listaPrecio;
-
+    private Lista_Precio listaPrecioBorrar; // cambio: guardamos temporalmente la lista a borrar
     string Mensaje;
+
+    Confirmacion confirmacion; // referencia al componente confirmación
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         await Leer();
     }
 
-    #region Leer usuarios
+    #region Leer listas
     private async Task Leer()
     {
         var resp = await http.Get<List<Lista_Precio>>("api/Lista_Precio");
-
-        string Mensaje = "";
-
         if (!resp.Error)
         {
             Lista_Precio = resp.Respuesta;
@@ -107,21 +111,31 @@
     }
     #endregion
 
-
-    //se unifico el borrar y el eliminar usuario en uno solo.
-    #region Eliminar Lista_Precio
-    private async Task Eliminar(Lista_Precio ListaPrecioBorrar)
+    #region Confirmación y eliminación
+    private void ConfirmarEliminar(Lista_Precio lista)
     {
-        var respuesta = await http.Delete($"api/Lista_Precio/{ListaPrecioBorrar.Id}");
+        listaPrecioBorrar = lista;
+        confirmacion.Ver(); // mostramos la advertencia
+    }
 
-        if (respuesta.Error)
+    private void Cancelar()
+    {
+        listaPrecioBorrar = null;
+        confirmacion.Ocultar();
+    }
+
+    private async Task Borrar()
+    {
+        if (listaPrecioBorrar != null)
         {
-            Mensaje = "No se pudo borrar La lista de precio";
-        }
-        else
-        {
+            var respuesta = await http.Delete($"api/Lista_Precio/{listaPrecioBorrar.Id}");
+            if (respuesta.Error)
+            {
+                Mensaje = "❌ No se pudo borrar la lista de precio";
+            }
             await Leer();
         }
+        Cancelar();
     }
     #endregion
 }
