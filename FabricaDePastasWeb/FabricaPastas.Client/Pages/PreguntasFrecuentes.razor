@@ -1,0 +1,249 @@
+﻿@page "/preguntas-frecuentes"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+@* <h1>PreguntasFrecuentes</h1>
+
+<div>
+    
+    <p>
+        <h3>1. Problemas de Acceso e Inicio de Sesión</h3>
+
+        Pregunta Frecuente	Causa Posible	Solución
+        No puedo iniciar sesión.	
+        1. Contraseña incorrecta. 
+        2. Usuario bloqueado por múltiples intentos fallidos. 
+        3. El usuario no existe o está inactivo.	
+        
+        1. Usa la opción "¿Olvidaste tu Contraseña?" para restablecerla. 
+        2. Espera 10-15 minutos (si aplica) o contacta a un administrador para desbloqueo. 
+        3. Verifica que la cuenta haya sido activada correctamente.
+        Mi sesión caducó y me pide volver a iniciar.	
+        La sesión expiró por inactividad (medida de seguridad).	
+        Simplemente vuelve a ingresar tus credenciales. Asegúrate de guardar tu trabajo con frecuencia.
+        Al ingresar, la pantalla está en blanco o se congela.	
+        Problemas con el caché del navegador o conexión a internet inestable.	
+        Borra la caché y las cookies de tu navegador y vuelve a intentarlo. Si persiste, prueba con otro navegador (Chrome, Firefox, etc.).
+    </p>
+
+</div>
+
+<div>
+    
+    <p>
+        <h3>2. Problemas de roles y permisos</h3>
+
+        Este grupo está directamente relacionado con la información de roles como la que se ve en la imagen (rol_Id:1, nombre_rol:Admin).
+
+        Pregunta Frecuente	Causa Posible	Solución
+
+        No puedo ver/editar ciertas secciones (ej. Módulo de Reportes).	
+        Tu Rol de Usuario no tiene los permisos necesarios para acceder a esa funcionalidad.
+        Contacta a un Administrador (el usuario con el rol "Admin") y solicita que te asignen un rol con los permisos requeridos 
+        (o que te los añadan a tu rol actual).
+        El sistema me muestra el error: "Acceso Denegado".	
+        Estás intentando realizar una acción (ej. borrar un registro) que está restringida por tu nivel de permiso.	
+        Confirma con un superior si tienes autorización para esa acción. Si es un error, 
+        el Administrador debe revisar la configuración de permisos por rol en la base de datos.
+        Mis datos de usuario (nombre, correo) son incorrectos.	El registro en la tabla de Usuarios (o una tabla relacionada)
+        está desactualizado.	Dirígete a tu "Perfil de Usuario" y edita la información. Si el error persiste,
+        notifica al área de TI o al Administrador para que revisen la base de datos.
+    </p>
+
+</div>
+
+<div>
+    
+    <p>
+        <h3>3. Problemas con la carga de datos y visualización</h3>
+
+        Pregunta Frecuente	Causa Posible	Solución
+
+
+        Al cargar una lista/reporte, solo veo el mensaje de carga o la lista vacía.	
+        1. Filtrado excesivo. 
+        2. Problema de conexión con el servidor de la base de datos. 
+        3. Tiempos de espera (Timeout).	1. Elimina los filtros y verifica si aparecen los datos. 
+        Luego, aplica los filtros de nuevo. 
+        2. Espera unos segundos y refresca la página (F5 o botón de refresco). 
+        3. Si el problema es recurrente, notifica a soporte, ya que puede ser un problema de rendimiento de la consulta SQL o del servidor.
+
+        Veo datos duplicados o inconsistentes en un reporte.	
+        1. Error de sincronización o entrada de datos. 
+        2. Error lógico en la consulta (JOIN) de la base de datos.	
+        Reporta el problema inmediatamente al equipo de soporte, indicando el ID del registro y el módulo donde ocurre. 
+        Esto requiere una revisión directa de las tablas para encontrar el origen de la duplicidad.
+
+        La página se refresca o me saca sin motivo aparente.	
+        1. Error en la programación del componente (ej. Blazor). 
+        2. Error de validación inesperado.	
+        Anota exactamente qué estabas haciendo (clics, datos ingresados) cuando ocurrió. 
+        Esto es un indicio de un bug que requiere revisión del código fuente.
+    </p>
+
+</div>
+
+<div>
+    
+    <p>
+        <h3>4. Consejos de mantenimiento básico</h3>
+
+        Para asegurar un rendimiento óptimo, considera estos puntos:
+
+        Limpieza de Caché: Si la interfaz luce desordenada o vieja, presiona Ctrl + F5 (o Cmd + Shift + R en Mac) 
+        para forzar una recarga completa del sistema y descartar el caché local.
+
+        Reporte de Errores: Cuando reportes un error a soporte, siempre incluye:
+
+        Paso a paso de cómo replicar el problema.
+
+        Una captura de pantalla del error.
+
+        El nombre de usuario afectado.
+
+        Compatibilidad: Utiliza siempre la última versión de los navegadores recomendados 
+        (generalmente Chrome o Edge) para evitar problemas de compatibilidad con las 
+        tecnologías de la interfaz (como Blazor).
+    </p>
+
+</div> *@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Preguntas Frecuentes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Preguntas Frecuentes</h1>
+
+        <div class="accordion" id="faqAccordion">
+
+            <!-- Sección 1 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        1. Problemas de Acceso e Inicio de Sesión
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>No puedo iniciar sesión:</strong><br>
+                                - Contraseña incorrecta<br>
+                                - Usuario bloqueado<br>
+                                - Usuario inactivo<br>
+                                <em>Solución:</em> Restablece la contraseña, espera 10-15 min o contacta al administrador.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Mi sesión caducó:</strong><br>
+                                - Expiración por inactividad<br>
+                                <em>Solución:</em> Vuelve a iniciar sesión. Guarda tu trabajo con frecuencia.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Pantalla en blanco o congelada:</strong><br>
+                                - Caché del navegador o conexión inestable<br>
+                                <em>Solución:</em> Borra caché/cookies o usa otro navegador.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        2. Problemas de Roles y Permisos
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>No puedo ver/editar ciertas secciones:</strong><br>
+                                - Rol sin permisos<br>
+                                <em>Solución:</em> Solicita al Admin que te asigne los permisos necesarios.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Error "Acceso Denegado":</strong><br>
+                                - Acción restringida por tu rol<br>
+                                <em>Solución:</em> Verifica autorización o pide revisión de permisos.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Datos personales incorrectos:</strong><br>
+                                - Registro desactualizado<br>
+                                <em>Solución:</em> Edita tu perfil o contacta a TI/Admin.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        3. Problemas con la Carga de Datos y Visualización
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Lista vacía o mensaje de carga:</strong><br>
+                                - Filtrado excesivo<br>
+                                - Problema de conexión<br>
+                                - Timeout<br>
+                                <em>Solución:</em> Quita filtros, refresca o reporta a soporte.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Datos duplicados o inconsistentes:</strong><br>
+                                - Error de sincronización o JOIN<br>
+                                <em>Solución:</em> Reporta con ID y módulo afectado.
+                            </li>
+                            <li class="list-group-item">
+                                <strong>La página se refresca sola:</strong><br>
+                                - Bug en componente o validación<br>
+                                <em>Solución:</em> Describe el paso a paso y reporta el error.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        4. Consejos de Mantenimiento Básico
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Limpieza de Caché:</strong> Ctrl + F5 (Windows) o Cmd + Shift + R (Mac).</li>
+                            <li class="list-group-item"><strong>Reporte de Errores:</strong> Incluye pasos, captura y usuario afectado.</li>
+                            <li class="list-group-item"><strong>Compatibilidad:</strong> Usa navegadores actualizados como Chrome o Edge.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
