@@ -35,7 +35,25 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
-      
+        //#region Método Post
+
+        //[HttpPost]
+        //public async Task<ActionResult<int>> Post(Tipo_Cliente entidad)
+        //{
+        //    try
+        //    {
+
+        //        return await repositorio.Insert(entidad);
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        return BadRequest(e.Message);
+        //    }
+        //}
+        //#endregion
+
+
 
     }
 }

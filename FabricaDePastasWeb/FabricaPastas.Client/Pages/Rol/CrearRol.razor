@@ -1,0 +1,54 @@
+﻿@page "/api/Rol/Crear"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+<h3>Crear nuevo Rol</h3>
+
+
+<EditForm Model="rol" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <label for="nombreRol" class="form-label">Nombre del rol</label>
+            <input type="text" id="nombreRol" @bind="rol.Nombre_rol" class="form-control" placeholder="Ej: Admin" />
+            <ValidationMessage For="@(() => rol.Nombre_rol)" />
+        </div>
+
+    </div>
+
+
+
+    <div class="col-12 text-center mt-4">
+        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+        <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+    </div>
+
+</EditForm>
+
+
+
+@code {
+    private Rol rol = new Rol();
+
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Rol>("api/Rol", rol);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+
+
+        navigationManager.NavigateTo("/api/Rol");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Rol");
+    }
+}

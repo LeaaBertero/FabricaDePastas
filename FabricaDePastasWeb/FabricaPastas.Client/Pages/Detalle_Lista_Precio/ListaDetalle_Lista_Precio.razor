@@ -80,7 +80,6 @@ else
                             <th>💲 Precio personalizado</th>
                             <th class="text-center">Modificar</th>
                             <th class="text-center">Eliminar</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -88,18 +87,13 @@ else
                         {
                             <tr>
                                 <td>$@item.Precio_Personalizado</td>
-
+                                <td class="text-center">
+                                    <a class="btn btn-warning btn-sm" href="/api/Detalle_Lista_Precio/Editar/@item.Id">✏️ Modificar</a>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
+                                </td>
                             </tr>
-
-                        <td class="text-center">
-                            <a class="btn btn-warning btn-sm" href="/api/Detalle_Lista_Precio/Editar/@item.Id">✏️ Modificar</a>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
-                        </td>
-
-
-
                         }
                     </tbody>
                 </table>
@@ -111,7 +105,6 @@ else
         <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
     }
 </div>
-
 
 <Confirmacion @ref="confirmacion"
               Titulo="⚠️ Alerta"

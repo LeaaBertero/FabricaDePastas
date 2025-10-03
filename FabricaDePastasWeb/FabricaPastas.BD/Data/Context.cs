@@ -52,7 +52,7 @@ namespace FabricaPastas.BD.Data
             base.OnModelCreating(modelBuilder);
 
 
-            #region Has_Precision
+            #region Has_Precision Promocion_Producto
             modelBuilder.Entity<Promocion_Producto>()
             .Property(p => p.Descuento_Porcentaje)
             .HasColumnType("decimal(18,2)");
@@ -60,6 +60,30 @@ namespace FabricaPastas.BD.Data
             modelBuilder.Entity<Promocion_Producto>()
                 .Property(p => p.Precio_Promocional)
                 .HasColumnType("decimal(18,2)");
+            #endregion
+
+            #region Has_Precision Detalle_Lista_Precio
+            modelBuilder.Entity<Detalle_Lista_Precio>()
+            .Property(p => p.Precio_Personalizado)
+            .HasColumnType("decimal(18,2)");
+            #endregion
+
+            #region Has_Precision Detalle_Pedido
+            modelBuilder.Entity<Detalle_Pedido>()
+            .Property(p => p.Precio_Unitario)
+            .HasColumnType("decimal(18,2)");
+            #endregion
+
+            #region Has_Precision Pedido
+            modelBuilder.Entity<Pedido>()
+            .Property(p => p.Total)
+            .HasColumnType("decimal(18,2)");
+            #endregion
+
+            #region Has_Precision Producto
+            modelBuilder.Entity<Producto>()
+            .Property(p => p.PrecioBase)
+            .HasColumnType("decimal(18,2)");
             #endregion
 
         }
