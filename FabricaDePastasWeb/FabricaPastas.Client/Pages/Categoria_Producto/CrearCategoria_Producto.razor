@@ -3,53 +3,56 @@
 @inject NavigationManager navigationManager;
 
 
-@* <h1 class=" text-center">Acá podes cargar la categoría de productos</h1>
-
-<EditForm Model="categoria_producto" OnValidSubmit="Grabar">
-    <DataAnnotationsValidator />
-
-    <div class="form-group">
-        <label for="nombreCategoria">Nombre de categoría</label>
-        <input type="text" @bind="categoria_producto.Nombre_Categoria" class="form-control" />
-        <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
-    </div>
-
-    <div>
-        <button class="btn btn-primary" type="submit">Crear categoría</button>
-        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-    </div>
-                
-</EditForm> *@
-
-<h1 class="text-center mb-4">📂 Carga de categoría de productos</h1>
+<h1 class="text-center mb-4">Categorías de productos</h1>
 
 <EditForm Model="categoria_producto" OnValidSubmit="Grabar" class="container">
     <DataAnnotationsValidator />
 
-    <div class="row justify-content-center g-3">
+    <div class="row g-3">
+        
         <div class="col-md-6">
-            <label for="nombreCategoria" class="form-label">Nombre de categoría</label>
-            <input type="text" id="nombreCategoria" @bind="categoria_producto.Nombre_Categoria"
-                   class="form-control" placeholder="Ej: Bebidas, Snacks, Limpieza..." />
-            <ValidationMessage For="@(() => categoria_producto.Nombre_Categoria)" />
+            <label for="Tipo_Pasta" class="form-label">Tipo de pasta</label>
+            <input type="text" id="tipo_pasta" @bind="categoria_producto.Tipo_Pasta" class="form-control" placeholder="Raviones / Ñosquis" />
+            <ValidationMessage For="@(() => categoria_producto.Tipo_Pasta)" />
+        </div>
+        
+        <div class="col-md-6">
+            <label for="Forma" class="form-label">Tipo de pasta</label>
+            <input type="text" id="forma" @bind="categoria_producto.Forma" class="form-control" placeholder="Corta/larga/rellena" />
+            <ValidationMessage For="@(() => categoria_producto.Forma)" />
+        </div>
+        
+        <div class="col-md-6">
+            <label for="Forma" class="form-label">Tamanio</label>
+            <input type="text" id="tamanio" @bind="categoria_producto.Tamanio" class="form-control" placeholder="grosor / largo / diametro" />
+            <ValidationMessage For="@(() => categoria_producto.Tamanio)" />
         </div>
 
         <div class="col-md-6">
-            <label for="nombreCategoria" class="form-label">Imagen</label>
-            <input type="file" id="nombreCategoria" @bind="categoria_producto.Imagen_Url"
-                   class="form-control" placeholder="Ej: Bebidas, Snacks, Limpieza..." />
-            <ValidationMessage For="@(() => categoria_producto.Imagen_Url)" />
+            <label for="IngredientesBase" class="form-label">Ingredientes Base</label>
+            <input type="text" id="tamanio" @bind="categoria_producto.IngredientesBase" class="form-control" placeholder="huevo / espinaca / calabaza" />
+            <ValidationMessage For="@(() => categoria_producto.IngredientesBase)" />
         </div>
+        
+        <div class="col-md-6">
+            <label for="ProcesoElaboracion" class="form-label">Proceso de elaboración</label>
+            <input type="text" id="procesoElaboracion" @bind="categoria_producto.ProcesoElaboracion" class="form-control" placeholder="huevo / espinaca / calabaza" />
+            <ValidationMessage For="@(() => categoria_producto.ProcesoElaboracion)" />
+        </div>
+
+        
 
         <div class="col-12 text-center mt-4">
-            <button class="btn btn-success me-2" type="submit">✅ Crear categoría</button>
+            <button class="btn btn-success me-2" type="submit">✅ Registrar categoría</button>
             <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
         </div>
     </div>
+
 </EditForm>
 
 
 @code {
+    
     private Categoria_Producto categoria_producto = new Categoria_Producto();
 
     private async Task Grabar()
@@ -60,12 +63,12 @@
         {
             var body = httpRespuesta.HttpResponseMessage;
         }
+        navigationManager.NavigateTo("api/CategoriaProducto/Lista");
 
-        navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
     }
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/api/Categoria_Producto/Lista");
+        navigationManager.NavigateTo("api/CategoriaProducto/Lista"); 
     }
 }

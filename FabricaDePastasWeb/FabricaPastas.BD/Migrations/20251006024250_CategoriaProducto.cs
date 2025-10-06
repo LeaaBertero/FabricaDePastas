@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class CategoriaProducto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,11 @@ namespace FabricaPastas.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Categoria_Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre_Categoria = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Imagen_Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Tipo_Pasta = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Forma = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Tamanio = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IngredientesBase = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ProcesoElaboracion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,7 +207,8 @@ namespace FabricaPastas.BD.Migrations
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Usuario_Id = table.Column<int>(type: "int", nullable: false),
                     Fecha_Inicio_Promo = table.Column<DateOnly>(type: "date", nullable: false),
-                    Fecha_Fin_Promo = table.Column<DateOnly>(type: "date", nullable: false)
+                    Fecha_Fin_Promo = table.Column<DateOnly>(type: "date", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -263,9 +267,9 @@ namespace FabricaPastas.BD.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "Nombre_Categoria",
+                name: "Tipo_Pasta_Forma_Tamanio_IngredientesBase_ProcesoElaboracion",
                 table: "Categoria_Producto",
-                column: "Nombre_Categoria");
+                columns: new[] { "Tipo_Pasta", "Forma", "Tamanio", "IngredientesBase", "ProcesoElaboracion" });
 
             migrationBuilder.CreateIndex(
                 name: "Precio_Personalizado",

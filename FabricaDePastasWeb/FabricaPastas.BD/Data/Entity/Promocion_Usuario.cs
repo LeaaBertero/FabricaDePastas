@@ -27,8 +27,12 @@ namespace FabricaPastas.BD.Data.Entity
         public DateOnly Fecha_Inicio_Promo { get; set; }
         [Required(ErrorMessage = "La fecha de fin de promo es obligatoria")]
         public DateOnly Fecha_Fin_Promo { get; set; }
+        
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Descripcion { get; set; }
         #endregion
 
-            
+
     }
 }

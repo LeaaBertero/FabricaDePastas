@@ -11,7 +11,9 @@
     <ValidationSummary />
 
     <div class="row justify-content-center">
+        
         <div class="col-md-6">
+            
             <div class="mb-3">
                 <label for="NombreUsuario" class="form-label">Usuario</label>
                 <InputText id="NombreUsuario" @bind-Value="usuarioLogin.NombreUsuario" class="form-control" placeholder="Ej: user@user.com" />
@@ -24,30 +26,14 @@
                 <ValidationMessage For="@(() => usuarioLogin.Contraseña)" />
             </div>
 
-            <select id="TipoClienteSeleccionado" @bind="TipoClienteSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
-                @if (ListaTipoCliente != null)
-                {
-                    foreach (var TipoCliente in ListaTipoCliente)
-                    {
-                        <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
-                    }
-                }
-            </select>
-
-
-            @if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
-            {
-                <div class="alert alert-info mt-3 text-center">
-                    Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong>
-                </div>
-            }
-
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-success me-2">✅ Ingresar</button>
-                @* <button type="button" class="btn btn-outline-secondary" @onclick="Cancelar">Cancelar</button> *@
+            <div class="col-12 text-center mt-4">
+                <button class="btn btn-success me-2" type="submit">✅ Iniciar sesión</button>
+                
             </div>
+
+         
         </div>
+
     </div>
 
 
@@ -92,16 +78,6 @@
         var httpRespuesta = await http.Post<CrearLoginDTO>("/api/Usuario/Login", usuarioLogin);
         
 
-        if (!httpRespuesta.Error && httpRespuesta.HttpResponseMessage.IsSuccessStatusCode)
-        {
-            // Si querés guardar el token, lo hacés acá
-            // Por ahora redirigimos al dashboard
-            navigationManager.NavigateTo("/api/Tipo_Cliente");
-        }
-        else
-        {
-            // Acá podrías mostrar un mensaje de error
-            Console.WriteLine("Login fallido");
-        }
+      
     }
 }

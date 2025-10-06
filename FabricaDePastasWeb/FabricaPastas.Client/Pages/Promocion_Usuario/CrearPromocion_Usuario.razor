@@ -50,6 +50,13 @@
             <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
         </div>
 
+        <div class="col-md-6">
+            <label for="fechaFin" class="form-label">Descripción de promo</label>
+            <input type="text" id="Descripcion" placeholder="Descripción de la promoción"
+                   @bind="promocion_usuario.Descripcion" class="form-control" />
+            <ValidationMessage For="@(() => promocion_usuario.Descripcion)" />
+        </div>
+
         <div class="col-12 text-center mt-4">
             <button class="btn btn-success me-2" type="submit">🎯 Cargar promoción</button>
             <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>

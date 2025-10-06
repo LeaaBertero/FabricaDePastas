@@ -79,6 +79,7 @@
                         <tr>
                             <th>📅 Fecha inicio</th>
                             <th>📅 Fecha fin</th>
+                            <th>Descripción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +88,7 @@
                             <tr>
                                 <td>@item.Fecha_Inicio_Promo.ToShortDateString()</td>
                                 <td>@item.Fecha_Fin_Promo.ToShortDateString()</td>
+                                <td>@(item.Descripcion ?? string.Empty)</td>
                             </tr>
                         }
                     </tbody>

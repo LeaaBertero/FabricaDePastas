@@ -9,13 +9,24 @@ namespace FabricaPastas.Shared.DTO
 {
     public class CrearCategoria_ProductoDTO
     {
-        #region Atributos de Validación
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
-        public string? Nombre_Categoria { get; set; }
+        public string? Tipo_Pasta { get; set; }
 
-        [Required(ErrorMessage = "La imagen de la categoría es obligatoria")]
-        public string? Imagen_Url { get; set; }
-        #endregion
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Forma { get; set; }
+
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? Tamanio { get; set; }
+
+        //[Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? IngredientesBase { get; set; }
+
+        [Required(ErrorMessage = "El campo Nombre es obligatorio")]
+        [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}")]
+        public string? ProcesoElaboracion { get; set; }
     }
 }

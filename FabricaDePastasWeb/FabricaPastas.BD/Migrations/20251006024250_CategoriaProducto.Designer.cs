@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20251004205333_cuatro-octubre")]
-    partial class cuatrooctubre
+    [Migration("20251006024250_CategoriaProducto")]
+    partial class CategoriaProducto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,18 +36,33 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Categoria_Producto_Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Imagen_Url")
+                    b.Property<string>("Forma")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Nombre_Categoria")
+                    b.Property<string>("IngredientesBase")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ProcesoElaboracion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Tamanio")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Tipo_Pasta")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Nombre_Categoria" }, "Nombre_Categoria");
+                    b.HasIndex(new[] { "Tipo_Pasta", "Forma", "Tamanio", "IngredientesBase", "ProcesoElaboracion" }, "Tipo_Pasta_Forma_Tamanio_IngredientesBase_ProcesoElaboracion");
 
                     b.ToTable("Categoria_Producto");
                 });
@@ -369,6 +384,11 @@ namespace FabricaPastas.BD.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateOnly>("Fecha_Fin_Promo")
                         .HasColumnType("date");

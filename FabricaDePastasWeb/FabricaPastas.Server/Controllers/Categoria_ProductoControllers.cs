@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FabricaPastas.Server.Controllers
 {
     [ApiController]
-    [Route("api/Categoria_Producto")]
+    [Route("/api/Categoria_Producto")]
     public class Categoria_ProductoControllers : ControllerBase
     {
         private readonly ICategoria_ProductoRepositorio repositorio;
@@ -34,8 +34,6 @@ namespace FabricaPastas.Server.Controllers
             return await repositorio.Select();
         }
         #endregion
-
-       
 
         #region Método Post
         [HttpPost]
@@ -101,6 +99,8 @@ namespace FabricaPastas.Server.Controllers
         //        return BadRequest(e.Message);
         //    }
         //}
+
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Categoria_Producto entidad)
         {
@@ -116,8 +116,11 @@ namespace FabricaPastas.Server.Controllers
                 return NotFound("No se encontró la categoria buscada");
             }
 
-            dammy.Nombre_Categoria = entidad.Nombre_Categoria;
-            dammy.Imagen_Url = entidad.Imagen_Url; // agregar esta línea
+            dammy.Tipo_Pasta = entidad.Tipo_Pasta;
+            dammy.Forma = entidad.Forma; 
+            dammy.Tamanio = entidad.Tamanio; 
+            dammy.IngredientesBase = entidad.IngredientesBase; 
+            dammy.ProcesoElaboracion = entidad.ProcesoElaboracion; 
 
             try
             {
@@ -154,5 +157,6 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
+       
     }
 }

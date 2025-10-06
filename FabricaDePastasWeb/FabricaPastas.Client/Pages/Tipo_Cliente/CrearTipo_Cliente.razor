@@ -1,0 +1,64 @@
+﻿@page "/api/Tipo_Cliente/Crear"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+
+
+<h1 class="text-center mb-4 text-primary fw-bold">📝 Registrate en nuestra web</h1>
+
+<EditForm Model="tipo_cliente" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-4">
+        
+        <div class="col-md-6">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" id="descripcion" @bind="tipo_cliente.Descripcion" class="form-control" placeholder="Ej: Ingresá el tipo de cliente" />
+            <ValidationMessage For="@(() => tipo_cliente.Descripcion)" />
+        </div>
+
+       
+    </div>
+
+
+
+    <div class="col-12 text-center mt-4">
+        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+        <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+    </div>
+
+
+
+
+
+
+
+</EditForm>
+
+
+@code {
+    private Tipo_Cliente tipo_cliente = new Tipo_Cliente();
+
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Tipo_Cliente>("api/Tipo_Cliente", tipo_cliente);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+
+
+        navigationManager.NavigateTo("/api/Tipo_Cliente/Lista");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Tipo_Cliente/Lista");
+    }
+
+
+}

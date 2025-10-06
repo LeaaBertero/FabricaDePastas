@@ -1,0 +1,54 @@
+﻿@page "/api/Forma_Pago/Crear"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+<h3>Nueva forma de pago</h3>
+
+
+<EditForm Model="forma_pago" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <label for="Forma_Pago" class="form-label">Forma de pago</label>
+            <input type="text" id="Forma_Pago" @bind="forma_pago.Metodo" class="form-control" placeholder="Ej: Admin" />
+            <ValidationMessage For="@(() => forma_pago.Metodo)" />
+        </div>
+
+    </div>
+
+
+
+    <div class="col-12 text-center mt-4">
+        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+        <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+    </div>
+
+</EditForm>
+
+
+
+@code {
+    private Forma_Pago forma_pago = new Forma_Pago();
+
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Forma_Pago>("api/Forma_Pago", forma_pago);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+
+
+        navigationManager.NavigateTo("/api/Forma_Pago/Lista");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Forma_Pago/Lista");
+    }
+}

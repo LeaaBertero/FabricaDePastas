@@ -34,6 +34,12 @@
                 <ValidationMessage For="@(() => EditarPromocion_usuario.Fecha_Fin_Promo)" />
             </div>
 
+            <div class="form-group">
+                <label for="FechaFinPromo">Descripción</label>
+                <input type="text" @bind="EditarPromocion_usuario.Descripcion" class="form-control" />
+                <ValidationMessage For="@(() => EditarPromocion_usuario.Descripcion)" />
+            </div>
+
 
             <div>
                 <button class="btn btn-success" type="submit">Modificar</button>

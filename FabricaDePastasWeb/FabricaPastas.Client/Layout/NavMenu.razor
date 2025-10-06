@@ -12,40 +12,48 @@
 <div class="position-fixed top-0 start-0 vh-100 bg-light border-end shadow-sm p-3 overflow-auto" style="width: 260px;" @onclick="ToggleNavMenu">
     <nav class="nav flex-column">
         <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="" Match="NavLinkMatch.All">
-                <i class="bi bi-house-door-fill me-2"></i>Inicio
-            </NavLink>
-        </div>
-
-        <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/preguntas-frecuentes" Match="NavLinkMatch.All">
                 <i class="bi bi-box-arrow-in-right me-2"></i>Perguntas frecuentes
             </NavLink>
         </div>
 
         <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/LoginUsuarios" Match="NavLinkMatch.All">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar sesión
+            <NavLink class="nav-link text-dark fw-semibold" href="" Match="NavLinkMatch.All">
+                <i class="bi bi-house-door-fill me-2"></i>Inicio
             </NavLink>
         </div>
 
-        <div class="nav-item mb-2">
+
+      @*   <div class="nav-item mb-2">
+            <NavLink class="nav-link text-dark fw-semibold" href="/LoginUsuarios" Match="NavLinkMatch.All">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar sesión
+            </NavLink>
+        </div> *@
+
+       @*  <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Usuario/Registro/Crear" Match="NavLinkMatch.All">
                 <i class="bi bi-person-plus-fill me-2"></i>Nuevo usuario
             </NavLink>
-        </div>
+        </div> *@
 
         @* Tipo_Cliente (comentado) *@
 
         <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/Rol" Match="NavLinkMatch.All"> @* cambiar por href="/api/Rol/Lista"  *@
-                <i class="bi bi-person-badge-fill me-2"></i>Rol
+            <NavLink class="nav-link text-dark fw-semibold" href="/api/Tipo_Cliente/Crear" Match="NavLinkMatch.All">
+                @* cambiar por href="/api/Rol/Lista"  *@
+                <i class="bi bi-person-badge-fill me-2"></i>Tipo de cliente(C)
+            </NavLink>
+        </div>
+
+        <div class="nav-item mb-2">
+            <NavLink class="nav-link text-dark fw-semibold" href="/api/Rol/" Match="NavLinkMatch.All"> @* cambiar por href="/api/Rol/Lista"  *@
+                <i class="bi bi-person-badge-fill me-2"></i>Rol(L)
             </NavLink>
         </div>
 
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Rol/Crear" Match="NavLinkMatch.All">
-                <i class="bi bi-person-badge-fill me-2"></i>Nuevo Rol
+                <i class="bi bi-person-badge-fill me-2"></i>Rol(C)
             </NavLink>
         </div>
 
@@ -57,7 +65,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Promocion_Usuario/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Promo_Usuario/Lista
+                <i class="bi bi-card-list me-2"></i>Promo_Usuari(L)
             </NavLink>
         </div>
         <div class="nav-item mb-2">
@@ -67,7 +75,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Promocion_Producto/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Promo_Producto/Lista
+                <i class="bi bi-card-list me-2"></i>Promo_Producto(L)
             </NavLink>
         </div>
         <div class="nav-item mb-2">
@@ -77,7 +85,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Promocion/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Promoción/Lista
+                <i class="bi bi-card-list me-2"></i>Promoción(L)
             </NavLink>
         </div>
 
@@ -89,7 +97,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Producto/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Productos/Lista
+                <i class="bi bi-card-list me-2"></i>Productos(L)
             </NavLink>
         </div>
 
@@ -101,14 +109,14 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Pedido/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Pedidos/Lista
+                <i class="bi bi-card-list me-2"></i>Pedidos(L)
             </NavLink>
         </div>
 
         <!-- Métodos y precios -->
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Metodo_Entrega/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-truck me-2"></i>Método de entrega
+                <i class="bi bi-truck me-2"></i>Método de entrega(L)
             </NavLink>
         </div>
         <div class="nav-item mb-2">
@@ -118,7 +126,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Lista_Precio/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Lista_precio/Lista
+                <i class="bi bi-card-list me-2"></i>Lista_precio(L)
             </NavLink>
         </div>
         <div class="nav-item mb-2">
@@ -127,15 +135,23 @@
             </NavLink>
         </div>
 
+        <!-- Nuevo Pagos -->
+        <div class="nav-item mb-2">
+            <NavLink class="nav-link text-dark fw-semibold" href="/api/Forma_Pago/Crear" Match="NavLinkMatch.All">
+                <i class="bi bi-credit-card me-2"></i>Forma_Pago/Crear
+            </NavLink>
+        </div>
+
         <!-- Pagos y estados -->
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Forma_Pago/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-credit-card me-2"></i>Forma_Pago/Lista
+                <i class="bi bi-credit-card me-2"></i>Forma_Pago(L)
             </NavLink>
         </div>
+
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Estado_Pedido/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-clipboard-check me-2"></i>Estado_Pedido
+                <i class="bi bi-clipboard-check me-2"></i>Estado_Pedido(L)
             </NavLink>
         </div>
 
@@ -147,7 +163,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Detalle_Pedido/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Detalle_Pedido/Lista
+                <i class="bi bi-card-list me-2"></i>Detalle_Pedido(L)
             </NavLink>
         </div>
 
@@ -159,7 +175,7 @@
         </div>
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Categoria_Producto/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Categoria producto
+                <i class="bi bi-card-list me-2"></i>Categoria producto (L)
             </NavLink>
         </div>
 
