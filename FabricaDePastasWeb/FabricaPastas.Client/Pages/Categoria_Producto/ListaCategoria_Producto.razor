@@ -2,21 +2,18 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-
-
-
-<h1 class="text-center mb-4">👥 Lista de usuarios registrados</h1>
+<h1 class="text-center mb-4">🍝 Lista de categorías de productos</h1>
 
 <div class="container">
     @if (Mensaje == null)
     {
         @if (categoriaproductoLista == null)
         {
-            <div class="alert alert-secondary text-center">🔄 Buscando usuarios...</div>
+            <div class="alert alert-secondary text-center">🔄 Cargando categorías...</div>
         }
         else if (categoriaproductoLista.Count == 0)
         {
-            <div class="alert alert-warning text-center">⚠️ No existen usuarios registrados</div>
+            <div class="alert alert-warning text-center">⚠️ No existen categorías registradas</div>
         }
         else
         {
@@ -26,17 +23,13 @@
                         <tr>
                             <th>Tipo de pasta</th>
                             <th>Forma</th>
-                            <th>Tamaño|</th>
+                            <th>Tamaño</th>
                             <th>Ingredientes base</th>
                             <th>Proceso de elaboración</th>
-                          
-                          @*<th class="text-center">Modificar</th>
-                            <th class="text-center">Eliminar</th> *@
                         </tr>
                     </thead>
-                    
+
                     <tbody>
-                       
                         @foreach (var item in categoriaproductoLista)
                         {
                             <tr>
@@ -45,80 +38,55 @@
                                 <td>@item.Tamanio</td>
                                 <td>@item.IngredientesBase</td>
                                 <td>@item.ProcesoElaboracion</td>
-                                
-                               
-                                @* <td class="text-center">
-                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">✏️ Modificar</a>
-                                </td> *@
-                               
-                                @*  <td class="text-center">
-                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
-                                </td> *@
-
                             </tr>
                         }
                     </tbody>
-
                 </table>
-            
             </div>
         }
     }
     else
     {
-        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+        <div class="alert alert-danger text-center">❌ @Mensaje</div>
     }
 </div>
 
-
-
-
-
 @code {
-   
-
     private List<Categoria_Producto> categoriaproductoLista;
-    // Usuario usuario;
-
-    string Mensaje;
-
- 
+    private string Mensaje;
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await Leer();
     }
 
-    #region Leer usuarios
     private async Task Leer()
     {
-        var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto/Lista");
+        Mensaje = "";
 
-        string Mensaje = "";
-
-        if (!resp.Error)
+        try
         {
-            categoriaproductoLista = resp.Respuesta;
+            var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto/Lista");
+
+            if (!resp.Error)
+            {
+                categoriaproductoLista = resp.Respuesta;
+            }
+            else
+            {
+                Mensaje = await resp.ObtenerError();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Mensaje = await resp.ObtenerError();
+            // ✅ Captura y muestra el error real en pantalla y consola
+            Mensaje = $"⚠️ Error inesperado: {ex.Message}";
+            Console.WriteLine($"[DEBUG] Error en Leer(): {ex}");
         }
     }
-    #endregion
-
 
     private void Cancelar()
     {
         navigationManager.NavigateTo($"/Categoria_Producto/Lista");
     }
-
 }
-
-
-
-
-
-
