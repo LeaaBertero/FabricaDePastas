@@ -1,78 +1,12 @@
 ﻿@page "/api/Usuario/Lista"
-@using FabricaPastas.Client.Shared
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
 
-@* <table>
-
-    <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Nombre de usuario</th>
-        <th>E-mail</th>
-        <th>Contraseña</th>
-        <th>Nro Teléfono</th>
-    </tr>
-
-    @if (Mensaje == null)
-    {
-        if (ListaUsuarios == null)
-        {
-            <p>Buscando....</p>
-        }
-        else if (ListaUsuarios.Count == 0)
-        {
-            <p>No existen usuarios </p>
-        }
-        else
-        {
-            @foreach (var item in ListaUsuarios)
-            {
-                <tr>
-
-                    <td>@item.Nombre</td>
-                    <td>@item.Apellido</td>
-                    <td>@item.Email</td>
-                    <td>@item.NombreUsuario</td>
-                    <td>@item.Contraseña</td>
-                    <td>@item.Teléfono</td>
-
-                    <td>
-                        <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">Modificar</a>
-                    </td>
-
-                    <td>
-                        <button class="btn btn-danger"
-                                @onclick= "()=> Eliminar(item)">
-                            Borrar
-                        </button>
-                    </td>
-
-                </tr>
-
-            }
-        }
-    }
-    else
-    {
-        <p> Error: @Mensaje</p>
-    }
-
-
-</table>
-
-<Confirmacion @ref="confirmacion"
-            Titulo="Alerta !!"
-            textCancelar="Cancelar"
-            onCancel="@Cancelar"
-            onConfirm="@Eliminar"> 
-            <h3>Está por eliminar un usuario, desea continuar?</h3>
-</Confirmacion> *@
-
 <h1 class="text-center mb-4">👥 Lista de usuarios registrados</h1>
 
 <div class="container">
+
     @if (Mensaje == null)
     {
         @if (ListaUsuarios == null)
@@ -86,39 +20,58 @@
         else
         {
             <div class="table-responsive">
+
                 <table class="table table-bordered table-hover align-middle">
+
                     <thead class="table-light">
+
                         <tr>
+
                             <th>Nombre</th>
+
                             <th>Apellido</th>
-                            <th>Usuario</th>
+                       
                             <th>Email</th>
-                            <th>Contraseña</th>
+
                             <th>Teléfono</th>
-                            <th class="text-center">Modificar</th>
-                            <th class="text-center">Eliminar</th>
+                         
+                            <th class="text-center">Acción</th>
+
                         </tr>
+
                     </thead>
+
                     <tbody>
+
                         @foreach (var item in ListaUsuarios)
                         {
                             <tr>
                                 <td>@item.Nombre</td>
+
                                 <td>@item.Apellido</td>
-                                <td>@item.NombreUsuario</td>
+                                @* <td>@item.NombreUsuario</td> *@
+
                                 <td>@item.Email</td>
-                                <td>@item.Contraseña</td>
+
+                                @* <td>@item.Contraseña</td> *@
+
                                 <td>@item.Teléfono</td>
-                                <td class="text-center">
+                                
+                               @*<td class="text-center">
                                     <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">✏️ Modificar</a>
-                                </td>
+                                </td> *@
+                                
                                 <td class="text-center">
                                     <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
                                 </td>
+                            
                             </tr>
                         }
+
                     </tbody>
+
                 </table>
+
             </div>
         }
     }
@@ -135,21 +88,6 @@
               onConfirm="@Eliminar">
     <h5 class="text-danger text-center">Está por eliminar un usuario. ¿Desea continuar?</h5>
 </Confirmacion>
-
-    
-
-     
-
-             
-             
-
-
-
-
-    
-
-
-
 
 
 @code {
@@ -188,75 +126,20 @@
     #endregion
 
 
-
-    // #region Eliminar usuario
-    // private async Task Eliminar(Usuario usuarioBorrar)
-    // {
-
-    //     usuarioBorrar = usuario;
-
-
-    // }
-    // #endregion
-
-    // private async Task Borrar()
-    // {
-    //     var respuesta = await http.Delete($"api/Usuario/{usuario.Id}");
-    //     if (respuesta.Error)
-    //     {
-    //         var body = "No se pudo borrar";
-    //     }
-
-    //     await Leer();
-    // }
-
-
-    //se unifico el borrar y el eliminar usuario en uno solo.
-
-    // private async Task Eliminar(Usuario usuario)
-    // {
-    //     usuarioBorrar = usuario;
-    //     confirmacion.Ver();
-    // }
-
-    // private void Cancelar()
-    // {
-    //     confirmacion.Ocultar();
-    //     usuarioBorrar = null;
-    // }
-
-    // #region Eliminar usuario
-    // private async Task Borrar(Usuario usuarioBorrar)
-    // {
-    //     var respuesta = await http.Delete($"api/Usuario/{usuarioBorrar.Id}");
-
-    //     if (respuesta.Error)
-    //     {
-    //         Mensaje = "No se pudo borrar el usuario";
-    //     }
-    //     else
-    //     {
-    //         await Leer(); 
-    //     }
-    // }
-    // #endregion
-    // variable que ya tenías
-
-    // cuando el usuario hace click en "Borrar" -> muestra el la centana emergente al usuario, para que confirme
     private async Task Eliminar(Usuario usuario)
     {
         usuarioBorrar = usuario;
         confirmacion.Ver();
     }
 
-    // cancelar: oculta modal y limpia selección
+   
     private void Cancelar()
     {
         confirmacion.Ocultar();
         usuarioBorrar = null;
     }
 
-    // CORREGIDO: método sin parámetros invocado por onConfirm="@Borrar"
+   
     private async Task Eliminar()
     {
         if (usuarioBorrar == null)
@@ -276,7 +159,7 @@
             await Leer();
         }
 
-        // limpiar y cerrar modal
+       
         usuarioBorrar = null;
         confirmacion.Ocultar();
     }

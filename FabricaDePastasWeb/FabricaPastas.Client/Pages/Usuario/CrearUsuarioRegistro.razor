@@ -4,8 +4,6 @@
 @inject NavigationManager navigationManager;
 
 
-
-
 <h1 class="text-center mb-4 text-primary fw-bold">📝 Registrate en nuestra web</h1>
 
 <EditForm Model="usuario" OnValidSubmit="Grabar" class="container">
@@ -14,19 +12,19 @@
     <div class="row g-4">
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" @bind="usuario.Nombre" class="form-control" placeholder="Ej: Leandro" />
+            <input type="text" id="nombre" @bind="usuario.Nombre" class="form-control" placeholder="Tu nombre" />
             <ValidationMessage For="@(() => usuario.Nombre)" />
         </div>
 
         <div class="col-md-6">
             <label for="apellido" class="form-label">Apellido</label>
-            <input type="text" id="apellido" @bind="usuario.Apellido" class="form-control" placeholder="Ej: Rodríguez" />
+            <input type="text" id="apellido" @bind="usuario.Apellido" class="form-control" placeholder="Tu apellido" />
             <ValidationMessage For="@(() => usuario.Apellido)" />
         </div>
 
         <div class="col-md-6">
             <label for="email" class="form-label">E-mail</label>
-            <input type="email" id="email" @bind="usuario.Email" class="form-control" placeholder="Ej: lean@example.com" />
+            <input type="email" id="email" @bind="usuario.Email" class="form-control" placeholder="Correo@correo.com" />
             <ValidationMessage For="@(() => usuario.Email)" />
         </div>
 
@@ -38,42 +36,40 @@
 
         <div class="col-md-6">
             <label for="nombreUsuario" class="form-label">Nombre de usuario</label>
-            <input type="text" id="nombreUsuario" @bind="usuario.NombreUsuario" class="form-control" placeholder="Ej: lean.dev" />
+            <input type="text" id="nombreUsuario" @bind="usuario.NombreUsuario" class="form-control" placeholder="Tu nombre de usuario" />
             <ValidationMessage For="@(() => usuario.NombreUsuario)" />
         </div>
 
         <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="tel" id="telefono" @bind="usuario.Teléfono" class="form-control" placeholder="Ej: 3511234567" />
+            <input type="tel" id="telefono" @bind="usuario.Teléfono" class="form-control" placeholder="N° Teléfono" />
             <ValidationMessage For="@(() => usuario.Teléfono)" />
         </div>
 
         <div class="col-md-6">
             <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" id="direccion" @bind="usuario.Dirección" class="form-control" placeholder="Ej: Av. Siempre Viva 123" />
+            <input type="text" id="direccion" @bind="usuario.Dirección" class="form-control" placeholder="Dirección" />
             <ValidationMessage For="@(() => usuario.Dirección)" />
         </div>
 
         <div class="col-md-6">
             <label for="cuitCuil" class="form-label">CUIT / CUIL</label>
-            <input type="tel" id="cuitCuil" @bind="usuario.Cuit_Cuil" class="form-control" placeholder="Ej: 20-12345678-9" />
+            <input type="tel" id="cuitCuil" @bind="usuario.Cuit_Cuil" class="form-control" placeholder="Cuit / Cuil" />
             <ValidationMessage For="@(() => usuario.Cuit_Cuil)" />
         </div>
 
-
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+            @* <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button> *@
+           
+        </div>
         
 
     </div>
 
 
 
-    <div class="col-12 text-center mt-4">
-        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
-        @* <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button> *@
-    </div>
-
-
-       
+  
 
 
    
@@ -102,6 +98,8 @@
     {
         navigationManager.NavigateTo("/api/Usuario/Lista");
     }
+
+   
 
   
 }

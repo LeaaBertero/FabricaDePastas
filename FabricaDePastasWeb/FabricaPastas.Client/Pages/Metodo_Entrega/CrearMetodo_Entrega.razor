@@ -1,0 +1,60 @@
+﻿@page "/api/Metodo_Entrega/Crear"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+<h1 class="text-center mb-4 text-primary fw-bold">Método de entrega</h1>
+
+<EditForm Model="metodo_entrega" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
+
+    <div class="row g-4">
+        
+        <div class="col-md-6">
+            <label for="descpcion" class="form-label">Descripción</label>
+            <input type="text" id="descripcion" @bind="metodo_entrega.Descripcion" class="form-control" placeholder="Metodo de entrega" />
+            <ValidationMessage For="@(() => metodo_entrega.Descripcion)" />
+        </div>
+
+       
+
+        <div class="col-12 text-center mt-4">
+            <button class="btn btn-success me-2" type="submit">Aceptar</button>
+            @* <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button> *@
+
+        </div>
+
+
+    </div>
+
+</EditForm>
+
+
+@code {
+
+    private Metodo_Entrega metodo_entrega = new Metodo_Entrega();
+
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<Metodo_Entrega>("api/Metodo_Entrega", metodo_entrega);
+
+        if (httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+
+
+        navigationManager.NavigateTo("/api/Metodo_Entrega/Lista");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Metodo_Entrega/Lista");
+    }
+
+
+
+
+}

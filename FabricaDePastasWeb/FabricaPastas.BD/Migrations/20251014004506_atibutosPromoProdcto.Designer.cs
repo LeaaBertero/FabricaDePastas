@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20251008234740_cero")]
-    partial class cero
+    [Migration("20251014004506_atibutosPromoProdcto")]
+    partial class atibutosPromoProdcto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,10 @@ namespace FabricaPastas.BD.Migrations
 
                     b.Property<int>("Detalle_Pedido_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pedido_Id")
                         .HasColumnType("int");
@@ -354,6 +358,12 @@ namespace FabricaPastas.BD.Migrations
 
                     b.Property<decimal>("Descuento_Porcentaje")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateOnly>("FechaDesde")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("FechaHasta")
+                        .HasColumnType("date");
 
                     b.Property<string>("Nombre_Producto")
                         .IsRequired()

@@ -17,13 +17,13 @@
         </div>
         
         <div class="col-md-6">
-            <label for="Forma" class="form-label">Tipo de pasta</label>
+            <label for="Forma" class="form-label">Forma</label>
             <input type="text" id="forma" @bind="categoria_producto.Forma" class="form-control" placeholder="Corta/larga/rellena" />
             <ValidationMessage For="@(() => categoria_producto.Forma)" />
         </div>
         
         <div class="col-md-6">
-            <label for="Forma" class="form-label">Tamanio</label>
+            <label for="Forma" class="form-label">Tamanño</label>
             <input type="text" id="tamanio" @bind="categoria_producto.Tamanio" class="form-control" placeholder="grosor / largo / diametro" />
             <ValidationMessage For="@(() => categoria_producto.Tamanio)" />
         </div>
@@ -44,7 +44,7 @@
 
         <div class="col-12 text-center mt-4">
             <button class="btn btn-success me-2" type="submit">✅ Registrar categoría</button>
-            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Ver lista</button>
         </div>
     </div>
 
@@ -63,12 +63,12 @@
         {
             var body = httpRespuesta.HttpResponseMessage;
         }
-        navigationManager.NavigateTo("api/CategoriaProducto/Lista");
+        navigationManager.NavigateTo("api/Categoria_Producto/Lista");
 
     }
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("api/CategoriaProducto/Lista"); 
+        navigationManager.NavigateTo("api/Categoria_Producto/Lista"); 
     }
 }

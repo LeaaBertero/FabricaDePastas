@@ -5,15 +5,14 @@
 
 
 
-
 <h1 class="text-center mb-4">🎉 Promociones activas</h1>
 
-<div class="container mb-3">
+@* <div class="container mb-3">
     <div class="d-flex justify-content-between align-items-center">
         <p class="mb-0 fw-bold text-success">¡Promoción disponible!</p>
         <a class="btn btn-success" href="/api/Promocion/Crear">➕ Cargar promoción</a>
     </div>
-</div>
+</div> *@
 
 <div class="container">
     @if (Mensaje == null)
@@ -37,7 +36,8 @@
                             <th>Fecha inicio</th>
                             <th>Fecha fin</th>
                             <th>Activa</th>
-                            <th class="text-center">Acciones</th>
+                            <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@
                                     <a class="btn btn-primary btn-sm" href="/api/Promocion/Editar/@item.Id">✏️ Editar</a>
                                 </td>
                                 <td class="text-center">
-                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Eliminar</button>
                                 </td>
 
                             </tr>

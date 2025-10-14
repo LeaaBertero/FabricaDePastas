@@ -22,8 +22,10 @@
 
 
     <div class="col-12 text-center mt-4">
-        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
+        <button class="btn btn-success me-2" type="submit">✅ Crear Rol</button>
         <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        @* <a href="/api/Rol">Ver lista</a> *@
+        <a class="btn btn-outline-secondary" type="button" href="/api/Rol">Ver lista</a>
     </div>
 
 </EditForm>
@@ -49,6 +51,7 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/api/Rol");
+        navigationManager.NavigateTo("/");
+        // navigationManager.NavigateTo("/api/Rol");
     }
 }

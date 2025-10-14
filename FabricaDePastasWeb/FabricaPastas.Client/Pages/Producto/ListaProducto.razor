@@ -79,25 +79,40 @@
         else
         {
             <div class="table-responsive">
+               
                 <table class="table table-bordered table-hover align-middle">
+                    
                     <thead class="table-light">
+                       
                         <tr>
                             <th>📦 Nombre</th>
+
                             <th>📝 Descripción</th>
+
                             <th>💰 Precio base</th>
+
                             <th>🖼️ Imagen</th>
+
                             <th>📦 Stock</th>
+
                             <th class="text-center">✏️ Acción</th>
+                        
                         </tr>
+                    
                     </thead>
+                   
                     <tbody>
+
                         @foreach (var item in Lista_producto)
                         {
                             <tr>
+                                
                                 <td>@item.Nombre</td>
                                 <td>@item.Descripcion</td>
                                 <td>$@item.PrecioBase</td>
+                                
                                 <td>
+                                    
                                     @if (!string.IsNullOrEmpty(item.Imagen_Url))
                                     {
                                         <img src="@item.Imagen_Url" alt="Imagen del producto" class="img-thumbnail" style="max-width: 100px;" />
@@ -106,16 +121,23 @@
                                     {
                                         <span class="text-muted">Sin imagen</span>
                                     }
+                               
                                 </td>
+                            
                                 <td>@item.Stock</td>
+                               
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar</a>
                                     <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Eliminar</button> @* Botón eliminar *@
                                 </td>
+                            
                             </tr>
                         }
+
                     </tbody>
+
                 </table>
+
             </div>
         }
     }
@@ -209,7 +231,7 @@
 }
 
 
-}
+
 
 
 

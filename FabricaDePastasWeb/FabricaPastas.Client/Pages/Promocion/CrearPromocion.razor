@@ -3,9 +3,6 @@
 @inject NavigationManager navigationManager;
 
 
-
-
-
 <h1 class="text-center mb-4">Promoción de productos</h1>
 
 <EditForm Model="promocion" OnValidSubmit="Grabar" class="container">
@@ -45,9 +42,11 @@
         </div>
 
         <div class="col-12 text-center mt-4">
-            <button class="btn btn-success me-2" type="submit">✅ Registrar promoción</button>
+            <button class="btn btn-success me-2" type="submit">✅ Crear promo!</button>
             <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+            <a class="btn btn-outline-secondary" type="button" href="api/Promocion/Lista">Ver lista</a>
         </div>
+
     </div>
 </EditForm>
 
@@ -69,6 +68,7 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("api/Promocion/Lista"); //que vaya a la lista de promocioes (hacer!!)
+        navigationManager.NavigateTo("/"); 
+        // navigationManager.NavigateTo("api/Promocion/Lista"); 
     }
 }

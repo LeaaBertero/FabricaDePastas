@@ -1,84 +1,103 @@
 ﻿@page "/"
            
-    @* <h1 class="text-center">La Nonna Pastas ... para el mundo! </h1>
-            
-
-    <nav>
-
-        <ul>
-
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/LoginUsuario">Iniciar sesión</a></li>
-            <li><a href="/api/Usuario/Registro/Crear">Registrate!</a></li>
-            <li><a href="/api/Promocion/Crear">Promociones</a></li>
-            <li><a href="/api/Producto/Crear">Productos</a></li>
-            <li><a href="/api/Pedido/Crear">Pedidos</a></li>
-            <li><a href="/api/Metodo_Entrega/Lista">Método de entrega</a></li>
-            <li><a href="/api/Forma_Pago/Lista">Forma de pago</a></li>
-            <li><a href="/api/Categoria_Producto/Crear">Categoria de productos</a></li>
-                
-        </ul>
-                 
-    </nav> *@
-
-<h1 class="text-center mb-4 text-danger fw-bold">La Nonna Pastas... para el mundo! 🇮🇹</h1>
-
-<div>
-    <a class="navbar-brand fw-bold text-danger" href="https://web.whatsapp.com/"> 🪀 Escribinos por whatsapp!</a>
-    
-</div>
-
-<div class="ubicacion">
-    <a target="_blank" href="https://maps.app.goo.gl/2L1eU1cPGsSpmUDJ9?g_st=aw">Encontranos aquí</a>
-</div>
-
-
-
+   
+<h1 class="text-center mb-4 text-danger fw-bold">Visitanos en nuestra web - Conocenos !</h1>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    
     <div class="container-fluid">
+        
         <a class="navbar-brand fw-bold text-danger" href="/">🍝 La Nonna</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNonna"
-                aria-controls="navbarNonna" aria-expanded="false" aria-label="Toggle navigation">
+       
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarNonna"
+                aria-controls="navbarNonna" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse justify-content-center" id="navbarNonna">
+
             <ul class="navbar-nav">
+               
                 <li class="nav-item">
                     <a class="nav-link active" href="/">Inicio</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/LoginUsuarios">Iniciar sesión</a>
                 </li>
+             
                 <li class="nav-item">
-                    <a class="nav-link" href="/api/Usuario/Registro/Crear">Registrate</a>
+                    <a class="nav-link" href="/api/Usuario/Registro/Crear">Registro</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/Nosotros">Nosotros</a>
+                </li>
+
+              @*   <li class="nav-item">
+                    <a class="nav-link" href="/api/Usuario/Registro/Crear">Registrate</a>
+                </li> *@
+@* 
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Promocion/Crear">Promociones</a>
-                </li>
+                </li> *@
+
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Producto/Crear">Productos</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Pedido/Crear">Pedidos</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Metodo_Entrega/Lista">Método de entrega</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Forma_Pago/Lista">Forma de pago</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/api/Categoria_Producto/Crear">Categorías</a>
                 </li>
+
             </ul>
+
         </div>
+
     </div>
+
 </nav>
-                   
 
+<div class="row-cols-auto">
 
+   @*  <a class="btn btn-outline-secondary" type="button" href="/api/Usuario/Registro/Crear">Registrate!</a> *@
+    <p>¿Querès ver nustras promociones? clickeá el botón !</p>
+
+    <a class="btn btn-outline-secondary" type="button" href="/api/Promocion/Lista">Promos activas</a>
+    <a class="btn btn-outline-secondary" type="button" href="/Catalogo">Catálogo</a>
+
+    <div class="container mb-3">
+       @*  <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0 fw-bold text-success">¡Promoción disponible!</p>
+            <a class="btn btn-success" href="/api/Promocion/Crear">➕ Cargar promoción</a>
+        </div> *@
+    </div>
+
+</div>
+
+<div>
+    <a class="navbar-brand fw-bold text-danger" href="https://web.whatsapp.com/"> 🪀 Escribinos por whatsapp!</a>
+</div>
+    
+
+<div class="ubicacion">
+    <a target="_blank" href="https://maps.app.goo.gl/2L1eU1cPGsSpmUDJ9?g_st=aw">Encontranos aquí</a>
+</div>
 
 
 

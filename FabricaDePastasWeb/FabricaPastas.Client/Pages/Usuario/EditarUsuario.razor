@@ -3,54 +3,15 @@
 @inject NavigationManager navigationManager;
 
 
-@* 
-<EditForm Model="Modificarusuario" OnValidSubmit="Grabar">
-
-    <DataAnnotationsValidator />
-           
-
-    <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" @bind="Modificarusuario.Nombre" class="form-control" />
-        <ValidationMessage For="@(() => Modificarusuario.Nombre)" />
-    </div>
-
-    <div class="form-group">
-        <label for="apellido">Apellido</label>
-        <input type="text" @bind="Modificarusuario.Apellido" class="form-control" />
-        <ValidationMessage For="@(() => Modificarusuario.Apellido)" />
-    </div>
-
-    <div class="form-group">
-        <label for="e-mail">E-mail</label>
-        <input type="email" @bind="Modificarusuario.Email" class="form-control" />
-        <ValidationMessage For="@(() => Modificarusuario.Email)" />
-    </div>
-
-    <div class="form-group">
-        <label for="contraseña">Contraseña</label>
-        <input type="password" @bind="Modificarusuario.Contraseña" class="form-control" />
-        <ValidationMessage For="@(() => Modificarusuario.Contraseña)" />
-    </div>
-
-           
-
-
-    <div>
-        <button class="btn btn-success" type="submit">Actualizar</button>
-        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-    </div>
-
-
-</EditForm> *@
-
 <h1 class="text-center mb-4 text-success fw-bold">🧑‍💻 Modificar usuario</h1>
 
 <EditForm Model="Modificarusuario" OnValidSubmit="Grabar" class="container">
     <DataAnnotationsValidator />
 
     <div class="row justify-content-center">
+
         <div class="col-md-6">
+
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" id="nombre" @bind="Modificarusuario.Nombre" class="form-control" placeholder="Ej: Leandro" />
@@ -79,8 +40,11 @@
                 <button class="btn btn-success me-2" type="submit">✅ Actualizar</button>
                 <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
             </div>
+
         </div>
+
     </div>
+
 </EditForm>
 
 

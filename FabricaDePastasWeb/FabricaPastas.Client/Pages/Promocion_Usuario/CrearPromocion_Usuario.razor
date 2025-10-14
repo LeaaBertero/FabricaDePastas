@@ -3,34 +3,11 @@
 @inject NavigationManager navigationManager;
 
 
-@* <h1 class="text-center">Promocion de los productos</h1>
-
-<EditForm Model="promocion_usuario" OnValidSubmit="Grabar">
-    <DataAnnotationsValidator />
-
-    <div class="form-group">
-        <label for="descuento_pocercentaje">Fecha de inicio</label>
-        <input placeholder="Fecha de inicio" type="date"  
-                @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
-        <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
-    </div>
-            
-    <div class="form-group">
-        <label for="descuento_pocercentaje">Fecha fin de promo</label>
-        <input placeholder="Fecha de inicio" type="date"
-                @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
-        <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
-    </div>
-
-     
-    <div>
-        <button class="btn btn-primary" type="submit">Cargar promo !</button>
-        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-    </div>
-
-</EditForm> *@
+#<!-- #region name -->
 
 <h1 class="text-center mb-4">Promoción de los productos</h1>
+
+
 
 <EditForm Model="promocion_usuario" OnValidSubmit="Grabar" class="container">
     <DataAnnotationsValidator />
@@ -63,6 +40,9 @@
         </div>
     </div>
 </EditForm>
+
+<!-- #endregion -->
+
 
 
 @code {

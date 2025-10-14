@@ -6,7 +6,7 @@
 
 
 
-<h1 class="text-center mb-4 text-primary fw-bold">📝 Registrate en nuestra web</h1>
+<h1 class="text-center mb-4 text-primary fw-bold">📝 Ingresá el tipo de cliente</h1>
 
 <EditForm Model="tipo_cliente" OnValidSubmit="Grabar" class="container">
     <DataAnnotationsValidator />
@@ -27,6 +27,10 @@
     <div class="col-12 text-center mt-4">
         <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
         <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+        <a class="btn btn-outline-secondary" type="button" href="/api/Tipo_Cliente/Lista">Ver lista</a>
+
+        @* <a href="/api/Tipo_Cliente/Lista">Ver lista </a> *@
+
     </div>
 
 
@@ -57,7 +61,8 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/api/Tipo_Cliente/Lista");
+        navigationManager.NavigateTo("/");
+        // navigationManager.NavigateTo("/api/Tipo_Cliente/Lista");
     }
 
 

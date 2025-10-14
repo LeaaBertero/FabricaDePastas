@@ -1,5 +1,4 @@
-﻿@page "/api/Rol"
-@using FabricaPastas.Client.Shared   
+﻿@page "/api/Rol"   
 @inject IHTTPServicio http;
 @inject HttpClient Http;
 @inject NavigationManager navigationManager;
@@ -56,7 +55,7 @@
 
             <div class="text-center mt-4">
                 <button class="btn btn-success me-2" @onclick="IngresarConRol">✅ Ingresar</button>
-                
+                <button class="btn btn-outline-secondary" type="button" @onclick="NuevoRol">Nuevo rol</button>
             </div>
         </div>
     </div>
@@ -128,8 +127,9 @@ else
     {
         if (!string.IsNullOrEmpty(RolSeleccionado))
         {
-            navigationManager.NavigateTo($"/Listas");
+            navigationManager.NavigateTo($"/Administracion");
         }
+        //aca va la seccion de administracón arriba 
     }
     //selecciona el rol de usuario
     private string RolSeleccionado;
@@ -198,6 +198,13 @@ else
         rolBorrar = null;
         confirmacion.Ocultar();
     }
+
+
+    private void NuevoRol()
+    {
+        navigationManager.NavigateTo("/api/Rol/Crear");
+    }
+    
 
 
 }

@@ -1,0 +1,41 @@
+﻿@page "/Catalogo"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h2 class="card-title mb-4">📦 Catálogo de Productos</h2>
+
+                    <div class="d-grid gap-3 col-10 mx-auto">
+                        <button class="btn btn-primary" @onclick="ListaProducto">
+                            <i class="bi bi-box-seam me-2"></i> Ver productos
+                        </button>
+
+                        <a class="btn btn-success" href="api/Promocion/Lista">
+                            <i class="bi bi-tags me-2"></i> Ver promociones
+                        </a>
+
+                        <button class="btn btn-outline-danger" @onclick="Cancelar">
+                            <i class="bi bi-x-circle me-2"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void ListaProducto()
+    {
+        navigationManager.NavigateTo("/api/Producto/Lista");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/");
+    }
+}

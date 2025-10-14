@@ -1,115 +1,4 @@
-﻿@* @page "/api/Forma_Pago/Lista"
-@inject IHTTPServicio http;
-@inject NavigationManager navigationManager;
-
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Editar Pedidos registrados</title>
-</head>
-
-<body>
-
-    <header>
-        <h1 class="text-center">Lista pedidos registrados en el sistema</h1>
-    </header>
-
-    <main>
-
-
-        <table>
-
-            <tr>
-                <th>Fecha pedido</th>
-                <th>Total</th>
-
-            </tr>
-
-            @if (Mensaje == null)
-            {
-                if (Lista_forma_pago == null)
-                {
-                    <p>Buscando....</p>
-                }
-                else if (Lista_forma_pago.Count == 0)
-                {
-                    <p>No existen listas de pedidos </p>
-                }
-                else
-                {
-                    @foreach (var item in Lista_forma_pago)
-                    {
-                        <tr>
-
-                            <td>@item.Metodo</td>
-                           
-
-
-                            
-
-
-                        </tr>
-
-                    }
-                }
-            }
-            else
-            {
-                <p> Error: @Mensaje</p>
-            }
-
-
-        </table>
-
-    </main>
-
-
-    <footer>
-        <p>&copy; 2025 La Nonna Personal</p>
-    </footer>
-
-</body>
-
-</html>
-
-@code {
-
-
-    List<Forma_Pago> Lista_forma_pago;
-    
-
-    string Mensaje;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        await Leer();
-    }
-
-    #region Leer usuarios
-    private async Task Leer()
-    {
-        var resp = await http.Get<List<Forma_Pago>>("api/Forma_Pago");
-
-        string Mensaje = "";
-
-        if (!resp.Error)
-        {
-            Lista_forma_pago = resp.Respuesta;
-        }
-        else
-        {
-            Mensaje = await resp.ObtenerError();
-        }
-    }
-    #endregion
-}
- *@
-
-@page "/api/Forma_Pago/Lista"
+﻿@page "/api/Forma_Pago/Lista"
 @inject IHTTPServicio http;
 @inject HttpClient Http;
 @inject NavigationManager navigationManager;
@@ -138,6 +27,8 @@
 
 <h1 class="text-center mb-4">💳 Seleccione la forma de pago</h1>
 
+<p class="bg-warning text-center fs-4">Cargar Tipo de pago</p>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -153,12 +44,22 @@
                 }
             </select>
 
+            
+
             @if (!string.IsNullOrEmpty(FormaPagoSeleccionado))
             {
                 <div class="alert alert-info mt-3 text-center">
                     Forma de pago seleccionada: <strong>@FormaPagoSeleccionado</strong>
                 </div>
             }
+
+            <div>
+               
+                <button class="btn btn-primary" @onclick="NuevaFomaDePago">Cargar</button>
+            </div>
+
+
+          
 
            @*  <div class="text-center mt-4">
                 <button class="btn btn-success me-2" @onclick="ConfirmarPago">✅ Confirmar</button>
@@ -223,6 +124,11 @@ else
         }
     }
 
+
+    private void NuevaFomaDePago()
+    {
+        navigationManager.NavigateTo("/api/Forma_Pago/Crear");
+    }
 }
 
 

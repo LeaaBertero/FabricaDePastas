@@ -2,18 +2,26 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<h1 class="text-center mb-4">🍝 Lista de categorías de productos</h1>
+
+<h1 class="text-center mb-4 text-success fw-bold">🛒 lista de categorias</h1>
+
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      
+        <a class="btn btn-primary" href="/api/Categoria_Producto/Crear">➕ Cargar categoria</a>
+    </div>
+</div>
 
 <div class="container">
     @if (Mensaje == null)
     {
-        @if (categoriaproductoLista == null)
+        @if (Lista_Categoriaproducto == null)
         {
-            <div class="alert alert-secondary text-center">🔄 Cargando categorías...</div>
+            <div class="alert alert-secondary text-center">🔄 Buscando categorias...</div>
         }
-        else if (categoriaproductoLista.Count == 0)
+        else if (Lista_Categoriaproducto.Count == 0)
         {
-            <div class="alert alert-warning text-center">⚠️ No existen categorías registradas</div>
+            <div class="alert alert-warning text-center">⚠️ No existen categorias cargados</div>
         }
         else
         {
@@ -21,23 +29,29 @@
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Tipo de pasta</th>
-                            <th>Forma</th>
-                            <th>Tamaño</th>
-                            <th>Ingredientes base</th>
-                            <th>Proceso de elaboración</th>
+                            <th>📦 Tipo de pasta</th>
+                            <th>📝 Forma</th>
+                            <th>💰 Tamaño</th>
+                            <th>🖼️ Ingredientes base</th>
+                            <th>📦 Proceso de elaboración</th>
+                            @* <th class="text-center">✏️ Acción</th> *@
                         </tr>
                     </thead>
-
                     <tbody>
-                        @foreach (var item in categoriaproductoLista)
+                        @foreach (var item in Lista_Categoriaproducto)
                         {
                             <tr>
                                 <td>@item.Tipo_Pasta</td>
                                 <td>@item.Forma</td>
-                                <td>@item.Tamanio</td>
-                                <td>@item.IngredientesBase</td>
-                                <td>@item.ProcesoElaboracion</td>
+                                <td>$@item.Tamanio</td>
+                                <td>$@item.IngredientesBase</td>
+                                <td>$@item.ProcesoElaboracion</td>
+                            
+                                
+                                <td class="text-center">
+                                    @* <a class="btn btn-warning btn-sm" href="/api/Categoria_Producto/Editar/@item.Id">Modificar</a> *@
+                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Eliminar</button> 
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -47,46 +61,98 @@
     }
     else
     {
-        <div class="alert alert-danger text-center">❌ @Mensaje</div>
+        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
     }
 </div>
 
+@* Modal de confirmación (igual que en usuarios) *@
+<Confirmacion @ref="confirmacion"
+              Titulo="⚠️ Alerta"
+              textCancelar="Cancelar"
+              onCancel="@Cancelar"
+              onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">Está por eliminar un producto. ¿Desea continuar?</h5>
+</Confirmacion>
+
+
+
 @code {
-    private List<Categoria_Producto> categoriaproductoLista;
-    private string Mensaje;
+
+    Confirmacion confirmacion;
+
+    Categoria_Producto CategoriaproductoBorrar;
+
+    List<Categoria_Producto> Lista_Categoriaproducto;
+
+    string Mensaje;
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
         await Leer();
     }
 
     private async Task Leer()
     {
-        Mensaje = "";
+        var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto");
 
-        try
+        string Mensaje = "";
+
+        if (!resp.Error)
         {
-            var resp = await http.Get<List<Categoria_Producto>>("api/Categoria_Producto/Lista");
-
-            if (!resp.Error)
-            {
-                categoriaproductoLista = resp.Respuesta;
-            }
-            else
-            {
-                Mensaje = await resp.ObtenerError();
-            }
+            Lista_Categoriaproducto = resp.Respuesta;
         }
-        catch (Exception ex)
+        else
         {
-            // ✅ Captura y muestra el error real en pantalla y consola
-            Mensaje = $"⚠️ Error inesperado: {ex.Message}";
-            Console.WriteLine($"[DEBUG] Error en Leer(): {ex}");
+            Mensaje = await resp.ObtenerError();
         }
     }
 
+    
+    private void Eliminar(Categoria_Producto producto)
+    {
+        CategoriaproductoBorrar = producto;
+        confirmacion.Ver();
+    }
+
+    
     private void Cancelar()
     {
-        navigationManager.NavigateTo($"/Categoria_Producto/Lista");
+        confirmacion.Ocultar();
+        CategoriaproductoBorrar = null;
+    }
+
+    //  Confirmar  eliminar
+    private async Task Eliminar()
+    {
+        if (CategoriaproductoBorrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        var respuesta = await http.Delete($"api/Categoria_Producto/{CategoriaproductoBorrar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "❌ No se pudo borrar el producto";
+        }
+        else
+        {
+            await Leer(); // refresca lista
+        }
+
+        CategoriaproductoBorrar = null;
+        confirmacion.Ocultar();
     }
 }
+
+
+
+
+
+
+
+
+

@@ -75,6 +75,7 @@
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
                         <tr>
+                            <th>🔢 Nombre</th>
                             <th>🔢 Cantidad</th>
                             <th>💲 Precio unitario</th>
                         </tr>
@@ -83,6 +84,7 @@
                         @foreach (var item in Listadetalle_peddo)
                         {
                             <tr>
+                                <td>$@item.Nombre</td>
                                 <td>@item.Cantidad</td>
                                 <td>$@item.Precio_Unitario</td>
                             </tr>

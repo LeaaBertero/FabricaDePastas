@@ -28,21 +28,28 @@
         else
         {
             <div class="table-responsive">
+                
                 <table class="table table-bordered table-hover align-middle">
+                    
                     <thead class="table-light">
                         <tr>
-                            <th>📦 Producto</th>
+                            <th>📦 nombre del producto</th>
+                            <th>📦 Fecha desde</th>
+                            <th>📦 fecha hasta</th>
                             <th>💸 Descuento (%)</th>
                             <th>💰 Precio promocional</th>
                             <th class="text-center">✏️ Acción</th>
                            
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach (var item in ListaPromo_prod)
                         {
                             <tr>
                                 <td>@item.Nombre_Producto</td>
+                                <td>@item.FechaDesde</td>
+                                <td>@item.FechaHasta</td>
                                 <td>@item.Descuento_Porcentaje%</td>
                                 <td>$@item.Precio_Promocional</td>
                                 <td class="text-center">

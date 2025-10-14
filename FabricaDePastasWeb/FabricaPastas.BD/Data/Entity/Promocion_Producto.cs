@@ -34,6 +34,12 @@ namespace FabricaPastas.BD.Data.Entity
         [MaxLength(50, ErrorMessage = "Máximo número de caracteres {1}")]
         public string? Nombre_Producto { get; set; }
 
+        [Required(ErrorMessage = "La fecha de inicio es obligatoria")]
+        public DateOnly FechaDesde { get; set; }
+
+        [Required(ErrorMessage = "La fecha de fin es obligatoria")]
+        public DateOnly FechaHasta { get; set; }
+
         [Required(ErrorMessage = "El campo Descuento_Porcentaje es obligatorio")]
         public decimal Descuento_Porcentaje { get; set; }
 

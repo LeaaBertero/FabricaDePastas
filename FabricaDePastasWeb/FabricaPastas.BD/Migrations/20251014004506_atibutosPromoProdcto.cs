@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class cero : Migration
+    public partial class atibutosPromoProdcto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,6 +54,7 @@ namespace FabricaPastas.BD.Migrations
                     Detalle_Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio_Unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -189,6 +190,8 @@ namespace FabricaPastas.BD.Migrations
                     Promocion_Id = table.Column<int>(type: "int", nullable: false),
                     Producto_Id = table.Column<int>(type: "int", nullable: false),
                     Nombre_Producto = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FechaDesde = table.Column<DateOnly>(type: "date", nullable: false),
+                    FechaHasta = table.Column<DateOnly>(type: "date", nullable: false),
                     Descuento_Porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Precio_Promocional = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },

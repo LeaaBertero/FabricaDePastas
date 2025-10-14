@@ -36,6 +36,13 @@
     <DataAnnotationsValidator />
 
     <div class="row g-3">
+
+        <div class="col-md-6">
+            <label for="Cantidad" class="form-label">Nombre</label>
+            <input type="text" id="Cantidad" @bind="detallePedido.Nombre" class="form-control" min="1" step="1" placeholder="Ej: 10" />
+            <ValidationMessage For="@(() => detallePedido.Nombre)" />
+        </div>
+
         <div class="col-md-6">
             <label for="Cantidad" class="form-label">Cantidad</label>
             <input type="number" id="Cantidad" @bind="detallePedido.Cantidad" class="form-control" min="1" step="1" placeholder="Ej: 10" />

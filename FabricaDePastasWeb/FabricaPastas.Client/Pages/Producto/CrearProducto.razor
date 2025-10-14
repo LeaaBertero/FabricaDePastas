@@ -3,52 +3,6 @@
 @inject NavigationManager navigationManager;
 
 
-@* <h1 class=" text-center">Carga de productos (Stock)</h1>
-
-<EditForm Model="producto" OnValidSubmit="Grabar">
-    <DataAnnotationsValidator />
-
-    <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" @bind="producto.Nombre" class="form-control" />
-        <ValidationMessage For="@(() => producto.Nombre)" />
-    </div>
-                    
-    <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <input type="text" @bind="producto.Descripcion" class="form-control" />
-        <ValidationMessage For="@(() => producto.Descripcion)" />
-    </div>
-
-    <div class="form-group">
-        <label for="preciobase">Precio base</label>
-        <input type="number" @bind="producto.PrecioBase" class="form-control" />
-        <ValidationMessage For="@(() => producto.PrecioBase)" />
-    </div>
-                    
-    <div class="form-group">
-        <label for="imagenproducto">Imagen del producto</label>
-        <input type="file" name="imagen" accept="image/*" @bind="producto.Imagen_Url" />
-        <ValidationMessage For="@(() => producto.Imagen_Url)" />
-    </div>
-                   
-    <div class="form-group">
-        <label for="stock">Stock</label>
-        <input type="tel" name="stock" min="0" step="1" required @bind="producto.Stock" />
-        <ValidationMessage For="@(() => producto.Stock)" />
-    </div>
-
-                    
-
-
-    <div>
-        <button class="btn btn-primary" type="submit">Registrar</button>
-        <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
-    </div>
-
-
-</EditForm> *@
-
 <h1 class="text-center mb-4">Carga de productos (Stock)</h1>
 
 <EditForm Model="producto" OnValidSubmit="Grabar" class="container">
@@ -85,6 +39,10 @@
             <ValidationMessage For="@(() => producto.Imagen_Url)" />
         </div>
 
+
+      
+
+
         <div class="col-12 text-center mt-4">
             <button class="btn btn-success me-2" type="submit">📦 Registrar producto</button>
             <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
@@ -114,4 +72,10 @@
     {
         navigationManager.NavigateTo("/api/Producto/Lista");
     }
+
+
+   
+
+
+
 }
