@@ -50,31 +50,13 @@
 
     string Mensaje;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     try
-    //     {
-    //         ListaTipoCliente = await Http.GetFromJsonAsync<List<Tipo_Cliente>>("api/Tipo_Cliente");
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Error obteniendo tipos de cliente: {ex.Message}");
-    //     }
-    // }
-
-    // private void IngresarConTipoCliente()
-    // {
-    //     if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
-    //     {
-    //         navigationManager.NavigateTo($"/api/Categoria_Producto/Lista");
-    //     }
-    // }
+   
     
     private CrearLoginDTO usuarioLogin = new CrearLoginDTO();
 
     private async Task IniciarSesion()
     {
-        // var httpRespuesta = await http.Post<Usuario>("/api/Usuario/Login", usuarioLogin );
+        
         var httpRespuesta = await http.Post<CrearLoginDTO>("/api/Usuario/Login", usuarioLogin);
         
 

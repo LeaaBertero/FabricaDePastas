@@ -1,0 +1,165 @@
+﻿@page "/api/Promocion_Producto/ListaSB"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+
+
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-danger">
+            🌟 ¡Ofertas estelares en productos únicos!
+        </h1>
+        <p class="text-muted fs-5">
+            Descubrí promociones galácticas seleccionadas por <strong>Pelusín del Cosmos</strong> 🚀. ¡Solo por tiempo limitado!
+        </p>
+    </div>
+
+    @if (Mensaje == null)
+    {
+        @if (ListaPromo_prod == null)
+        {
+            <div class="alert alert-secondary text-center shadow-sm">
+                🔄 Buscando promociones...
+            </div>
+        }
+        else if (ListaPromo_prod.Count == 0)
+        {
+            <div class="alert alert-warning text-center shadow-sm">
+                ⚠️ No existen promociones de productos
+            </div>
+        }
+        else
+        {
+            <div class="card shadow-sm border-start border-4 border-danger">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold text-danger mb-3">
+                        📋 Lista de promociones activas
+                    </h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th>📦 Producto</th>
+                                    <th>📅 Desde</th>
+                                    <th>📅 Hasta</th>
+                                    <th>💸 Descuento (%)</th>
+                                    <th>💰 Precio promocional</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ListaPromo_prod)
+                                {
+                                    <tr>
+                                        <td>@item.Nombre_Producto</td>
+                                        <td>@item.FechaDesde.ToShortDateString()</td>
+                                        <td>@item.FechaHasta.ToShortDateString()</td>
+                                        <td>@item.Descuento_Porcentaje%</td>
+                                        <td>$@item.Precio_Promocional</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-danger text-center shadow-sm">
+            ❌ Error: @Mensaje
+        </div>
+    }
+</div>
+
+
+
+@code {
+
+   
+    Promocion_Producto PromoAEliminar;   
+
+
+    List<Promocion_Producto> ListaPromo_prod;
+    Usuario usuario;
+
+    string Mensaje;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Leer();
+    }
+
+    #region Leer promociones de productos
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<Promocion_Producto>>("/api/Promocion_Producto");
+
+        string Mensaje = "";
+
+        if (!resp.Error)
+        {
+            ListaPromo_prod = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+
+
+    }
+    #endregion
+
+
+   
+    private void ConfirmarEliminar(Promocion_Producto promo)
+    {
+        PromoAEliminar = promo;
+       
+    }
+
+   
+    private void Cancelar()
+    {
+        PromoAEliminar = null;
+        
+    }
+
+    
+    private async Task Eliminar()
+    {
+        if (PromoAEliminar == null)
+        {
+           
+            return;
+        }
+
+        var respuesta = await http.Delete($"/api/Promocion_Producto/{PromoAEliminar.Id}");
+
+        if (respuesta.Error)
+        {
+            Mensaje = "❌ No se pudo eliminar la promoción";
+        }
+        else
+        {
+            await Leer(); 
+        }
+
+        PromoAEliminar = null;
+       
+    }
+
+
+}
+
+
+
+
+
+
+

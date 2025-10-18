@@ -6,40 +6,50 @@
 
 
 
-<h1 class="text-center mb-4 text-primary fw-bold">📝 Ingresá el tipo de cliente</h1>
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-primary">
+            📝 Ingresá el tipo de cliente
+        </h1>
+        <p class="text-muted">Completá la descripción y registrá un nuevo tipo de cliente en el sistema</p>
+    </div>
 
-<EditForm Model="tipo_cliente" OnValidSubmit="Grabar" class="container">
-    <DataAnnotationsValidator />
+    <EditForm Model="tipo_cliente" OnValidSubmit="Grabar">
+        <DataAnnotationsValidator />
 
-    <div class="row g-4">
-        
-        <div class="col-md-6">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <input type="text" id="descripcion" @bind="tipo_cliente.Descripcion" class="form-control" placeholder="Ej: Ingresá el tipo de cliente" />
-            <ValidationMessage For="@(() => tipo_cliente.Descripcion)" />
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-start border-4 border-primary">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label fw-semibold">
+                                Descripción del tipo de cliente
+                            </label>
+                            <input type="text"
+                                   id="descripcion"
+                                   @bind="tipo_cliente.Descripcion"
+                                   class="form-control"
+                                   placeholder="Ej: Cliente mayorista, minorista, etc." />
+                            <ValidationMessage For="@(() => tipo_cliente.Descripcion)" />
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-success me-2" type="submit">
+                                ✅ Registrar
+                            </button>
+                            <button class="btn btn-outline-secondary me-2" type="button" @onclick="Cancelar">
+                                ❌ Cancelar
+                            </button>
+                            <a class="btn btn-outline-info" href="/api/Tipo_Cliente/Lista">
+                                📋 Ver lista
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-       
-    </div>
-
-
-
-    <div class="col-12 text-center mt-4">
-        <button class="btn btn-success me-2" type="submit">✅ Registrar</button>
-        <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
-        <a class="btn btn-outline-secondary" type="button" href="/api/Tipo_Cliente/Lista">Ver lista</a>
-
-        @* <a href="/api/Tipo_Cliente/Lista">Ver lista </a> *@
-
-    </div>
-
-
-
-
-
-
-
-</EditForm>
+    </EditForm>
+</div>
 
 
 @code {

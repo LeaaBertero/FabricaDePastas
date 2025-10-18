@@ -10,6 +10,9 @@ namespace FabricaPastas.Shared.DTO
     public class CrearDetalle_PedidoDTO
     {
         #region Atributos 
+        [Required(ErrorMessage = "El campo nombre del peddo es obligatorio")]
+        public string? Nombre { get; set; }
+
         [Required(ErrorMessage = "El campo Cantidad es obligatorio")]
         public int Cantidad { get; set; }
 

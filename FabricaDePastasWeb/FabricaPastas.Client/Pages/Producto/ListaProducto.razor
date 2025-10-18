@@ -3,58 +3,6 @@
 @inject NavigationManager navigationManager;
 
 
-@* <div>
-    <p>Para registrarte, hace click en el botón</p>
-    <a class="btn btn-primary" href="/api/Producto/Crear">Cargar producto</a>
-</div>
-
-<table>
-
-    <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Precio base</th>
-        <th>Imagen</th>
-        <th>Stock</th>
-    </tr>
-
-    @if (Mensaje == null)
-    {
-        if (Lista_producto == null)
-        {
-            <p>Buscando....</p>
-        }
-        else if (Lista_producto.Count == 0)
-        {
-            <p>No existen productos cargados </p>
-        }
-        else
-        {
-            @foreach (var item in Lista_producto)
-            {
-                <tr>
-                    <td>@item.Nombre</td>
-                    <td>@item.Descripcion</td>
-                    <td>@item.PrecioBase</td>
-                    <td>@item.Imagen_Url</td>
-                    <td>@item.Stock</td>
-
-                    <td>
-                        <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar producto</a>
-                    </td>
-
-                </tr>
-
-            }
-        }
-    }
-    else
-    {
-        <p> Error: @Mensaje</p>
-    }
-
-
-</table> *@
 
 <h1 class="text-center mb-4 text-success fw-bold">🛒 Productos disponibles</h1>
 
@@ -146,6 +94,9 @@
         <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
     }
 </div>
+
+
+<h2>Poner un botón cancelar para que vaya a la lista de roles en la sección de administración</h2>
 
 @* Modal de confirmación (igual que en usuarios) *@
 <Confirmacion @ref="confirmacion"

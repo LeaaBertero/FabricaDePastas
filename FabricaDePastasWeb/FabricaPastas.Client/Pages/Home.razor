@@ -1,105 +1,133 @@
 ﻿@page "/"
-           
-   
-<h1 class="text-center mb-4 text-danger fw-bold">Visitanos en nuestra web - Conocenos !</h1>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    
+
     <div class="container-fluid">
-        
+
         <a class="navbar-brand fw-bold text-danger" href="/">🍝 La Nonna</a>
-       
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNonna"
-                aria-controls="navbarNonna" 
-                aria-expanded="false" 
+                aria-controls="navbarNonna"
+                aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse justify-content-center" id="navbarNonna">
+            <ul class="navbar-nav gap-3">
 
-            <ul class="navbar-nav">
-               
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Inicio</a>
+                    <a class="nav-link active d-flex align-items-center gap-2 text-primary fw-bold" href="/">
+                        <i class="bi bi-house-door-fill"></i>Inicio
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/LoginUsuarios">Iniciar sesión</a>
-                </li>
-             
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Usuario/Registro/Crear">Registro</a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-success fw-semibold" href="/LoginUsuarios">
+                        <i class="bi bi-person-circle"></i>Iniciar sesión
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/Nosotros">Nosotros</a>
-                </li>
-
-              @*   <li class="nav-item">
-                    <a class="nav-link" href="/api/Usuario/Registro/Crear">Registrate</a>
-                </li> *@
-@* 
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Promocion/Crear">Promociones</a>
-                </li> *@
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Producto/Crear">Productos</a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-info fw-semibold" href="/Nosotros">
+                        <i class="bi bi-people-fill"></i>Nosotros
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/api/Pedido/Crear">Pedidos</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Metodo_Entrega/Lista">Método de entrega</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Forma_Pago/Lista">Forma de pago</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/Categoria_Producto/Crear">Categorías</a>
+                    <a class="nav-link d-flex align-items-center gap-2 text-warning fw-semibold" href="/preguntas-frecuentes">
+                        <i class="bi bi-question-circle-fill"></i>FAQ
+                    </a>
                 </li>
 
             </ul>
-
         </div>
 
     </div>
 
 </nav>
 
-<div class="row-cols-auto">
+<h1 class="text-center mb-4 display-5 fw-bold text-danger">
+    🌐 ¡Visitá nuestra web y conocé nuestra historia!
+</h1>
 
-   @*  <a class="btn btn-outline-secondary" type="button" href="/api/Usuario/Registro/Crear">Registrate!</a> *@
-    <p>¿Querès ver nustras promociones? clickeá el botón !</p>
+<div class="d-flex flex-column align-items-center gap-3 my-4">
 
-    <a class="btn btn-outline-secondary" type="button" href="/api/Promocion/Lista">Promos activas</a>
-    <a class="btn btn-outline-secondary" type="button" href="/Catalogo">Catálogo</a>
+    <a class="btn btn-outline-success d-flex align-items-center gap-2 fw-semibold shadow-sm"
+       target="_blank"
+       href="https://web.whatsapp.com/">
+        <i class="bi bi-whatsapp fs-4"></i>
+        Escribinos por WhatsApp
+    </a>
 
-    <div class="container mb-3">
-       @*  <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0 fw-bold text-success">¡Promoción disponible!</p>
-            <a class="btn btn-success" href="/api/Promocion/Crear">➕ Cargar promoción</a>
-        </div> *@
+    <a class="btn btn-outline-primary d-flex align-items-center gap-2 fw-semibold shadow-sm"
+       target="_blank"
+       href="https://maps.app.goo.gl/2L1eU1cPGsSpmUDJ9?g_st=aw">
+        <i class="bi bi-geo-alt-fill fs-5"></i>
+        Encontranos aquí
+    </a>
+
+</div>
+
+
+
+<div class="container my-4">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-start border-4 border-success">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold">
+                        🎯 Promos activas
+                    </h5>
+                    <p class="card-text">¿Querés ver nuestras promociones? ¡Clickeá el botón!</p>
+                    <a href="/api/Promocion/ListaUsuarios" class="btn btn-success">Ver promociones</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-primary fw-bold">
+                        📦 Catálogo de productos
+                    </h5>
+                    <p class="card-text">Accedé al catálogo y modificá los productos disponibles.</p>
+                    <a href="/Catalogo" class="btn btn-primary">Ir al catálogo</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-start border-4 border-warning">
+                <div class="card-body">
+                    <h5 class="card-title text-warning fw-bold">
+                        🛍️ Promos por producto
+                    </h5>
+                    <p class="card-text">Consultá las promociones específicas por producto.</p>
+                    <a href="/api/Promocion_Producto/Lista" class="btn btn-warning text-white">Ver promos por producto</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-start border-4 border-secondary">
+                <div class="card-body">
+                    <h5 class="card-title text-secondary fw-bold">
+                        🛠️ Tarea pendiente
+                    </h5>
+                    <p class="card-text">Crear el Razor de promociones de productos sin el botón de eliminar.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-</div>
-
-<div>
-    <a class="navbar-brand fw-bold text-danger" href="https://web.whatsapp.com/"> 🪀 Escribinos por whatsapp!</a>
-</div>
-    
-
-<div class="ubicacion">
-    <a target="_blank" href="https://maps.app.goo.gl/2L1eU1cPGsSpmUDJ9?g_st=aw">Encontranos aquí</a>
 </div>
 
 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 @code {
     //sin codigo

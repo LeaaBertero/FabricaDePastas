@@ -1,0 +1,66 @@
+﻿@page "/SeccionUsuarios"
+@inject IHTTPServicio http;
+@inject HttpClient Http;
+@inject NavigationManager navigationManager;
+
+
+
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-warning">
+            🧑‍🤝‍🧑 Registro de clientes
+        </h1>
+        <p class="text-muted">Accedé a las opciones para registrar usuarios y definir su tipo de cliente</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-start border-4 border-warning">
+                <div class="card-body text-center">
+                    <div class="d-grid gap-3">
+
+                        <button class="btn btn-outline-warning fw-semibold" type="button" @onclick="RegistrarUsuario">
+                            📝 Registrate
+                        </button>
+
+                        <button class="btn btn-outline-warning fw-semibold" type="button" @onclick="TipoCliente">
+                            📦 Tipo de cliente
+                        </button>
+
+                        @* Si querés volver a mostrar el botón de roles, lo dejamos listo: *@
+                        @* <button class="btn btn-outline-warning fw-semibold" type="button" @onclick="ListaRoles">
+                 🛡️ Rol
+               </button> *@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@code {
+   
+    private void RegistrarUsuario()
+    {
+        navigationManager.NavigateTo("/api/Usuario/Registro/Crear");
+    }
+
+
+    private void TipoCliente()
+    {
+        navigationManager.NavigateTo("/api/Tipo_Cliente/Crear");
+    }
+    
+    // private void ListaRoles()
+    // {
+    //     navigationManager.NavigateTo("/api/Rol");
+    // }
+    
+  
+}

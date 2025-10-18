@@ -4,75 +4,72 @@
 @inject NavigationManager navigationManager;
 
 
-@* <h1>Seleccione el tipo de cliente</h1>
 
-<select @bind="TipoClienteSeleccionado" class="form-select">
-    <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
-    @if (ListaTipoCliente != null)
-    {
-        foreach (var TipoCliente in ListaTipoCliente)
-        {
-            <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
-        }
-    }
-</select>
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <h1 class="display-6 fw-bold text-success">
+      🧾 Gestión de tipo de cliente
+    </h1>
+    <p class="text-muted">Seleccioná un tipo de cliente y realizá acciones administrativas</p>
+  </div>
 
-@if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
-{
-    <p>Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong></p>
-}
-
-<button class="btn btn-primary" @onclick="IngresarConTipoCliente">Ingresar</button> *@
-
-<h1 class="text-center mb-4">🧾 Seleccione el tipo de cliente</h1>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <label for="TipoClienteSeleccionado" class="form-label">Opciones disponibles</label>
-            <select id="TipoClienteSeleccionado" @bind="TipoClienteSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
-                @if (ListaTipoCliente != null)
-                {
-                    foreach (var TipoCliente in ListaTipoCliente)
-                    {
-                        <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
-                    }
-                }
-            </select>
-
-            @if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-start border-4 border-success">
+        <div class="card-body">
+          <label for="TipoClienteSeleccionado" class="form-label fw-semibold">
+            Opciones disponibles
+          </label>
+          <select id="TipoClienteSeleccionado" @bind="TipoClienteSeleccionado" class="form-select">
+            <option disabled selected value="">-- Seleccione un tipo de cliente --</option>
+            @if (ListaTipoCliente != null)
             {
-                <div class="alert alert-info mt-3 text-center">
-                    Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong>
-                </div>
+              foreach (var TipoCliente in ListaTipoCliente)
+              {
+                <option value="@TipoCliente.Tipo_Cliente_Id">@TipoCliente.Descripcion</option>
+              }
             }
+          </select>
 
-            <div class="text-center mt-4">
-                <button class="btn btn-success me-2" @onclick="IngresarConTipoCliente">✅ Ingresar</button>
-                @* <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button> *@
+          @if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
+          {
+            <div class="alert alert-info mt-3 text-center">
+              Cliente seleccionado: <strong>@TipoClienteSeleccionado</strong>
             </div>
-        </div>
-    </div>
-</div>
+          }
 
-@if (Mensaje == null)
-{
+          <div class="text-center mt-4">
+            <button class="btn btn-success me-2" @onclick="IngresarConTipoCliente">
+              ✅ Ingresar
+            </button>
+            <button class="btn btn-outline-secondary" type="button" @onclick="IngresarConTipoCliente">
+              ❌ Cancelar
+            </button>
+            <a class="btn btn-outline-info" href="/api/Tipo_Cliente/Lista">
+              📋 Ver lista
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (Mensaje == null)
+  {
     if (ListaTipoCliente == null)
     {
-        <p>Buscando...</p>
+      <p class="text-center text-muted mt-4">Buscando tipos de cliente...</p>
     }
     else if (ListaTipoCliente.Count == 0)
     {
-        <p>No existen tipos de cliente</p>
+      <p class="text-center text-warning mt-4">No existen tipos de cliente registrados</p>
     }
-}
-else
-{
-    <p>Error: @Mensaje</p>
-}
-
-
+  }
+  else
+  {
+    <p class="text-center text-danger mt-4">Error: @Mensaje</p>
+  }
+</div>
 
 
 @code {
@@ -102,7 +99,7 @@ else
     {
         if (!string.IsNullOrEmpty(TipoClienteSeleccionado))
         {
-            navigationManager.NavigateTo($"/api/Promocion/Lista");
+            navigationManager.NavigateTo($"/api/Promocion_Producto/ListaSB");
         }
     }
 }

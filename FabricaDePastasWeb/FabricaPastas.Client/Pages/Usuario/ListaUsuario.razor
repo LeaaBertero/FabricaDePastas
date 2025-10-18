@@ -3,92 +3,86 @@
 @inject NavigationManager navigationManager;
 
 
-<h1 class="text-center mb-4">👥 Lista de usuarios registrados</h1>
 
-<div class="container">
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-primary">
+            👥 Lista de usuarios registrados
+        </h1>
+        <p class="text-muted">Consultá los usuarios activos y gestioná sus datos desde esta sección</p>
+    </div>
 
     @if (Mensaje == null)
     {
         @if (ListaUsuarios == null)
         {
-            <div class="alert alert-secondary text-center">🔄 Buscando usuarios...</div>
+            <div class="alert alert-secondary text-center shadow-sm">
+                🔄 Buscando usuarios...
+            </div>
         }
         else if (ListaUsuarios.Count == 0)
         {
-            <div class="alert alert-warning text-center">⚠️ No existen usuarios registrados</div>
+            <div class="alert alert-warning text-center shadow-sm">
+                ⚠️ No existen usuarios registrados
+            </div>
         }
         else
         {
-            <div class="table-responsive">
+            <div class="card shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold text-primary mb-3">
+                        📋 Usuarios activos
+                    </h5>
 
-                <table class="table table-bordered table-hover align-middle">
-
-                    <thead class="table-light">
-
-                        <tr>
-
-                            <th>Nombre</th>
-
-                            <th>Apellido</th>
-                       
-                            <th>Email</th>
-
-                            <th>Teléfono</th>
-                         
-                            <th class="text-center">Acción</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        @foreach (var item in ListaUsuarios)
-                        {
-                            <tr>
-                                <td>@item.Nombre</td>
-
-                                <td>@item.Apellido</td>
-                                @* <td>@item.NombreUsuario</td> *@
-
-                                <td>@item.Email</td>
-
-                                @* <td>@item.Contraseña</td> *@
-
-                                <td>@item.Teléfono</td>
-                                
-                               @*<td class="text-center">
-                                    <a class="btn btn-warning btn-sm" href="/api/Usuario/Editar/@item.Id">✏️ Modificar</a>
-                                </td> *@
-                                
-                                <td class="text-center">
-                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Borrar</button>
-                                </td>
-                            
-                            </tr>
-                        }
-
-                    </tbody>
-
-                </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th>🧑 Nombre</th>
+                                    <th>👤 Apellido</th>
+                                    <th>📧 Email</th>
+                                    <th>📞 Teléfono</th>
+                                    <th>🛠️ Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ListaUsuarios)
+                                {
+                                    <tr>
+                                        <td>@item.Nombre</td>
+                                        <td>@item.Apellido</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Teléfono</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">
+                                                🗑️ Borrar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         }
     }
     else
     {
-        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+        <div class="alert alert-danger text-center shadow-sm">
+            ❌ Error: @Mensaje
+        </div>
     }
 </div>
 
 <Confirmacion @ref="confirmacion"
               Titulo="⚠️ Alerta"
               textCancelar="Cancelar"
+              textOk="Eliminar"
               onCancel="@Cancelar"
               onConfirm="@Eliminar">
     <h5 class="text-danger text-center">Está por eliminar un usuario. ¿Desea continuar?</h5>
 </Confirmacion>
-
 
 @code {
     Confirmacion confirmacion;

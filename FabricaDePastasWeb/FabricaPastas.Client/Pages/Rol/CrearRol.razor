@@ -4,31 +4,50 @@
 @inject NavigationManager navigationManager;
 
 
-<h3>Crear nuevo Rol</h3>
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-success">
+            🧑‍💼 Crear nuevo rol
+        </h1>
+        <p class="text-muted">Asigná un nombre al nuevo rol para gestionar accesos dentro del sistema</p>
+    </div>
 
+    <EditForm Model="rol" OnValidSubmit="Grabar">
+        <DataAnnotationsValidator />
 
-<EditForm Model="rol" OnValidSubmit="Grabar" class="container">
-    <DataAnnotationsValidator />
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-start border-4 border-success">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="nombreRol" class="form-label fw-semibold">
+                                Nombre del rol
+                            </label>
+                            <input type="text"
+                                   id="nombreRol"
+                                   @bind="rol.Nombre_rol"
+                                   class="form-control"
+                                   placeholder="Ej: Admin, Supervisor, Cliente" />
+                            <ValidationMessage For="@(() => rol.Nombre_rol)" />
+                        </div>
 
-    <div class="row g-4">
-        <div class="col-md-6">
-            <label for="nombreRol" class="form-label">Nombre del rol</label>
-            <input type="text" id="nombreRol" @bind="rol.Nombre_rol" class="form-control" placeholder="Ej: Admin" />
-            <ValidationMessage For="@(() => rol.Nombre_rol)" />
+                        <div class="text-center mt-4">
+                            <button class="btn btn-success me-2" type="submit">
+                                ✅ Crear rol
+                            </button>
+                            <button class="btn btn-outline-secondary me-2" type="button" @onclick="Cancelar">
+                                ❌ Cancelar
+                            </button>
+                            <a class="btn btn-outline-info" href="/api/Rol">
+                                📋 Ver lista
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-    </div>
-
-
-
-    <div class="col-12 text-center mt-4">
-        <button class="btn btn-success me-2" type="submit">✅ Crear Rol</button>
-        <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
-        @* <a href="/api/Rol">Ver lista</a> *@
-        <a class="btn btn-outline-secondary" type="button" href="/api/Rol">Ver lista</a>
-    </div>
-
-</EditForm>
+    </EditForm>
+</div>
 
 
 
@@ -51,7 +70,7 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/api/Rol");
         // navigationManager.NavigateTo("/api/Rol");
     }
 }

@@ -1,0 +1,43 @@
+﻿@page "/SeccionPedidos"
+@inject IHTTPServicio http;
+@inject NavigationManager navigationManager;
+
+
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-primary">
+            📦 Sección de pedidos
+        </h2>
+        <p class="text-muted">Gestioná usuarios y pedidos con estilo y claridad</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <!-- Tarjeta: Nuevo pedido -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-start border-4 border-success h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-semibold text-success">📝 Nuevo pedido</h5>
+                    <p class="card-text">Cargá tus pedidos al sistema de forma rápida y sencilla.</p>
+                    <a href="/api/Pedido/Crear" class="btn btn-success w-100">
+                        ➕ Cargar pedido
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta: Lista de pedidos -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-start border-4 border-info h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-semibold text-info">📋 Lista de pedidos</h5>
+                    <p class="card-text">Visualizá la lista completa de pedidos activos en el sistema.</p>
+                    <a href="/api/Pedido/ListaSB" class="btn btn-info text-white w-100">
+                        👁️ Ver pedidos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

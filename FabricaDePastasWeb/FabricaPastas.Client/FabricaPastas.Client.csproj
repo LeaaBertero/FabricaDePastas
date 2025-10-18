@@ -16,8 +16,4 @@
     <ProjectReference Include="..\FabricaPastas.Shared\FabricaPastas.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Promocion\" />
-  </ItemGroup>
-
 </Project>

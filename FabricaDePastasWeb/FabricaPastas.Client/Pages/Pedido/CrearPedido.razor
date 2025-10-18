@@ -3,75 +3,68 @@
 @inject NavigationManager navigationManager;
 
 
-@* <h1 class="text-center fondo">Fecha de pedidos y costos</h1>
 
-<EditForm Model="pedido" OnValidSubmit="Grabar">
-    <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <label for="Fechapedido">Fecha pedido</label>
-        <input type="date" @bind="pedido.Fecha_Pedido" class="form-control" />
-        <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-danger">
+            📅 Fecha de pedidos y costos
+        </h1>
+        <p class="text-muted">Completá los datos del pedido y registrá el costo total del servicio</p>
     </div>
 
-    <div class="form-group">
-        <label for="Fechapedido">Fecha entrega</label>
-        <input type="date" @bind="pedido.Fecha_Entrega" class="form-control" />
-        <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
-    </div>
+    <EditForm Model="pedido" OnValidSubmit="Grabar">
+        <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <label for="total">Total</label>
-        <input type="number" @bind="pedido.Total" class="form-control" />
-        <ValidationMessage For="@(() => pedido.Total)" />
-    </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm border-start border-4 border-danger">
+                    <div class="card-body">
+                        <div class="row g-4">
 
-           
+                            <div class="col-md-6">
+                                <label for="Fechapedido" class="form-label fw-semibold">Fecha del pedido</label>
+                                <input type="date" id="Fechapedido" @bind="pedido.Fecha_Pedido" class="form-control" />
+                                <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+                            </div>
 
+                            <div class="col-md-6">
+                                <label for="FechaEntrega" class="form-label fw-semibold">Fecha de entrega</label>
+                                <input type="date" id="FechaEntrega" @bind="pedido.Fecha_Entrega" class="form-control" />
+                                <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
+                            </div>
 
-    <div>
-        <button class="btn btn-primary" type="submit">Registrar</button>
-        <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-    </div>
+                            <div class="col-md-6">
+                                <label for="Observaciones" class="form-label fw-semibold">Observaciones de catering</label>
+                                <input type="text" id="Observaciones" @bind="pedido.Observaciones_Catering" class="form-control" placeholder="Ej: Sin gluten, vegano, etc." />
+                                <ValidationMessage For="@(() => pedido.Observaciones_Catering)" />
+                            </div>
 
-</EditForm> *@
+                            <div class="col-md-6">
+                                <label for="Total" class="form-label fw-semibold">Costo total</label>
+                                <input type="number" id="Total" @bind="pedido.Total" class="form-control" step="0.01" min="0" placeholder="Ej: 1500.00" />
+                                <ValidationMessage For="@(() => pedido.Total)" />
+                            </div>
 
-<h1 class="text-center mb-4">📅 Fecha de pedidos y costos</h1>
+                            <div class="col-12 text-center mt-4">
+                                <button class="btn btn-success me-2" type="submit">
+                                    💾 Registrar pedido
+                                </button>
+                                <button class="btn btn-outline-secondary me-2" type="button" @onclick="Cancelar">
+                                    ❌ Cancelar
+                                </button>
+                                <button class="btn btn-outline-info" type="button" @onclick="VerListaPedidos">
+                                    📋 Ver lista
+                                </button>
+                            </div>
 
-<EditForm Model="pedido" OnValidSubmit="Grabar" class="container">
-    <DataAnnotationsValidator />
-
-    <div class="row g-3">
-        <div class="col-md-6">
-            <label for="Fechapedido" class="form-label">Fecha del pedido</label>
-            <input type="date" id="Fechapedido" @bind="pedido.Fecha_Pedido" class="form-control" />
-            <ValidationMessage For="@(() => pedido.Fecha_Pedido)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="col-md-6">
-            <label for="FechaEntrega" class="form-label">Fecha de entrega</label>
-            <input type="date" id="FechaEntrega" @bind="pedido.Fecha_Entrega" class="form-control" />
-            <ValidationMessage For="@(() => pedido.Fecha_Entrega)" />
-        </div>
-
-        <div class="col-md-6">
-            <label for="FechaEntrega" class="form-label">Observaciones_Catering</label>
-            <input type="text" id="FechaEntrega" @bind="pedido.Observaciones_Catering" class="form-control" />
-            <ValidationMessage For="@(() => pedido.Observaciones_Catering)" />
-        </div>
-
-        <div class="col-md-6">
-            <label for="Total" class="form-label">Costo total</label>
-            <input type="number" id="Total" @bind="pedido.Total" class="form-control" step="0.01" min="0" placeholder="Ej: 1500.00" />
-            <ValidationMessage For="@(() => pedido.Total)" />
-        </div>
-
-        <div class="col-12 text-center mt-4">
-            <button class="btn btn-success me-2" type="submit">💾 Registrar pedido</button>
-            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
-        </div>
-    </div>
-</EditForm>
+    </EditForm>
+</div>
 
        
 
@@ -90,7 +83,12 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/api/Pedido/Lista");
+        navigationManager.NavigateTo("/");
+    }
+
+    private void VerListaPedidos()
+    {
+        navigationManager.NavigateTo("api/Pedido/ListaSB");
     }
 }
 

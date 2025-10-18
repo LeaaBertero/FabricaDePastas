@@ -12,33 +12,33 @@
 <div class="position-fixed top-0 start-0 vh-100 bg-light border-end shadow-sm p-3 overflow-auto" style="width: 260px;" @onclick="ToggleNavMenu">
     <nav class="nav flex-column">
         
-        <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/preguntas-frecuentes" Match="NavLinkMatch.All">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Preguntas frecuentes
-            </NavLink>
-        </div>
-        
-        <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/SeccionUsuarios" Match="NavLinkMatch.All">
+        <div class="nav-item mb-2 bg-primary rounded">
+            <NavLink class="nav-link text-white fw-semibold" href="/SeccionUsuarios" Match="NavLinkMatch.All">
                 <i class="bi bi-box-arrow-in-right me-2"></i>Sección usuarios
             </NavLink>
         </div>
 
-        <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/Metodo_Entrega/Crear" Match="NavLinkMatch.All">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Metodo de entrega
+        <div class="nav-item mb-2 bg-success rounded">
+            <NavLink class="nav-link text-white fw-semibold" href="/Secc-Admin" Match="NavLinkMatch.All">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sección Admin
+            </NavLink>
+        </div>
+
+        <div class="nav-item mb-2 bg-warning rounded">
+            <NavLink class="nav-link text-dark fw-semibold" href="/SeccionProductos" Match="NavLinkMatch.All">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sección productos
+            </NavLink>
+        </div>
+
+        <div class="nav-item mb-2 bg-info rounded">
+            <NavLink class="nav-link text-white fw-semibold" href="/SeccionPedidos" Match="NavLinkMatch.All">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sección pedidos
             </NavLink>
         </div>
        
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/" Match="NavLinkMatch.All">
                 <i class="bi bi-house-door-fill me-2"></i>Inicio
-            </NavLink>
-        </div>
-
-        <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/Administracion" Match="NavLinkMatch.All">
-                <i class="bi bi-house-door-fill me-2"></i>Administración
             </NavLink>
         </div>
 
@@ -54,33 +54,12 @@
             </NavLink>
         </div>
 
-        @* <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/Usuario/Registro/Crear" Match="NavLinkMatch.All">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Registro
-            </NavLink>
-        </div> *@
-
-        <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/rol/" Match="NavLinkMatch.All">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Rol
-            </NavLink>
-        </div>
-
-       
-
-       
-
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Tipo_Cliente/Crear" Match="NavLinkMatch.All">
                 @* cambiar por href="/api/Rol/Lista"  *@
                 <i class="bi bi-person-badge-fill me-2"></i>Tipo de cliente(C)
             </NavLink>
         </div>
-
-       
-
-      
-
         
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Promocion_Usuario/Crear" Match="NavLinkMatch.All">
@@ -118,28 +97,22 @@
             </NavLink>
         </div>
 
-        
-    @*     <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/Producto/Crear" Match="NavLinkMatch.All">
-                <i class="bi bi-box-seam me-2"></i>Productos
-            </NavLink>
-        </div> *@
-
-       @*  <div class="nav-item mb-2">
-            <NavLink class="nav-link text-dark fw-semibold" href="/api/Producto/Lista" Match="NavLinkMatch.All">
-                <i class="bi bi-card-list me-2"></i>Productos(L)
-            </NavLink>
-        </div> *@
-
-       
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Pedido/Crear" Match="NavLinkMatch.All">
                 <i class="bi bi-cart-plus me-2"></i>Pedidos
             </NavLink>
         </div>
+
         <div class="nav-item mb-2">
             <NavLink class="nav-link text-dark fw-semibold" href="/api/Pedido/Lista" Match="NavLinkMatch.All">
                 <i class="bi bi-card-list me-2"></i>Pedidos(L)
+            </NavLink>
+        </div>
+
+
+        <div class="nav-item mb-2">
+            <NavLink class="nav-link text-dark fw-semibold" href="/api/Metodo_Entrega/Crear" Match="NavLinkMatch.All">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Metodo de entrega
             </NavLink>
         </div>
 
@@ -214,11 +187,11 @@
         </div>
 
        
-       @*  <div class="nav-item mt-4">
+        <div class="nav-item mt-4">
             <NavLink class="nav-link text-primary fw-bold" href="https://localhost:7093/swagger" target="_blank">
                 <i class="bi bi-list-nested me-2"></i>Swagger
             </NavLink>
-        </div> *@
+        </div>
 
     </nav>
 

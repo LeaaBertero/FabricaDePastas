@@ -5,140 +5,136 @@
 @inject IJSRuntime jsRuntime   
 
 
-@* <h1 class="text-center">Seleccione el rol</h1>
-        
-<h2>Lista roles</h2>
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-6 fw-bold text-primary">
+            🧑‍💼 Gestión de roles de usuario
+        </h1>
+        <p class="text-muted">Seleccioná un rol existente o creá uno nuevo para gestionar accesos y permisos</p>
+    </div>
 
-<select @bind="RolSeleccionado" class="form-select">
-    <option disabled selected value="">-- Seleccione un rol --</option>
-    @if (ListaRoles != null)
-    {
-        foreach (var rol in ListaRoles)
-        {
-            <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
-        }
-    }
-    @if (!string.IsNullOrEmpty(RolSeleccionado))
-    {
-        <p>Rol seleccionado: <strong>@RolSeleccionado</strong></p>
-    }
-</select>
-
-<button class="btn btn-primary" @onclick="IngresarConRol">Ingresar</button> *@
-
-
-
-
-<h1 class="text-center mb-4">🧑‍💼 Seleccione el rol</h1>
-
-<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <label for="RolSeleccionado" class="form-label">Lista de roles disponibles</label>
-            <select id="RolSeleccionado" @bind="RolSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione un rol --</option>
-                @if (ListaRoles != null)
-                {
-                    foreach (var rol in ListaRoles)
+            <div class="card shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <label for="RolSeleccionado" class="form-label fw-semibold">
+                        Lista de roles disponibles
+                    </label>
+                    <select id="RolSeleccionado" @bind="RolSeleccionado" class="form-select">
+                        <option disabled selected value="">-- Seleccione un rol --</option>
+                        @if (ListaRoles != null)
+                        {
+                            foreach (var rol in ListaRoles)
+                            {
+                                <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
+                            }
+                        }
+                    </select>
+
+                    @if (!string.IsNullOrEmpty(RolSeleccionado))
                     {
-                        <option value="@rol.Nombre_rol">@rol.Nombre_rol</option>
+                        <div class="alert alert-info mt-3 text-center shadow-sm">
+                            Rol seleccionado: <strong>@RolSeleccionado</strong>
+                        </div>
                     }
-                }
-            </select>
 
-            @if (!string.IsNullOrEmpty(RolSeleccionado))
-            {
-                <div class="alert alert-info mt-3 text-center">
-                    Rol seleccionado: <strong>@RolSeleccionado</strong>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-success me-2" @onclick="IngresarConRol">
+                            ✅ Ingresar
+                        </button>
+                        <button class="btn btn-outline-secondary" type="button" @onclick="NuevoRol">
+                            ➕ Nuevo rol
+                        </button>
+                    </div>
                 </div>
-            }
-
-            <div class="text-center mt-4">
-                <button class="btn btn-success me-2" @onclick="IngresarConRol">✅ Ingresar</button>
-                <button class="btn btn-outline-secondary" type="button" @onclick="NuevoRol">Nuevo rol</button>
             </div>
         </div>
     </div>
+
+    @if (ListaRoles != null && ListaRoles.Count > 0)
+    {
+        <div class="card mt-5 shadow-sm border-start border-4 border-secondary">
+            <div class="card-body">
+                <h5 class="card-title fw-semibold text-secondary mb-3">
+                    📋 Roles registrados
+                </h5>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th>🧑‍💼 Rol</th>
+                                <th>🛠️ Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rol in ListaRoles)
+                            {
+                                <tr>
+                                    <td>@rol.Nombre_rol</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(rol)">
+                                            🗑️ Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    <Confirmacion @ref="confirmacion"
+                  Titulo="⚠️ Alerta"
+                  textCancelar="Cancelar"
+                  textOk="Eliminar"
+                  onCancel="@Cancelar"
+                  onConfirm="@Eliminar">
+        <h5 class="text-danger text-center">Está por eliminar un rol. ¿Desea continuar?</h5>
+    </Confirmacion>
+
+    @if (Mensaje == null)
+    {
+        if (ListaRoles == null)
+        {
+            <p class="text-center text-muted mt-4">🔄 Buscando roles de usuario...</p>
+        }
+        else if (ListaRoles.Count == 0)
+        {
+            <p class="text-center text-warning mt-4">⚠️ No existen roles de usuarios cargados</p>
+        }
+    }
+    else
+    {
+        <p class="text-center text-danger mt-4">❌ Error: @Mensaje</p>
+    }
 </div>
 
 
 
-@if (ListaRoles != null && ListaRoles.Count > 0)
-{
-    <table class="table table-striped table-bordered mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Rol</th>
-                <th>Acciones</th> 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var rol in ListaRoles)
-            {
-                <tr>
-                    <td>@rol.Nombre_rol</td>
-                    <td>
-                      
-                        <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(rol)">
-                            🗑️ Eliminar
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-
-<Confirmacion @ref="confirmacion"
-              Titulo="⚠️ Alerta"
-              textCancelar="Cancelar"
-              textOk="Eliminar"
-              onCancel="@Cancelar"
-              onConfirm="@Eliminar">
-    <h5 class="text-danger text-center">Está por eliminar un rol. ¿Desea continuar?</h5>
-</Confirmacion>
-
-
-@if (Mensaje == null)
-{
-    if (ListaRoles == null)
-    {
-        <p>Buscando....</p>
-    }
-    else if (ListaRoles.Count == 0)
-    {
-        <p>No existen roles de usuarios cargados</p>
-    }
-}
-else
-{
-    <p> Error: @Mensaje</p>
-}
-
-
-
 @code {
-    // ➡️ agregado: referencia al componente Confirmacion
+   
     Confirmacion confirmacion;
 
-    //navega a la pagina de listas segun el rol seleccionado
+    
     private void IngresarConRol()
     {
         if (!string.IsNullOrEmpty(RolSeleccionado))
         {
             navigationManager.NavigateTo($"/Administracion");
         }
-        //aca va la seccion de administracón arriba 
+        
     }
-    //selecciona el rol de usuario
+   
     private string RolSeleccionado;
 
     private List<Rol> ListaRoles;
 
     string Mensaje;
 
-    // ➡️ agregado: variable para guardar el rol seleccionado para borrar
+   
     private Rol? rolBorrar = null;
 
     protected override async Task OnInitializedAsync()
@@ -153,21 +149,21 @@ else
         }
     }
 
-    // ➡️ agregado: muestra el modal de confirmación y guarda el rol a borrar
+    
     private void ConfirmarEliminar(Rol rol)
     {
         rolBorrar = rol;
         confirmacion.Ver();
     }
 
-    // ➡️ agregado: método invocado al presionar "Cancelar" en el modal
+    
     private void Cancelar()
     {
         confirmacion.Ocultar();
         rolBorrar = null;
     }
 
-    // ➡️ agregado: método invocado por onConfirm del modal (sin parámetros)
+    
     private async Task Eliminar()
     {
         if (rolBorrar == null)
@@ -181,7 +177,7 @@ else
             var response = await Http.DeleteAsync($"/api/Rol/{rolBorrar.Id}");
             if (response.IsSuccessStatusCode)
             {
-                // refrescar lista
+                
                 ListaRoles = await Http.GetFromJsonAsync<List<Rol>>("/api/Rol");
             }
             else
@@ -194,7 +190,7 @@ else
             Mensaje = $"Error al eliminar: {ex.Message}";
         }
 
-        // limpiar y cerrar modal
+        
         rolBorrar = null;
         confirmacion.Ocultar();
     }
