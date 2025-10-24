@@ -3,45 +3,57 @@
 @inject NavigationManager navigationManager;
 
 
-#<!-- #region name -->
-
-<h1 class="text-center mb-4">Promoción de los productos</h1>
-
-
+<h1 class="text-center mb-4 text-success fw-bold">
+    <i class="bi bi-stars me-2"></i>Promoción de los productos
+</h1>
 
 <EditForm Model="promocion_usuario" OnValidSubmit="Grabar" class="container">
     <DataAnnotationsValidator />
 
-    <div class="row g-3">
-        <div class="col-md-6">
-            <label for="fechaInicio" class="form-label">Fecha de inicio</label>
-            <input type="date" id="fechaInicio" placeholder="Fecha de inicio"
-                   @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
-            <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
-        </div>
+    <div class="card shadow-sm border-start border-4 border-success mb-5">
+        <div class="card-body">
+            <div class="row g-4">
+                <!-- Fecha de inicio -->
+                <div class="col-md-6">
+                    <label for="fechaInicio" class="form-label fw-semibold">
+                        <i class="bi bi-calendar-event me-1"></i>Fecha de inicio
+                    </label>
+                    <input type="date" id="fechaInicio" @bind="promocion_usuario.Fecha_Inicio_Promo" class="form-control" />
+                    <ValidationMessage For="@(() => promocion_usuario.Fecha_Inicio_Promo)" />
+                </div>
 
-        <div class="col-md-6">
-            <label for="fechaFin" class="form-label">Fecha fin de promoción</label>
-            <input type="date" id="fechaFin" placeholder="Fecha fin"
-                   @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
-            <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
-        </div>
+                <!-- Fecha fin -->
+                <div class="col-md-6">
+                    <label for="fechaFin" class="form-label fw-semibold">
+                        <i class="bi bi-calendar-check me-1"></i>Fecha fin de promoción
+                    </label>
+                    <input type="date" id="fechaFin" @bind="promocion_usuario.Fecha_Fin_Promo" class="form-control" />
+                    <ValidationMessage For="@(() => promocion_usuario.Fecha_Fin_Promo)" />
+                </div>
 
-        <div class="col-md-6">
-            <label for="fechaFin" class="form-label">Descripción de promo</label>
-            <input type="text" id="Descripcion" placeholder="Descripción de la promoción"
-                   @bind="promocion_usuario.Descripcion" class="form-control" />
-            <ValidationMessage For="@(() => promocion_usuario.Descripcion)" />
-        </div>
+                <!-- Descripción -->
+                <div class="col-md-12">
+                    <label for="Descripcion" class="form-label fw-semibold">
+                        <i class="bi bi-chat-left-text me-1"></i>Descripción de la promoción
+                    </label>
+                    <input type="text" id="Descripcion" placeholder="Ej: 2x1 en productos seleccionados"
+                           @bind="promocion_usuario.Descripcion" class="form-control" />
+                    <ValidationMessage For="@(() => promocion_usuario.Descripcion)" />
+                </div>
 
-        <div class="col-12 text-center mt-4">
-            <button class="btn btn-success me-2" type="submit">🎯 Cargar promoción</button>
-            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">Cancelar</button>
+                <!-- Botones -->
+                <div class="col-12 text-center mt-4">
+                    <button class="btn btn-success me-2" type="submit">
+                        <i class="bi bi-check-circle-fill me-1"></i>Cargar promoción
+                    </button>
+                    <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">
+                        <i class="bi bi-x-circle me-1"></i>Cancelar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </EditForm>
-
-<!-- #endregion -->
 
 
 

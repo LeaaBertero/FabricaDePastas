@@ -4,12 +4,18 @@
 
 
 
-<h1 class="text-center mb-4 text-success fw-bold">🛒 Productos disponibles</h1>
+<h1 class="text-center mb-4 text-success fw-bold">
+    <i class="bi bi-bag-check-fill me-2"></i>Productos disponibles
+</h1>
 
 <div class="container mb-4">
     <div class="d-flex justify-content-between align-items-center">
-        <p class="mb-0 fw-semibold">Para registrar un nuevo producto, hacé click en el botón:</p>
-        <a class="btn btn-primary" href="/api/Producto/Crear">➕ Cargar producto</a>
+        <p class="mb-0 fw-semibold text-muted">
+            Para registrar un nuevo producto, hacé click en el botón:
+        </p>
+        <a class="btn btn-outline-primary shadow-sm" href="/api/Producto/Crear">
+            <i class="bi bi-plus-circle me-1"></i> Cargar producto
+        </a>
     </div>
 </div>
 
@@ -18,49 +24,38 @@
     {
         @if (Lista_producto == null)
         {
-            <div class="alert alert-secondary text-center">🔄 Buscando productos...</div>
+            <div class="alert alert-secondary text-center shadow-sm" role="alert">
+                <i class="bi bi-arrow-repeat me-2"></i>Buscando productos...
+            </div>
         }
         else if (Lista_producto.Count == 0)
         {
-            <div class="alert alert-warning text-center">⚠️ No existen productos cargados</div>
+            <div class="alert alert-warning text-center shadow-sm" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>No existen productos cargados
+            </div>
         }
         else
         {
-            <div class="table-responsive">
-               
+            <div class="table-responsive shadow-sm">
                 <table class="table table-bordered table-hover align-middle">
-                    
-                    <thead class="table-light">
-                       
+                    <thead class="table-success text-center">
                         <tr>
-                            <th>📦 Nombre</th>
-
-                            <th>📝 Descripción</th>
-
-                            <th>💰 Precio base</th>
-
-                            <th>🖼️ Imagen</th>
-
-                            <th>📦 Stock</th>
-
-                            <th class="text-center">✏️ Acción</th>
-                        
+                            <th><i class="bi bi-box-seam me-1"></i>Nombre</th>
+                            <th><i class="bi bi-card-text me-1"></i>Descripción</th>
+                            <th><i class="bi bi-currency-dollar me-1"></i>Precio base</th>
+                            <th><i class="bi bi-image me-1"></i>Imagen</th>
+                            <th><i class="bi bi-stack me-1"></i>Stock</th>
+                            <th class="text-center"><i class="bi bi-gear-fill me-1"></i>Acción</th>
                         </tr>
-                    
                     </thead>
-                   
                     <tbody>
-
                         @foreach (var item in Lista_producto)
                         {
                             <tr>
-                                
                                 <td>@item.Nombre</td>
                                 <td>@item.Descripcion</td>
                                 <td>$@item.PrecioBase</td>
-                                
                                 <td>
-                                    
                                     @if (!string.IsNullOrEmpty(item.Imagen_Url))
                                     {
                                         <img src="@item.Imagen_Url" alt="Imagen del producto" class="img-thumbnail" style="max-width: 100px;" />
@@ -69,42 +64,45 @@
                                     {
                                         <span class="text-muted">Sin imagen</span>
                                     }
-                               
                                 </td>
-                            
                                 <td>@item.Stock</td>
-                               
                                 <td class="text-center">
-                                    <a class="btn btn-warning btn-sm" href="/api/Producto/Editar/@item.Id">Modificar</a>
-                                    <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item)">🗑️ Eliminar</button> @* Botón eliminar *@
+                                    <a class="btn btn-warning btn-sm me-1 shadow-sm" href="/api/Producto/Editar/@item.Id">
+                                        <i class="bi bi-pencil-fill me-1"></i>Modificar
+                                    </a>
+                                    <button class="btn btn-danger btn-sm shadow-sm" @onclick="() => Eliminar(item)">
+                                        <i class="bi bi-trash-fill me-1"></i>Eliminar
+                                    </button>
                                 </td>
-                            
                             </tr>
                         }
-
                     </tbody>
-
                 </table>
-
             </div>
         }
     }
     else
     {
-        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+        <div class="alert alert-danger text-center shadow-sm" role="alert">
+            <i class="bi bi-x-circle-fill me-2"></i>Error: @Mensaje
+        </div>
     }
 </div>
 
+<div class="container text-center mt-4">
+    <a class="btn btn-outline-secondary shadow-sm" href="/api/Rol">
+        <i class="bi bi-arrow-left-circle me-1"></i> Volver a roles
+    </a>
+</div>
 
-<h2>Poner un botón cancelar para que vaya a la lista de roles en la sección de administración</h2>
-
-@* Modal de confirmación (igual que en usuarios) *@
 <Confirmacion @ref="confirmacion"
               Titulo="⚠️ Alerta"
               textCancelar="Cancelar"
               onCancel="@Cancelar"
               onConfirm="@Eliminar">
-    <h5 class="text-danger text-center">Está por eliminar un producto. ¿Desea continuar?</h5>
+    <h5 class="text-danger text-center">
+        <i class="bi bi-exclamation-octagon-fill me-2"></i>Está por eliminar un producto. ¿Desea continuar?
+    </h5>
 </Confirmacion>
 
            

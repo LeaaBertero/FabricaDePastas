@@ -2,72 +2,78 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar producto</title>
-</head>
+<h1 class="text-center mb-4 text-warning fw-bold">
+    <i class="bi bi-pencil-square me-2"></i>Editar producto
+</h1>
 
-<body>
+<EditForm Model="Editar_producto" OnValidSubmit="Grabar" class="container">
+    <DataAnnotationsValidator />
 
-    <header>
-        <h1>Editar producto</h1>
-    </header>
+    <div class="card shadow-sm border-start border-4 border-warning mb-5">
+        <div class="card-body">
+            <div class="row g-4">
+                <!-- Nombre -->
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label fw-semibold">
+                        <i class="bi bi-tag-fill me-1"></i>Nombre
+                    </label>
+                    <input type="text" id="nombre" @bind="Editar_producto.Nombre" class="form-control" placeholder="Ej: Fideos largos" />
+                    <ValidationMessage For="@(() => Editar_producto.Nombre)" />
+                </div>
 
-    <main>
+                <!-- Descripción -->
+                <div class="col-md-6">
+                    <label for="descripcion" class="form-label fw-semibold">
+                        <i class="bi bi-card-text me-1"></i>Descripción
+                    </label>
+                    <input type="text" id="descripcion" @bind="Editar_producto.Descripcion" class="form-control" placeholder="Ej: Pasta casera sin TACC" />
+                    <ValidationMessage For="@(() => Editar_producto.Descripcion)" />
+                </div>
 
-        <EditForm Model="Editar_producto" OnValidSubmit="Grabar">
-            <DataAnnotationsValidator />
+                <!-- Precio base -->
+                <div class="col-md-4">
+                    <label for="precio_base" class="form-label fw-semibold">
+                        <i class="bi bi-currency-dollar me-1"></i>Precio base
+                    </label>
+                    <input type="number" id="precio_base" @bind="Editar_producto.PrecioBase" class="form-control" step="0.01" min="0" placeholder="Ej: 999.99" />
+                    <ValidationMessage For="@(() => Editar_producto.PrecioBase)" />
+                </div>
 
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" @bind="Editar_producto.Nombre" class="form-control" />
-                <ValidationMessage For="@(() => Editar_producto.Nombre)" />
+                <!-- Imagen -->
+                <div class="col-md-4">
+                    <label for="imagen_url" class="form-label fw-semibold">
+                        <i class="bi bi-image me-1"></i>Imagen del producto (URL)
+                    </label>
+                    <input type="url" id="imagen_url" @bind="Editar_producto.Imagen_Url" class="form-control" placeholder="https://..." />
+                    <ValidationMessage For="@(() => Editar_producto.Imagen_Url)" />
+                </div>
+
+                <!-- Stock -->
+                <div class="col-md-4">
+                    <label for="stock" class="form-label fw-semibold">
+                        <i class="bi bi-stack me-1"></i>Stock disponible
+                    </label>
+                    <input type="number" id="stock" @bind="Editar_producto.Stock" class="form-control" step="1" min="0" placeholder="Ej: 50" />
+                    <ValidationMessage For="@(() => Editar_producto.Stock)" />
+                </div>
+
+                <!-- Botones -->
+                <div class="col-12 text-center mt-4">
+                    <button class="btn btn-warning me-2" type="submit">
+                        <i class="bi bi-check-circle-fill me-1"></i>Actualizar
+                    </button>
+                    <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">
+                        <i class="bi bi-x-circle me-1"></i>Cancelar
+                    </button>
+                </div>
             </div>
-           
-            <div class="form-group">
-                <label for="descripcion">Descripcion</label>
-                <input type="text" @bind="Editar_producto.Descripcion" class="form-control" />
-                <ValidationMessage For="@(() => Editar_producto.Descripcion)" />
-            </div>
+        </div>
+    </div>
+</EditForm>
 
-            <div class="form-group">
-                <label for="precio_base">Precio base</label>
-                <input type="number" @bind="Editar_producto.PrecioBase" class="form-control" />
-                <ValidationMessage For="@(() => Editar_producto.PrecioBase)" />
-            </div>
-            
-            <div class="form-group">
-                <label for="imagen_url">Imagen del producto</label>
-                <input type="url" @bind="Editar_producto.Imagen_Url" class="form-control" />
-                <ValidationMessage For="@(() => Editar_producto.Imagen_Url)" />
-            </div>
-            
-            <div class="form-group">
-                <label for="stock">Stock de productos disponibles</label>
-                <input type="number" name="stock" min="0" step="1" required @bind="Editar_producto.Stock" class="form-control" />
-                <ValidationMessage For="@(() => Editar_producto.Stock)" />
-            </div>
-
-           
-
-
-            <div>
-                <button class="btn btn-success" type="submit">Actualizar</button>
-                <button class="btn btn-secondary" onclick="Cancelar">Cancelar</button>
-            </div>
-
-
-        </EditForm>
-
-    </main>
-
-    <footer>
-        <p class="text-center">© 2023 La Nonna Personal</p>
-    </footer>
-
-</body>
-</html>
+<footer class="text-center text-muted mt-5 mb-3">
+    © 2023 La Nonna Personal
+</footer>
 
 
 @code {

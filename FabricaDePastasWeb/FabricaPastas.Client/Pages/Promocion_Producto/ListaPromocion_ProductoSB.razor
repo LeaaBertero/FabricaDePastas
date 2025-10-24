@@ -3,9 +3,6 @@
 @inject NavigationManager navigationManager;
 
 
-
-
-
 <div class="container my-5">
     <div class="text-center mb-4">
         <h1 class="display-5 fw-bold text-danger">
@@ -75,7 +72,11 @@
     }
 </div>
 
-
+<div class="d-flex justify-content-center mt-5">
+    <button class="btn btn-info shadow-sm px-4 py-2 fw-bold text-white" type="button" @onclick="PromoUsuarioActivas">
+        📜 Ver Promo usuarios
+    </button>
+</div>
 
 @code {
 
@@ -152,6 +153,13 @@
 
         PromoAEliminar = null;
        
+    }
+
+
+    private void PromoUsuarioActivas()
+    {
+        navigationManager.NavigateTo("/api/Promocion_Usuario/ListaSB");
+        // navigationManager.NavigateTo("/api/Rol");
     }
 
 

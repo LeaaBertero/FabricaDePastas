@@ -2,7 +2,7 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-<h3 class="text-center">Seccion Admin</h3>
+@* <h3 class="text-center">Seccion Admin</h3> *@
 
 
 <div class="container mt-5">
@@ -11,20 +11,49 @@
         <p class="text-muted">Gestioná usuarios y promociones con estilo y claridad.</p>
     </div>
 
-    <div class="row justify-content-center">
+   
+
+    @* <div class="row justify-content-center">
         <div class="col-md-5 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Usuarios registrados</h5>
-                    <p class="card-text">Roles</p>
-                    <a href="/api/Rol" class="btn btn-outline-primary w-100">Ver roles</a>
+                    <h5 class="card-title">Productos</h5>
+                    <p class="card-text">Ver productos</p>
+                    <a href="/SeccionProductos" class="btn btn-outline-primary w-100">Sección productos</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
+
+    @* <div class="row justify-content-center">
+        <div class="col-md-5 mb-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pedidos</h5>
+                    <p class="card-text">Pedidos y lista pedidos</p>
+                    <a href="/SeccionPedidos" class="btn btn-outline-primary w-100">Sección pedidos</a>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <button class="btn btn-info shadow-sm px-4 py-2 fw-bold text-white" type="button" @onclick="RolesActivos">
+        📜 Ver Roles activos
+    </button>
 </div>
         
 
 @code {
-
+   
+    private void RolesActivos()
+    {
+        navigationManager.NavigateTo("/api/Rol");
+        // navigationManager.NavigateTo("/api/Rol");
+    }
 }
+    
+    

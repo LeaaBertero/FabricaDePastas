@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20251017031746_CorreccionDetalle_Pedido")]
-    partial class CorreccionDetalle_Pedido
+    [Migration("20251023065439_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

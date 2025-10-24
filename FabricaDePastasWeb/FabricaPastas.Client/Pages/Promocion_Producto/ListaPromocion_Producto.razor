@@ -4,12 +4,18 @@
 
 
 
-<h1 class="text-center mb-4 text-primary fw-bold">🛍️ Promociones de productos</h1>
+<h1 class="text-center mb-4 text-primary fw-bold">
+    <i class="bi bi-tags-fill me-2"></i>Promociones de productos
+</h1>
 
 <div class="container mb-4">
     <div class="d-flex justify-content-between align-items-center">
-        <p class="mb-0 fw-semibold">Para registrar una nueva promoción, hacé click en el botón:</p>
-        <a class="btn btn-primary" href="/api/Promocion_Producto/Crear">➕ Crear promoción de producto</a>
+        <p class="mb-0 fw-semibold text-muted">
+            Para registrar una nueva promoción, hacé click en el botón:
+        </p>
+        <a class="btn btn-outline-primary shadow-sm" href="/api/Promocion_Producto/Crear">
+            <i class="bi bi-plus-circle me-1"></i> Crear promoción de producto
+        </a>
     </div>
 </div>
 
@@ -18,45 +24,44 @@
     {
         @if (ListaPromo_prod == null)
         {
-            <div class="alert alert-secondary text-center">🔄 Buscando promociones...</div>
+            <div class="alert alert-secondary text-center shadow-sm" role="alert">
+                <i class="bi bi-arrow-repeat me-2"></i>Buscando promociones...
+            </div>
         }
         else if (ListaPromo_prod.Count == 0)
         {
-            <div class="alert alert-warning text-center">⚠️ No existen promociones de productos</div>
+            <div class="alert alert-warning text-center shadow-sm" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>No existen promociones de productos
+            </div>
         }
         else
         {
-            <div class="table-responsive">
-                
+            <div class="table-responsive shadow-sm">
                 <table class="table table-bordered table-hover align-middle">
-                    
-                    <thead class="table-light">
+                    <thead class="table-primary text-center">
                         <tr>
-                            <th>📦 nombre del producto</th>
-                            <th>📦 Fecha desde</th>
-                            <th>📦 fecha hasta</th>
-                            <th>💸 Descuento (%)</th>
-                            <th>💰 Precio promocional</th>
-                            <th class="text-center">✏️ Acción</th>
-                           
+                            <th><i class="bi bi-box-seam me-1"></i>Producto</th>
+                            <th><i class="bi bi-calendar-event me-1"></i>Desde</th>
+                            <th><i class="bi bi-calendar-check me-1"></i>Hasta</th>
+                            <th><i class="bi bi-percent me-1"></i>Descuento</th>
+                            <th><i class="bi bi-currency-dollar me-1"></i>Precio promo</th>
+                            <th class="text-center"><i class="bi bi-gear-fill me-1"></i>Acción</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach (var item in ListaPromo_prod)
                         {
                             <tr>
                                 <td>@item.Nombre_Producto</td>
-                                <td>@item.FechaDesde</td>
-                                <td>@item.FechaHasta</td>
+                                <td>@item.FechaDesde.ToShortDateString()</td>
+                                <td>@item.FechaHasta.ToShortDateString()</td>
                                 <td>@item.Descuento_Porcentaje%</td>
                                 <td>$@item.Precio_Promocional</td>
                                 <td class="text-center">
-@*                                     <a class="btn btn-warning btn-sm" href="/api/Promocion_Producto/Editar/@item.Id">Editar</a> *@
-                                    <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(item)">Eliminar</button>
+                                    <button class="btn btn-sm btn-danger shadow-sm" @onclick="() => ConfirmarEliminar(item)">
+                                        <i class="bi bi-trash-fill me-1"></i>Eliminar
+                                    </button>
                                 </td>
-
-
                             </tr>
                         }
                     </tbody>
@@ -66,16 +71,20 @@
     }
     else
     {
-        <div class="alert alert-danger text-center">❌ Error: @Mensaje</div>
+        <div class="alert alert-danger text-center shadow-sm" role="alert">
+            <i class="bi bi-x-circle-fill me-2"></i>Error: @Mensaje
+        </div>
     }
 </div>
 
- <Confirmacion @ref="confirmacion"
+<Confirmacion @ref="confirmacion"
               Titulo="⚠️ Confirmar eliminación"
               textCancelar="Cancelar"
               onCancel="@Cancelar"
               onConfirm="@Eliminar">
-    <h5 class="text-danger text-center">¿Seguro que desea eliminar esta promoción?</h5>
+    <h5 class="text-danger text-center">
+        <i class="bi bi-exclamation-octagon-fill me-2"></i>¿Seguro que desea eliminar esta promoción?
+    </h5>
 </Confirmacion>
 
 @code {

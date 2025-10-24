@@ -73,9 +73,9 @@
                                 <button class="btn btn-success me-2" type="submit">
                                     ✅ Registrar
                                 </button>
-                                <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">
-                                    ❌ Cancelar
-                                </button>
+                             @*    <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">
+                                    ❌ Ir a inicio
+                                </button> *@
                             </div>
 
                         </div>
@@ -101,13 +101,14 @@
         }
 
 
-        navigationManager.NavigateTo("/api/Usuario/Lista");
+        // navigationManager.NavigateTo("/api/Usuario/Lista");
+        navigationManager.NavigateTo("/api/Tipo_Cliente/Crear");
     }
 
-    private void Cancelar()
-    {
-        navigationManager.NavigateTo("/api/Usuario/Lista");
-    }
+    // private void Cancelar()
+    // {
+    //     navigationManager.NavigateTo("/");
+    // }
 
    
 

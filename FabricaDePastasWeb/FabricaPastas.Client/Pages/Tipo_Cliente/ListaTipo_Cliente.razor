@@ -14,6 +14,7 @@
   </div>
 
   <div class="row justify-content-center">
+
     <div class="col-md-6">
       <div class="card shadow-sm border-start border-4 border-success">
         <div class="card-body">
@@ -39,20 +40,37 @@
           }
 
           <div class="text-center mt-4">
+
             <button class="btn btn-success me-2" @onclick="IngresarConTipoCliente">
               ✅ Ingresar
             </button>
-            <button class="btn btn-outline-secondary" type="button" @onclick="IngresarConTipoCliente">
+
+            <button class="btn btn-outline-secondary" type="button" @onclick="Cancelar">
               ❌ Cancelar
             </button>
+         @*    
+            <button class="btn btn-outline-danger" type="button" @onclick="Eliminar">
+              ❌ Eliminar
+            </button> *@
+
             <a class="btn btn-outline-info" href="/api/Tipo_Cliente/Lista">
               📋 Ver lista
             </a>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <Confirmacion @ref="confirmacion"
+                Titulo="⚠️ Alerta"
+                textCancelar="Cancelar"
+                textOk="Eliminar"
+                onCancel="@Cancelar"
+                onConfirm="@Eliminar">
+    <h5 class="text-danger text-center">Está por eliminar un rol. ¿Desea continuar?</h5>
+  </Confirmacion>
 
   @if (Mensaje == null)
   {
@@ -74,12 +92,15 @@
 
 @code {
 
-    //selecciona el rol de usuario
+    Confirmacion confirmacion;
+   
     private string TipoClienteSeleccionado;
+
+    private Tipo_Cliente? TipoClienteBorrar = null;
 
     private List<Tipo_Cliente> ListaTipoCliente;
 
-    // private List<Tipo_Cliente> ListaTipoClientes;
+   
 
     string Mensaje;
 
@@ -101,6 +122,44 @@
         {
             navigationManager.NavigateTo($"/api/Promocion_Producto/ListaSB");
         }
+    }
+
+    private async Task Eliminar()
+    {
+        if (TipoClienteBorrar == null)
+        {
+            confirmacion.Ocultar();
+            return;
+        }
+
+        try
+        {
+            var response = await Http.DeleteAsync($"/api/Tipo_Cliente/Lista{TipoClienteBorrar.Id}");
+            if (response.IsSuccessStatusCode)
+            {
+
+                ListaTipoCliente = await Http.GetFromJsonAsync<List<Tipo_Cliente>>("/api/Tipo_Cliente");
+            }
+            else
+            {
+                Mensaje = "No se pudo eliminar el rol.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Mensaje = $"Error al eliminar: {ex.Message}";
+        }
+
+
+        TipoClienteBorrar = null;
+        confirmacion.Ocultar();
+    }
+
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/Tipo_Cliente/Crear");
+        
     }
 }
 

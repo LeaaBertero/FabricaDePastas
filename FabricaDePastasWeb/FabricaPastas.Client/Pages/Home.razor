@@ -41,6 +41,18 @@
                     </a>
                 </li>
 
+              @*   <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 text-danger fw-semibold" href="/Secc-Admin">
+                        <i class="bi bi-question-circle-fill"></i>Admin
+                    </a>
+                </li> *@
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 text-danger fw-semibold" href="/Secc-Admin">
+                        <i class="bi bi-gear-fill"></i>Admin
+                    </a>
+                </li>
+
             </ul>
         </div>
 
@@ -87,7 +99,7 @@
             </div>
         </div>
 
-        <div class="col">
+      @*   <div class="col">
             <div class="card h-100 shadow-sm border-start border-4 border-primary">
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold">
@@ -97,7 +109,7 @@
                     <a href="/Catalogo" class="btn btn-primary">Ir al catálogo</a>
                 </div>
             </div>
-        </div>
+        </div> *@
 
         <div class="col">
             <div class="card h-100 shadow-sm border-start border-4 border-warning">
@@ -106,21 +118,24 @@
                         🛍️ Promos por producto
                     </h5>
                     <p class="card-text">Consultá las promociones específicas por producto.</p>
-                    <a href="/api/Promocion_Producto/Lista" class="btn btn-warning text-white">Ver promos por producto</a>
+                    <a href="/api/Promocion_Producto/ListaSB" class="btn btn-warning text-white">Ver promos por producto</a>
                 </div>
             </div>
         </div>
 
         <div class="col">
-            <div class="card h-100 shadow-sm border-start border-4 border-secondary">
+            <div class="card h-100 shadow-sm border-start border-4 border-warning">
                 <div class="card-body">
-                    <h5 class="card-title text-secondary fw-bold">
-                        🛠️ Tarea pendiente
+                    <h5 class="card-title text-warning fw-bold">
+                        🛍️ Promos por usuarios
                     </h5>
-                    <p class="card-text">Crear el Razor de promociones de productos sin el botón de eliminar.</p>
+                    <p class="card-text">Consultá las promociones específicas por usuarios.</p>
+                    <a href="/api/Promocion_Usuario/Lista" class="btn btn-warning text-white">Ver promos por usuarios</a>
                 </div>
             </div>
         </div>
+
+       
 
     </div>
 </div>

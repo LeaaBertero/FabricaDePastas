@@ -2,9 +2,6 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-
-
-
 <div class="container my-5">
     <div class="text-center mb-4">
         <h1 class="display-6 fw-bold text-danger">
@@ -83,7 +80,7 @@
 
     private void Cancelar()
     {
-        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/SeccionPedidos");
     }
 
     private void VerListaPedidos()

@@ -53,7 +53,26 @@ namespace FabricaPastas.Server.Controllers
         }
         #endregion
 
+        #region Método Delete
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await repositorio.Existe(id);
 
+            if (!existe)
+            {
+                return NotFound($"El Tipo de cliente {id} no existe.");
+            }
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("No se pudo eliminar el tipo de cliente");
+            }
+        }
+        #endregion
 
     }
 }

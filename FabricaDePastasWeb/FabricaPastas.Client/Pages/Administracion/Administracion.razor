@@ -3,82 +3,70 @@
 @inject NavigationManager navigationManager;
 
 <div class="container mt-5">
-    <div class="text-center mb-4">
-        <h2 class="fw-bold text-primary">Panel de Administración</h2>
-        <p class="text-muted">Gestioná usuarios y promociones con estilo y claridad.</p>
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-speedometer2 me-2"></i>Panel de Administración
+        </h2>
+        <p class="text-muted">Gestioná usuarios, productos y promociones con estilo y claridad.</p>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-5 mb-3">
-            <div class="card shadow-sm border-0">
+    <div class="row justify-content-center g-4">
+        <!-- Usuarios -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Usuarios registrados</h5>
+                    <i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+                    <h5 class="card-title fw-semibold">Usuarios registrados</h5>
                     <p class="card-text">Visualizá la lista completa de usuarios activos en el sistema.</p>
-                    <a href="api/Usuario/Lista" class="btn btn-outline-primary w-100">Ver usuarios</a>
+                    <a href="api/Usuario/Lista" class="btn btn-primary w-100">
+                        <i class="bi bi-eye me-1"></i> Ver usuarios
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-5 mb-3">
-            <div class="card shadow-sm border-0">
+        <!-- Promociones -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Promociones</h5>
+                    <i class="bi bi-stars display-4 text-success mb-3"></i>
+                    <h5 class="card-title fw-semibold">Promociones</h5>
                     <p class="card-text">Cargá nuevas promociones para potenciar la experiencia del cliente.</p>
-                    <a href="/api/Promocion/Crear" class="btn btn-outline-success w-100">Cargar promos</a>
+                    <a href="/api/Promocion/Crear" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle me-1"></i> Cargar promos
+                    </a>
                 </div>
             </div>
         </div>
 
-        @* <div class="col-md-5 mb-3">
-
-            <div class="card shadow-sm border-0">
+        <!-- Productos -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Lista de productos</h5>
-                    <p class="card-text">Ver lista de nuevos productos para potenciar la experiencia del cliente.</p>
-                    <a href="/api/Producto/Lista" class="btn btn-outline-success w-100">Ver lista de productos</a>
+                    <i class="bi bi-box-seam display-4 text-success mb-3"></i>
+                    <h5 class="card-title fw-semibold">Nuevo producto</h5>
+                    <p class="card-text">Cargá nuevos productos para ampliar tu catálogo.</p>
+                    <a href="/api/Producto/Crear" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle me-1"></i> Cargar productos
+                    </a>
                 </div>
             </div>
-
-        </div> *@
-
-        <div class="col-md-5 mb-3">
-
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Cargar nuevo producto</h5>
-                    <p class="card-text">Cargá nuevos productos para potenciar la experiencia del cliente.</p>
-                    <a href="/api/Producto/Crear" class="btn btn-outline-success w-100">Cargar productos</a>
-                </div>
-            </div>
-
         </div>
 
-        <div class="col-md-5 mb-3">
-
-            <div class="card shadow-sm border-0">
+        <!-- Promociones de producto -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Cargar nuev promoción de producto</h5>
-                    <p class="card-text">Cargá nuevas promociones de productos para potenciar la experiencia del cliente.</p>
-                    <a href="/api/Promocion_Producto/Crear" class="btn btn-outline-success w-100">Cargar promociones de productos</a>
+                    <i class="bi bi-tags-fill display-4 text-success mb-3"></i>
+                    <h5 class="card-title fw-semibold">Promoción de producto</h5>
+                    <p class="card-text">Cargá promociones específicas para productos destacados.</p>
+                    <a href="/api/Promocion_Producto/Crear" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle me-1"></i> Cargar promociones de productos
+                    </a>
                 </div>
             </div>
-
         </div>
-
-        @* <div class="col-md-5 mb-3">
-
-            <div class="card shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Lista de productos</h5>
-                    <p class="card-text">Cargá nuevos promos de productos para potenciar la experiencia del cliente.</p>
-                    <a href="/api/Promocion_Producto/Crear" class="btn btn-outline-success w-100">Nueva promocion de producto</a>
-                </div>
-            </div>
-
-        </div> *@
-
     </div>
-
 </div>
 
 @code {
