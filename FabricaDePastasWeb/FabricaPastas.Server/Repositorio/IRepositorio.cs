@@ -10,5 +10,6 @@ namespace FabricaPastas.Server.Repositorio
         Task<List<E>> Select();
         Task<E> SelectById(int id);
         Task<bool> Update(int id, E entidad);
+        IQueryable<E> Query();
     }
 }

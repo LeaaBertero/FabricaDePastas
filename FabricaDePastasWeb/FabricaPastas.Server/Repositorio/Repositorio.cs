@@ -101,5 +101,12 @@ namespace FabricaPastas.Server.Repositorio
             return true;
         }
         #endregion
+
+
+        public IQueryable<E> Query()
+        {
+            return context.Set<E>().AsQueryable();
+        }
+
     }
 }

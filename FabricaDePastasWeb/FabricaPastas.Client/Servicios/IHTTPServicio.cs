@@ -7,5 +7,6 @@ namespace FabricaPastas.Client.Servicios
         Task<HTTPRespuesta<T>> Get<T>(string url);
         Task<HTTPRespuesta<object>> Post<T>(string url, T entidad);
         Task<HTTPRespuesta<object>> Put<T>(string url, T entidad);
+        Task<HTTPRespuesta<TResponse>> Post<TRequest, TResponse>(string url, TRequest entidad);
     }
 }

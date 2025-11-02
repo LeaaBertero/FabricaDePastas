@@ -7,12 +7,18 @@
 
         public HttpResponseMessage HttpResponseMessage { get; set; }
 
+        // 🔹 Propiedades nuevas (opcionales)
+        public bool Exitoso => !Error;
+        public string Mensaje { get; set; } = string.Empty;
+
+
         public HTTPRespuesta(T respuesta, bool error, HttpResponseMessage httpResponseMessage)
         {
             Respuesta = respuesta;
             Error = error;
             HttpResponseMessage = httpResponseMessage;
         }
+
 
         public async Task<string> ObtenerError()
         {

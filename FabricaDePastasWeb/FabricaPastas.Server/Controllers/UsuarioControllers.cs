@@ -143,5 +143,56 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
+
+
+        #region Método Login
+        [HttpPost("Login")]
+        public async Task<ActionResult<LoginRespuestaDTO>> Login([FromBody] CrearLoginDTO loginDTO)
+        {
+            // Validación inicial
+            if (loginDTO == null || string.IsNullOrEmpty(loginDTO.NombreUsuario) || string.IsNullOrEmpty(loginDTO.Contraseña))
+            {
+                return new LoginRespuestaDTO
+                {
+                    Exitoso = false,
+                    Mensaje = "Debe ingresar nombre de usuario y contraseña."
+                };
+            }
+
+            // Busca el usuario por nombre de usuario (case insensitive)
+            var usuario = await repositorio.Query()
+                .FirstOrDefaultAsync(u => u.NombreUsuario.ToLower() == loginDTO.NombreUsuario.ToLower());
+
+            if (usuario == null)
+            {
+                return new LoginRespuestaDTO
+                {
+                    Exitoso = false,
+                    Mensaje = "Usuario no encontrado."
+                };
+            }
+
+            // Verificamos la contraseña (texto plano en este ejemplo; idealmente usar hash)
+            if (usuario.Contraseña != loginDTO.Contraseña) // O PasswordHash si implementaste hash
+            {
+                return new LoginRespuestaDTO
+                {
+                    Exitoso = false,
+                    Mensaje = "Contraseña incorrecta."
+                };
+            }
+
+            // Login exitoso
+            return new LoginRespuestaDTO
+            {
+                Exitoso = true,
+                Mensaje = "Inicio de sesión exitoso.",
+                // Token = "...", // Opcional si vas a implementar JWT
+                // IdUsuario = usuario.Id // Puedes agregar info adicional si querés
+            };
+        }
+        #endregion
+
+
     }
 }

@@ -1,19 +1,17 @@
 ﻿@page "/LoginUsuarios"
 @inject IHTTPServicio http
-@inject HttpClient Http;
+@inject HttpClient Http
 @inject NavigationManager navigationManager
-
 
 <h1 class="text-center mb-4">🔐 Iniciar sesión</h1>
 
 <EditForm Model="usuarioLogin" OnValidSubmit="IniciarSesion" class="container">
     <DataAnnotationsValidator />
-@*     <ValidationSummary /> *@
+    <ValidationSummary />
 
     <div class="row justify-content-center">
-        
         <div class="col-md-6">
-            
+
             <div class="mb-3">
                 <label for="NombreUsuario" class="form-label">Usuario</label>
                 <InputText id="NombreUsuario" @bind-Value="usuarioLogin.NombreUsuario" class="form-control" placeholder="Ej: user@user.com" />
@@ -27,39 +25,74 @@
             </div>
 
             <div class="col-12 text-center mt-4">
-                <button class="btn btn-success me-2" type="submit">✅ Iniciar sesión</button>
-                
+                <button class="btn btn-success me-2" type="submit" disabled="@cargando">
+                    @if (cargando)
+                    {
+                        <span>Cargando...</span>
+                    }
+                    else
+                    {
+                        <span>✅ Iniciar sesión</span>
+                    }
+                </button>
             </div>
-
-         
         </div>
-
     </div>
-
-
 </EditForm>
 
+@if (!string.IsNullOrEmpty(Mensaje))
+{
+    <div class="alert alert-danger text-center mt-3">@Mensaje</div>
+}
+
 @code {
-   
-   
-    private string TipoClienteSeleccionado;
-
-    private List<Tipo_Cliente> ListaTipoCliente;
-
-    
-
-    string Mensaje;
-
-   
-    
     private CrearLoginDTO usuarioLogin = new CrearLoginDTO();
+    private string Mensaje;
+    private bool cargando = false;
 
     private async Task IniciarSesion()
     {
-        
-        var httpRespuesta = await http.Post<CrearLoginDTO>("/api/Usuario/Login", usuarioLogin);
-        
+        Mensaje = string.Empty;
+        cargando = true;
 
-      
+        try
+        {
+            // Usamos el método genérico que devuelve un LoginRespuestaDTO
+            var httpRespuesta = await http.Post<CrearLoginDTO, LoginRespuestaDTO>("/api/Usuario/Login", usuarioLogin);
+
+            cargando = false;
+
+            // 1️⃣ Si hubo error HTTP (401, 400, etc.)
+            if (httpRespuesta.Error)
+            {
+                Mensaje = await httpRespuesta.ObtenerError();
+                return;
+            }
+
+            // 2️⃣ Si hubo éxito en la petición, verificamos la respuesta del backend
+            var resultado = httpRespuesta.Respuesta;
+
+            if (resultado == null)
+            {
+                Mensaje = "Respuesta inválida del servidor.";
+                return;
+            }
+
+            if (resultado.Exitoso)
+            {
+                // Inicio de sesión correcto
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                // Credenciales incorrectas o cualquier fallo del backend
+                Mensaje = resultado.Mensaje ?? "Usuario o contraseña incorrectos.";
+            }
+        }
+        catch (Exception ex)
+        {
+            cargando = false;
+            Mensaje = $"Ocurrió un error: {ex.Message}";
+        }
     }
 }

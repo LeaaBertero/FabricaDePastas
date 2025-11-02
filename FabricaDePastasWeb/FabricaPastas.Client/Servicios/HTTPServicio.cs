@@ -93,5 +93,30 @@ namespace FabricaPastas.Client.Servicios
                 new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
         #endregion
+
+
+        #region Método Post<TRequest, TResponse>
+        public async Task<HTTPRespuesta<TResponse>> Post<TRequest, TResponse>(string url, TRequest entidad)
+        {
+            var enviarJson = JsonSerializer.Serialize(entidad);
+
+            var enviarContent = new StringContent(enviarJson,
+                                Encoding.UTF8,
+                                "application/json");
+
+            var response = await http.PostAsync(url, enviarContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var respuesta = await DesSerializar<TResponse>(response);
+                return new HTTPRespuesta<TResponse>(respuesta, false, response);
+            }
+            else
+            {
+                return new HTTPRespuesta<TResponse>(default, true, response);
+            }
+        }
+        #endregion
+
     }
 }
