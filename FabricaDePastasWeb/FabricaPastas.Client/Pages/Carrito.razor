@@ -1,11 +1,106 @@
-﻿@page "/Carrito"
-@inject IHTTPServicio http;
-@inject NavigationManager navigationManager;
+﻿@page "/carrito"
+@inject CarritoServicio CarritoServicio
+@inject IHTTPServicio http
+@inject NavigationManager navigationManager
 
+<h3 class="text-center mt-4 mb-4">🛒 Carrito de compras</h3>
 
-<h3>Carrito</h3>
+@if (CarritoServicio.Items.Count == 0)
+{
+    <div class="alert alert-warning text-center">
+        Tu carrito está vacío. <a href="/catalogousuario" class="alert-link">Ir al catálogo</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in CarritoServicio.Items)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.PrecioUnitario.ToString("C")</td>
+                        <td>@item.Cantidad</td>
+                        <td>@item.Subtotal.ToString("C")</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(item.IdProducto)">
+                                <i class="bi bi-trash"></i> Quitar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end fw-bold">Total:</td>
+                    <td colspan="2" class="fw-bold">@CarritoServicio.ObtenerTotal().ToString("C")</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-secondary me-2" @onclick="VaciarCarrito">
+            <i class="bi bi-x-circle"></i> Vaciar carrito
+        </button>
+
+        <button class="btn btn-success" @onclick="FinalizarCompra">
+            <i class="bi bi-check-circle"></i> Finalizar compra
+        </button>
+    </div>
+}
 
 @code {
+    private async Task Eliminar(int id)
+    {
+        CarritoServicio.Eliminar(id);
+    }
 
-   
+    private void VaciarCarrito()
+    {
+        CarritoServicio.Vaciar();
+    }
+
+    private async Task FinalizarCompra()
+    {
+        // Crea el objeto CrearPedidoDTO
+        var pedido = new CrearPedidoDTO
+        {
+            Fecha_Pedido = DateOnly.FromDateTime(DateTime.Now),
+            Fecha_Entrega = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
+            Total = CarritoServicio.ObtenerTotal(),
+            Productos = CarritoServicio.Items.Select(item => new CrearDetalle_PedidoDTO
+            {
+                Nombre = item.Nombre,
+                Cantidad = item.Cantidad,
+                Precio_Unitario = item.PrecioUnitario
+            }).ToList()
+
+        };
+
+        var response = await http.Post<CrearPedidoDTO, int>("api/Pedido", pedido);
+
+        if (response.Exitoso)
+        {
+            CarritoServicio.Vaciar();
+            navigationManager.NavigateTo("/pedidoexitoso");
+        }
+        else
+        {
+            Console.WriteLine("❌ Error al guardar el pedido: " + response.Mensaje);
+        }
+    }
 }
+

@@ -1,0 +1,122 @@
+﻿@page "/catalogo-usuario"
+@inject IHTTPServicio http
+@inject CarritoServicio carritoServicio
+@inject NavigationManager navigationManager
+
+<h1 class="text-center mb-4">🍝 Catálogo de Productos</h1>
+
+@if (productos == null)
+{
+    <p class="text-center text-muted">Cargando productos...</p>
+}
+else if (!productos.Any())
+{
+    <p class="text-center text-muted">No hay productos disponibles.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var p in productos)
+        {
+            <div class="col">
+                <div class="card shadow-sm h-100">
+                    <img src="@p.Imagen_Url" class="card-img-top" alt="@p.Nombre" style="object-fit: cover; height: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Nombre</h5>
+                        <p class="card-text">@p.Descripcion</p>
+                        <p class="fw-bold text-success">💲@p.PrecioBase</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center">
+                        <button class="btn btn-outline-success w-100" @onclick="() => AgregarAlCarrito(p)">
+                            🛒 Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (carritoServicio.Items.Any())
+{
+    <div class="mt-5">
+        <h4>🛍️ Carrito de compras</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in carritoServicio.Items)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>$@item.PrecioUnitario</td>
+                        <td>@item.Cantidad</td>
+                        <td>$@item.Subtotal</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" @onclick="() => QuitarDelCarrito(item.IdProducto)">❌</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-end">
+            <h5>Total: 💰 $@carritoServicio.ObtenerTotal()</h5>
+            <button class="btn btn-primary" @onclick="FinalizarCompra">Finalizar compra</button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="mt-4 text-center text-muted">
+        <p>Tu carrito está vacío. Agrega algunos productos para comenzar 🍝</p>
+    </div>
+}
+
+@code {
+    private List<ProductoDTO>? productos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var respuesta = await http.Get<List<ProductoDTO>>("api/Producto");
+
+        if (respuesta.Error)
+        {
+            Console.WriteLine("Error al cargar productos");
+            return;
+        }
+
+        productos = respuesta.Respuesta ?? new();
+    }
+
+    private void AgregarAlCarrito(ProductoDTO producto)
+    {
+        var item = new CarritoDTO
+        {
+            IdProducto = producto.Id,
+            Nombre = producto.Nombre ?? "",
+            Descripcion = producto.Descripcion ?? "",
+            PrecioUnitario = producto.PrecioBase,
+            Cantidad = 1
+        };
+
+        carritoServicio.Agregar(item);
+    }
+
+    private void QuitarDelCarrito(int idProducto)
+    {
+        carritoServicio.Eliminar(idProducto);
+    }
+
+    private void FinalizarCompra()
+    {
+        navigationManager.NavigateTo("/pedido");
+    }
+}

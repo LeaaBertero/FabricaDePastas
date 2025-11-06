@@ -1,4 +1,5 @@
 using FabricaPastas.BD.Data;
+using FabricaPastas.Client.Servicios;
 using FabricaPastas.Server.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,8 @@ builder.Services.AddScoped<IPromocionRepositorio, PromocionRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ITipo_ClienteRepositorio, Tipo_ClienteRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<CarritoServicio>();
+
 #endregion
 
 var app = builder.Build();
