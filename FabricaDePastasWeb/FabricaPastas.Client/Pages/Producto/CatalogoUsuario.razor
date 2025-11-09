@@ -3,82 +3,138 @@
 @inject CarritoServicio carritoServicio
 @inject NavigationManager navigationManager
 
-<h1 class="text-center mb-4">🍝 Catálogo de Productos</h1>
+<div class="container py-4">
 
-@if (productos == null)
-{
-    <p class="text-center text-muted">Cargando productos...</p>
-}
-else if (!productos.Any())
-{
-    <p class="text-center text-muted">No hay productos disponibles.</p>
-}
-else
-{
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var p in productos)
-        {
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <img src="@p.Imagen_Url" class="card-img-top" alt="@p.Nombre" style="object-fit: cover; height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">@p.Nombre</h5>
-                        <p class="card-text">@p.Descripcion</p>
-                        <p class="fw-bold text-success">💲@p.PrecioBase</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center">
-                        <button class="btn btn-outline-success w-100" @onclick="() => AgregarAlCarrito(p)">
-                            🛒 Agregar al carrito
-                        </button>
+    <!-- 🔹 Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-danger">
+            🍝 Catálogo de Productos
+        </h1>
+
+        <button class="btn btn-outline-primary fw-semibold" @onclick="VolverInicio">
+            <i class="bi bi-arrow-left-circle"></i> Volver al inicio
+        </button>
+    </div>
+
+    <!-- 🔹 Listado de productos -->
+    @if (productos == null)
+    {
+        <div class="text-center text-muted mt-5">
+            <div class="spinner-border text-danger mb-3"></div>
+            <p>Cargando productos...</p>
+        </div>
+    }
+    else if (!productos.Any())
+    {
+        <p class="text-center text-muted">No hay productos disponibles.</p>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var p in productos)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="@p.Imagen_Url" class="card-img-top rounded-top" alt="@p.Nombre"
+                             style="object-fit: cover; height: 220px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger fw-bold">@p.Nombre</h5>
+                            <p class="card-text text-secondary">@p.Descripcion</p>
+                            <p class="fw-bold text-success fs-5">💲@p.PrecioBase</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-center">
+                            <button class="btn btn-success w-100 fw-semibold" @onclick="() => AgregarAlCarrito(p)">
+                                🛒 Agregar al carrito
+                            </button>
+                        </div>
                     </div>
                 </div>
+            }
+        </div>
+    }
+
+    <!-- 🔹 Carrito -->
+    <div class="carrito-container mt-5 p-4 bg-light rounded shadow-sm">
+
+        <h4 class="fw-bold text-dark mb-3">🛍️ Carrito de compras</h4>
+
+        @if (carritoServicio.Items.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-danger">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in carritoServicio.Items)
+                        {
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>$@item.PrecioUnitario</td>
+                                <td>@item.Cantidad</td>
+                                <td>$@item.Subtotal</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => QuitarDelCarrito(item.IdProducto)">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-end mt-3">
+                <h5 class="fw-bold">Total: 💰 $@carritoServicio.ObtenerTotal()</h5>
+                <button class="btn btn-primary fw-semibold" @onclick="FinalizarCompra">
+                    Finalizar compra
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-3">
+                <p>Tu carrito está vacío. Agregá algunos productos para comenzar 🍝</p>
             </div>
         }
     </div>
-}
 
-@if (carritoServicio.Items.Any())
-{
-    <div class="mt-5">
-        <h4>🛍️ Carrito de compras</h4>
-        <table class="table table-bordered table-striped">
-            <thead class="table-light">
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in carritoServicio.Items)
-                {
-                    <tr>
-                        <td>@item.Nombre</td>
-                        <td>$@item.PrecioUnitario</td>
-                        <td>@item.Cantidad</td>
-                        <td>$@item.Subtotal</td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" @onclick="() => QuitarDelCarrito(item.IdProducto)">❌</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+</div>
 
-        <div class="text-end">
-            <h5>Total: 💰 $@carritoServicio.ObtenerTotal()</h5>
-            <button class="btn btn-primary" @onclick="FinalizarCompra">Finalizar compra</button>
-        </div>
-    </div>
-}
-else
-{
-    <div class="mt-4 text-center text-muted">
-        <p>Tu carrito está vacío. Agrega algunos productos para comenzar 🍝</p>
-    </div>
-}
+<!-- 🔹 Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+    body {
+        background: url('/images/fondo-nonna.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .carrito-container {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .btn-success:hover {
+        background-color: #28a745;
+        transform: scale(1.05);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
 
 @code {
     private List<ProductoDTO>? productos;
@@ -118,5 +174,10 @@ else
     private void FinalizarCompra()
     {
         navigationManager.NavigateTo("/pedido");
+    }
+
+    private void VolverInicio()
+    {
+        navigationManager.NavigateTo("/InicioUsuario");
     }
 }

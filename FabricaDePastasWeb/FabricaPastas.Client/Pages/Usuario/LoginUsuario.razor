@@ -2,6 +2,8 @@
 @inject IHTTPServicio http
 @inject HttpClient Http
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
 
 <h1 class="text-center mb-4">🔐 Iniciar sesión</h1>
 
@@ -80,9 +82,13 @@
 
             if (resultado.Exitoso)
             {
-                // Inicio de sesión correcto
-                navigationManager.NavigateTo("/");
+                // Guardar nombre de usuario en el almacenamiento local del navegador
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "usuarioNombre", usuarioLogin.NombreUsuario);
+
+                // Redirigir a la página de inicio del usuario
+                navigationManager.NavigateTo("/InicioUsuario");
             }
+
             else
             {
                 // Credenciales incorrectas o cualquier fallo del backend
