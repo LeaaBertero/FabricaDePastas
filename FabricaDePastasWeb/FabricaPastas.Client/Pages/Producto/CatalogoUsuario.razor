@@ -35,15 +35,33 @@
             {
                 <div class="col">
                     <div class="card h-100 shadow-sm border-0">
-                        <img src="@p.Imagen_Url" class="card-img-top rounded-top" alt="@p.Nombre"
+
+                        <!-- ✅ CAMBIO: ahora la imagen usa la URL base de la app -->
+                        <!-- Esto garantiza que si la imagen está en wwwroot/images, se mostrará correctamente -->
+                        <img src="@($"{navigationManager.BaseUri.TrimEnd('/')}{p.Imagen_Url}")"
+                             class="card-img-top rounded-top"
+                             alt="@p.Nombre"
                              style="object-fit: cover; height: 220px;">
+                        <!-- 🟢 Fin del cambio -->
+
                         <div class="card-body">
                             <h5 class="card-title text-danger fw-bold">@p.Nombre</h5>
                             <p class="card-text text-secondary">@p.Descripcion</p>
                             <p class="fw-bold text-success fs-5">💲@p.PrecioBase</p>
+
+                            <!-- 🔹 Selector de cantidad -->
+                            <div class="input-group mt-2">
+                                <span class="input-group-text">Cantidad</span>
+                                <input type="number"
+                                       class="form-control text-center"
+                                       min="1"
+                                       value="@obtenerCantidad(p.Id)"
+                                       @oninput="(e) => cambiarCantidad(p.Id, e)" />
+                            </div>
                         </div>
+
                         <div class="card-footer bg-transparent border-0 text-center">
-                            <button class="btn btn-success w-100 fw-semibold" @onclick="() => AgregarAlCarrito(p)">
+                            <button class="btn btn-success w-100 fw-semibold mt-2" @onclick="() => AgregarAlCarrito(p)">
                                 🛒 Agregar al carrito
                             </button>
                         </div>
@@ -90,7 +108,24 @@
                 </table>
             </div>
 
-            <div class="text-end mt-3">
+            <!-- 🔹 Método de pago -->
+            <div class="mt-4">
+                <h5 class="fw-bold mb-2">💳 Método de pago</h5>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="efectivo" name="metodoPago"
+                           value="Efectivo" @onchange="SeleccionarMetodoPago" checked="@("Efectivo" == metodoPago)">
+                    <label class="form-check-label" for="efectivo">Efectivo</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="transferencia" name="metodoPago"
+                           value="Transferencia" @onchange="SeleccionarMetodoPago" checked="@("Transferencia" == metodoPago)">
+                    <label class="form-check-label" for="transferencia">Transferencia</label>
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
                 <h5 class="fw-bold">Total: 💰 $@carritoServicio.ObtenerTotal()</h5>
                 <button class="btn btn-primary fw-semibold" @onclick="FinalizarCompra">
                     Finalizar compra
@@ -138,6 +173,8 @@
 
 @code {
     private List<ProductoDTO>? productos;
+    private Dictionary<int, int> cantidades = new(); // cantidad por producto
+    private string metodoPago = "Efectivo"; // por defecto
 
     protected override async Task OnInitializedAsync()
     {
@@ -152,15 +189,28 @@
         productos = respuesta.Respuesta ?? new();
     }
 
+    private int obtenerCantidad(int id)
+    {
+        return cantidades.ContainsKey(id) ? cantidades[id] : 1;
+    }
+
+    private void cambiarCantidad(int id, ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int nuevaCantidad))
+            cantidades[id] = Math.Max(1, nuevaCantidad);
+    }
+
     private void AgregarAlCarrito(ProductoDTO producto)
     {
+        int cantidad = obtenerCantidad(producto.Id);
+
         var item = new CarritoDTO
         {
             IdProducto = producto.Id,
             Nombre = producto.Nombre ?? "",
             Descripcion = producto.Descripcion ?? "",
             PrecioUnitario = producto.PrecioBase,
-            Cantidad = 1
+            Cantidad = cantidad
         };
 
         carritoServicio.Agregar(item);
@@ -169,6 +219,12 @@
     private void QuitarDelCarrito(int idProducto)
     {
         carritoServicio.Eliminar(idProducto);
+    }
+
+    private void SeleccionarMetodoPago(ChangeEventArgs e)
+    {
+        metodoPago = e.Value?.ToString() ?? "Efectivo";
+        carritoServicio.AsignarMetodoPago(metodoPago);
     }
 
     private void FinalizarCompra()

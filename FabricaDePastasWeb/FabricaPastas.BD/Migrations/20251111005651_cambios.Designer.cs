@@ -4,6 +4,7 @@ using FabricaPastas.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20251111005651_cambios")]
+    partial class cambios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,11 +254,11 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Estado_Pedido_Id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Fecha_Entrega")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha_Entrega")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("Fecha_Pedido")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha_Pedido")
+                        .HasColumnType("date");
 
                     b.Property<int>("Forma_Pago_Id")
                         .HasColumnType("int");

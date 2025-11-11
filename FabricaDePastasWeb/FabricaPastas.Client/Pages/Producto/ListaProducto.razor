@@ -2,8 +2,6 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-
-
 <h1 class="text-center mb-4 text-success fw-bold">
     <i class="bi bi-bag-check-fill me-2"></i>Productos disponibles
 </h1>
@@ -43,7 +41,10 @@
                             <th><i class="bi bi-box-seam me-1"></i>Nombre</th>
                             <th><i class="bi bi-card-text me-1"></i>Descripción</th>
                             <th><i class="bi bi-currency-dollar me-1"></i>Precio base</th>
+
+                            @* ✅ Mantenemos la columna de imagen *@
                             <th><i class="bi bi-image me-1"></i>Imagen</th>
+
                             <th><i class="bi bi-stack me-1"></i>Stock</th>
                             <th class="text-center"><i class="bi bi-gear-fill me-1"></i>Acción</th>
                         </tr>
@@ -55,17 +56,24 @@
                                 <td>@item.Nombre</td>
                                 <td>@item.Descripcion</td>
                                 <td>$@item.PrecioBase</td>
-                                <td>
+
+                                <td class="text-center">
+                                    @* ✅ CAMBIO IMPORTANTE: usamos "navigationManager.BaseUri" para asegurar ruta correcta *@
                                     @if (!string.IsNullOrEmpty(item.Imagen_Url))
                                     {
-                                        <img src="@item.Imagen_Url" alt="Imagen del producto" class="img-thumbnail" style="max-width: 100px;" />
+                                        <img src="@($"{navigationManager.BaseUri.TrimEnd('/')}{item.Imagen_Url}")"
+                                             alt="@item.Nombre"
+                                             class="img-thumbnail shadow-sm"
+                                             style="max-width: 100px; border-radius:10px;" />
                                     }
                                     else
                                     {
-                                        <span class="text-muted">Sin imagen</span>
+                                        <span class="text-muted fst-italic">Sin imagen</span>
                                     }
                                 </td>
+
                                 <td>@item.Stock</td>
+
                                 <td class="text-center">
                                     <a class="btn btn-warning btn-sm me-1 shadow-sm" href="/api/Producto/Editar/@item.Id">
                                         <i class="bi bi-pencil-fill me-1"></i>Modificar
@@ -105,30 +113,22 @@
     </h5>
 </Confirmacion>
 
-           
 
 @code {
-
     Confirmacion confirmacion;
-
     Producto productoBorrar;
-
     List<Producto> Lista_producto;
-
     string Mensaje;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
         await Leer();
     }
 
     private async Task Leer()
     {
         var resp = await http.Get<List<Producto>>("api/Producto");
-
-        string Mensaje = "";
 
         if (!resp.Error)
         {
@@ -140,21 +140,21 @@
         }
     }
 
-    //  Muestra el modal de confirmación
+    // Muestra el modal de confirmación
     private void Eliminar(Producto producto)
     {
         productoBorrar = producto;
         confirmacion.Ver();
     }
 
-    //  Cancelar cerrar modal sin borrar
+    // Cancelar cierre modal sin borrar
     private void Cancelar()
     {
         confirmacion.Ocultar();
         productoBorrar = null;
     }
 
-    //  Confirmar  eliminar
+    // Confirmar eliminación
     private async Task Eliminar()
     {
         if (productoBorrar == null)
@@ -178,12 +178,3 @@
         confirmacion.Ocultar();
     }
 }
-
-
-
-
-
-
-
-
-

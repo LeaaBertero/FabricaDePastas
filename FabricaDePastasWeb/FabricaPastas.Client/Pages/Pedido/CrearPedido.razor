@@ -50,9 +50,17 @@
                                 <button class="btn btn-outline-secondary me-2" type="button" @onclick="Cancelar">
                                     ❌ Cancelar
                                 </button>
-                                <button class="btn btn-outline-info" type="button" @onclick="VerListaPedidos">
+                                <button class="btn btn-outline-info me-2" type="button" @onclick="VerListaPedidos">
                                     📋 Ver lista
                                 </button>
+
+                                @* Botón para descargar el recibo PDF, solo visible si se creó un pedido *@
+                                @if (pedidoCreadoId != 0)
+                                {
+                                    <button class="btn btn-primary" type="button" @onclick="DescargarRecibo">
+                                        🧾 Descargar recibo
+                                    </button>
+                                }
                             </div>
 
                         </div>
@@ -63,18 +71,30 @@
     </EditForm>
 </div>
 
-       
-
 @code {
-    private Pedido pedido = new Pedido();
+    private CrearPedidoDTO pedido = new CrearPedidoDTO(); // Cambiar tipo
+    private int pedidoCreadoId = 0; // Almacena el ID del pedido creado
 
     private async Task Grabar()
     {
-        var httpRespuesta = await http.Post<Pedido>("api/Pedido", pedido);
+        var httpRespuesta = await http.Post<CrearPedidoDTO, int>("api/Pedido", pedido);
 
         if (httpRespuesta.Error)
         {
             var body = httpRespuesta.HttpResponseMessage;
+        }
+        else
+        {
+            pedidoCreadoId = httpRespuesta.Respuesta;
+        }
+    }
+
+    private void DescargarRecibo()
+    {
+        if (pedidoCreadoId != 0)
+        {
+            // Abrir PDF en nueva pestaña o forzar descarga
+            navigationManager.NavigateTo($"api/Pedido/{pedidoCreadoId}/recibo", true);
         }
     }
 
@@ -88,4 +108,3 @@
         navigationManager.NavigateTo("api/Pedido/ListaSB");
     }
 }
-

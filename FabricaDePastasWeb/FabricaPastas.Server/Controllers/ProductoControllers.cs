@@ -2,7 +2,6 @@
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
 using FabricaPastas.Server.Repositorio;
-using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,19 +12,46 @@ namespace FabricaPastas.Server.Controllers
     public class ProductoControllers : ControllerBase
     {
         private readonly IProductoRepositorio repositorio;
-
-        //private readonly Context context;
         private readonly IMapper mapper;
 
         #region constructor
-        public ProductoControllers(IProductoRepositorio repositorio, 
-                                   IMapper mapper)
+        public ProductoControllers(IProductoRepositorio repositorio, IMapper mapper)
         {
             this.repositorio = repositorio;
-            //this.context = context;
             this.mapper = mapper;
         }
         #endregion
+
+
+        // ✅ NUEVO MÉTODO PARA SUBIR IMAGEN
+        [HttpPost("SubirImagen")]
+        [RequestSizeLimit(10_000_000)] // opcional: límite de 10 MB
+        [Consumes("multipart/form-data")] // 👈 ESTA LÍNEA ES LA CLAVE
+        public async Task<ActionResult<string>> SubirImagen(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Archivo no válido");
+
+            // Generar nombre único
+            var nombreArchivo = $"{Guid.NewGuid()}_{file.FileName}";
+            var carpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+            // Crear carpeta si no existe
+            if (!Directory.Exists(carpeta))
+                Directory.CreateDirectory(carpeta);
+
+            // Guardar archivo
+            var rutaArchivo = Path.Combine(carpeta, nombreArchivo);
+            using (var stream = new FileStream(rutaArchivo, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Devolver URL accesible desde el cliente
+            var url = $"/images/{nombreArchivo}";
+            return Ok(url);
+        }
+
 
         #region Método Get
         [HttpGet]
@@ -52,30 +78,14 @@ namespace FabricaPastas.Server.Controllers
 
         #region Método Post
         [HttpPost]
-        public async Task<ActionResult<int>> Post(CrearProductoDTO entidadDTO)
+        public async Task<ActionResult<int>> Post([FromBody] Producto entidad)
         {
             try
             {
-                //Usuario entidad = new Usuario();
-
-                //entidad.Nombre = entidadDTO.Nombre;
-                //entidad.Apellido = entidadDTO.Apellido;
-                //entidad.Email = entidadDTO.Email;
-                //entidad.Contraseña = entidadDTO.Contraseña;
-                //entidad.Teléfono = entidadDTO.Teléfono;
-                //entidad.Dirección = entidadDTO.Dirección;
-                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
-                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
-
-                Producto entidad = mapper.Map<Producto>(entidadDTO);
-
-
                 return await repositorio.Insert(entidad);
-
             }
             catch (Exception e)
             {
-
                 return BadRequest(e.Message);
             }
         }
@@ -102,15 +112,11 @@ namespace FabricaPastas.Server.Controllers
             dammy.PrecioBase = entidad.PrecioBase;
             dammy.Imagen_Url = entidad.Imagen_Url;
             dammy.Stock = entidad.Stock;
-            
-            //dammy.Fecha_Registro = entidad.Fecha_Registro;
 
             try
             {
                 await repositorio.Update(id, dammy);
-
                 return Ok();
-
             }
             catch (Exception e)
             {
@@ -129,6 +135,7 @@ namespace FabricaPastas.Server.Controllers
             {
                 return NotFound($"El producto {id} no existe.");
             }
+
             if (await repositorio.Delete(id))
             {
                 return Ok();
@@ -139,10 +146,5 @@ namespace FabricaPastas.Server.Controllers
             }
         }
         #endregion
-
     }
 }
-
-
-
-

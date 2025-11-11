@@ -2,7 +2,6 @@
 @inject IHTTPServicio http;
 @inject NavigationManager navigationManager;
 
-
 <h1 class="text-center mb-4 text-success fw-bold">
     <i class="bi bi-box-fill me-2"></i>Carga de productos (Stock)
 </h1>
@@ -13,12 +12,13 @@
     <div class="card shadow-sm border-start border-4 border-success mb-5">
         <div class="card-body">
             <div class="row g-4">
+
                 <!-- Nombre del producto -->
                 <div class="col-md-6">
                     <label for="nombre" class="form-label fw-semibold">
                         <i class="bi bi-tag-fill me-1"></i>Nombre del producto
                     </label>
-                    <input type="text" id="nombre" @bind="producto.Nombre" class="form-control" placeholder="Ej: Yerba Mate 500g" />
+                    <input type="text" id="nombre" @bind="producto.Nombre" class="form-control" placeholder="Ej: Ravioles de ricota" />
                     <ValidationMessage For="@(() => producto.Nombre)" />
                 </div>
 
@@ -27,7 +27,7 @@
                     <label for="descripcion" class="form-label fw-semibold">
                         <i class="bi bi-card-text me-1"></i>Descripción
                     </label>
-                    <input type="text" id="descripcion" @bind="producto.Descripcion" class="form-control" placeholder="Ej: Orgánica, sin TACC" />
+                    <input type="text" id="descripcion" @bind="producto.Descripcion" class="form-control" placeholder="Ej: Pasta fresca artesanal" />
                     <ValidationMessage For="@(() => producto.Descripcion)" />
                 </div>
 
@@ -36,26 +36,31 @@
                     <label for="preciobase" class="form-label fw-semibold">
                         <i class="bi bi-currency-dollar me-1"></i>Precio base
                     </label>
-                    <input type="number" id="preciobase" @bind="producto.PrecioBase" class="form-control" step="0.01" min="0" placeholder="Ej: 999.99" />
+                    <input type="number" id="preciobase" @bind="producto.PrecioBase" class="form-control" step="0.01" min="0" />
                     <ValidationMessage For="@(() => producto.PrecioBase)" />
                 </div>
 
-                <!-- Stock disponible -->
+                <!-- Stock -->
                 <div class="col-md-4">
                     <label for="stock" class="form-label fw-semibold">
-                        <i class="bi bi-stack me-1"></i>Stock disponible
+                        <i class="bi bi-stack me-1"></i>Stock
                     </label>
-                    <input type="number" id="stock" @bind="producto.Stock" class="form-control" step="1" min="0" placeholder="Ej: 50" />
+                    <input type="number" id="stock" @bind="producto.Stock" class="form-control" min="0" />
                     <ValidationMessage For="@(() => producto.Stock)" />
                 </div>
 
-                <!-- Imagen del producto -->
+                <!-- Imagen -->
                 <div class="col-md-4">
-                    <label for="imagenproducto" class="form-label fw-semibold">
+                    <label class="form-label fw-semibold">
                         <i class="bi bi-image me-1"></i>Imagen del producto
                     </label>
-                    <input type="file" id="imagenproducto" name="imagen" accept="image/*" @bind="producto.Imagen_Url" class="form-control" />
-                    <ValidationMessage For="@(() => producto.Imagen_Url)" />
+                    <InputFile OnChange="SubirImagen" accept="image/*" class="form-control" />
+
+                    @if (!string.IsNullOrEmpty(producto.Imagen_Url))
+                    {
+                        <!-- ✅ Previsualización de la imagen -->
+                        <img src="@producto.Imagen_Url" class="img-thumbnail mt-3" style="max-width: 150px;" />
+                    }
                 </div>
 
                 <!-- Botones -->
@@ -75,37 +80,52 @@
     </div>
 </EditForm>
 
-
-
-           
-
 @code {
     private Producto producto = new Producto();
+
+    // ✅ Método modificado correctamente
+    private async Task SubirImagen(InputFileChangeEventArgs e)
+    {
+        var archivo = e.File;
+
+        using var contenido = new MultipartFormDataContent();
+        var stream = archivo.OpenReadStream(10_000_000); // límite 10 MB
+
+        // ✅ Importante: especificar el tipo de contenido y el nombre de campo "file"
+        var fileContent = new StreamContent(stream);
+        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(archivo.ContentType);
+
+        contenido.Add(fileContent, "file", archivo.Name);
+
+        // ✅ Usamos PostAsync directo, no a través de IHTTPServicio (porque envía JSON)
+        using var client = new HttpClient { BaseAddress = new Uri(navigationManager.BaseUri) };
+        var response = await client.PostAsync("api/Producto/SubirImagen", contenido);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var url = await response.Content.ReadAsStringAsync();
+            producto.Imagen_Url = url.Trim('"'); // guarda la URL limpia
+        }
+        else
+        {
+            Console.WriteLine($"❌ Error al subir imagen: {response.StatusCode}");
+        }
+    }
 
     private async Task Grabar()
     {
         var httpRespuesta = await http.Post<Producto>("api/Producto", producto);
 
-        if (httpRespuesta.Error)
+        if (!httpRespuesta.Error)
         {
-            var body = httpRespuesta.HttpResponseMessage;
+            navigationManager.NavigateTo("/api/Producto/Lista");
         }
-        navigationManager.NavigateTo("/api/Producto/Lista");
+        else
+        {
+            Console.WriteLine("❌ Error al guardar el producto");
+        }
     }
 
-    private void Cancelar()
-    {
-        navigationManager.NavigateTo("/api/Rol");
-    }
-
-    private void ListaProductos()
-    {
-        navigationManager.NavigateTo("/api/Producto/Lista");
-    }
-
-
-   
-
-
-
+    private void Cancelar() => navigationManager.NavigateTo("/api/Rol");
+    private void ListaProductos() => navigationManager.NavigateTo("/api/Producto/Lista");
 }

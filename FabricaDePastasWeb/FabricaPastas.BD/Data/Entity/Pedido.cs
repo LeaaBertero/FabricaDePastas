@@ -2,24 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FabricaPastas.BD.Data.Entity
 {
-    #region Indices
-    //[Index(nameof(Pedido_Id), Name = "Pedido_Id", IsUnique = true)]
-    [Index(nameof(Fecha_Pedido), nameof(Total),
-    Name = "Fecha_Pedido_Total", IsUnique = false)]
+    #region Índices
+    [Index(nameof(Fecha_Pedido), nameof(Total), Name = "Fecha_Pedido_Total", IsUnique = false)]
     #endregion
     public class Pedido : EntityBase
     {
-
         #region Clave Primaria
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Pedido_Id { get; set; }
         #endregion
 
@@ -30,25 +21,31 @@ namespace FabricaPastas.BD.Data.Entity
         public int Metodo_Entrega_Id { get; set; }
         #endregion
 
-        #region Atributos 
+        #region Atributos
+
         [Required(ErrorMessage = "La fecha del pedido es obligatoria")]
-        public DateOnly Fecha_Pedido { get; set; }
+        public DateTime Fecha_Pedido { get; set; }
 
         [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
-        public DateOnly Fecha_Entrega { get; set; } //agregado para el método de entrega
+        public DateTime Fecha_Entrega { get; set; }
 
-        
-        public string? Observaciones_Catering { get; set; } //Descripción del catering (opcional)
+        public string? Observaciones_Catering { get; set; }
 
+        [Required(ErrorMessage = "El total del pedido es obligatorio")]
         public decimal Total { get; set; }
 
-        //#region Tablas relacionadas (Uno a muchos) - Listas
-        //public List<Pedido>? Pedidos { get; set; }
-        //public List<Promocion_Usuario>? Promociones_Usuario { get; set; }
-        //public List<Promocion_Producto>? Promociones_Producto { get; set; }
-        //public List<Promocion>? Promociones { get; set; }
-        //#endregion
-        #endregion
+        // 🔹 Nuevo campo: método de pago elegido
+        [Required(ErrorMessage = "El método de pago es obligatorio")]
+        [MaxLength(50)]
+        public string Metodo_Pago { get; set; } = "Efectivo"; // Por defecto
 
+        // 🔹 Nuevo campo: número o código de pedido (útil para PDF y búsqueda)
+        [MaxLength(20)]
+        public string Codigo_Pedido { get; set; } = Guid.NewGuid().ToString("N")[..8].ToUpper();
+
+        // 🔹 Relación con los detalles del pedido
+        public List<Detalle_Pedido>? Detalles { get; set; }
+
+        #endregion
     }
 }

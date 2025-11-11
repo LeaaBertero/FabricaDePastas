@@ -2,6 +2,7 @@
 using FabricaPastas.BD.Data;
 using FabricaPastas.BD.Data.Entity;
 using FabricaPastas.Server.Repositorio;
+using FabricaPastas.Server.Servicios;
 using FabricaPastas.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,153 +10,142 @@ using Microsoft.EntityFrameworkCore;
 namespace FabricaPastas.Server.Controllers
 {
     [ApiController]
-    [Route("api/Pedido")]
-    public class PedidoControllers : ControllerBase
+    [Route("api/[controller]")]
+    public class PedidoController : ControllerBase
     {
-        private readonly IPedidoRepositorio repositorio;
+        private readonly Context _context;
+        private readonly IPedidoRepositorio _repositorio;
+        private readonly IMapper _mapper;
 
-        //private readonly Context context;
-        private readonly IMapper mapper;
-
-        #region constructor
-        public PedidoControllers(IPedidoRepositorio repositorio, 
-                                 IMapper mapper)
+        #region Constructor
+        public PedidoController(Context context, IPedidoRepositorio repositorio, IMapper mapper)
         {
-            this.repositorio = repositorio;
-            //this.context = context;
-            this.mapper = mapper;
+            _context = context;
+            _repositorio = repositorio;
+            _mapper = mapper;
         }
         #endregion
 
-        #region Método Get
+        #region GET: Todos los pedidos
         [HttpGet]
         public async Task<ActionResult<List<Pedido>>> Get()
         {
-            return await repositorio.Select();
+            var pedidos = await _context.Pedido
+                .Include(p => p.Detalles) // ✅ solo incluimos la lista de detalles
+                .ToListAsync();
+
+            return Ok(pedidos);
         }
         #endregion
 
-        #region Método Get por {id}
+        #region GET: Pedido por ID
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Pedido>> Get(int id)
         {
-            var dammy = await repositorio.SelectById(id);
+            var pedido = await _context.Pedido
+                .Include(p => p.Detalles)
+                .FirstOrDefaultAsync(p => p.Pedido_Id == id);
 
-            if (dammy == null)
-            {
-                return NotFound();
-            }
+            if (pedido == null)
+                return NotFound("No se encontró el pedido solicitado.");
 
-            return dammy;
+            return Ok(pedido);
         }
         #endregion
 
-        #region Método Post
+        #region POST: Crear pedido
         [HttpPost]
-        public async Task<ActionResult<int>> Post(CrearPedidoDTO entidadDTO)
+        public async Task<ActionResult<int>> CrearPedido([FromBody] CrearPedidoDTO dto)
         {
+            if (dto == null || dto.Productos == null || dto.Productos.Count == 0)
+                return BadRequest("El pedido debe contener al menos un producto.");
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
-                //Usuario entidad = new Usuario();
+                var totalCalculado = dto.Productos.Sum(p => p.Cantidad * p.Precio_Unitario);
 
-                //entidad.Nombre = entidadDTO.Nombre;
-                //entidad.Apellido = entidadDTO.Apellido;
-                //entidad.Email = entidadDTO.Email;
-                //entidad.Contraseña = entidadDTO.Contraseña;
-                //entidad.Teléfono = entidadDTO.Teléfono;
-                //entidad.Dirección = entidadDTO.Dirección;
-                //entidad.Cuit_Cuil = entidadDTO.Cuit_Cuil;
-                //entidad.Fecha_Registro = entidadDTO.Fecha_Registro;
+                var pedido = new Pedido
+                {
+                    Usuario_Id = dto.Usuario_Id,
+                    Estado_Pedido_Id = 1, // Pendiente
+                    Forma_Pago_Id = dto.Forma_Pago_Id,
+                    Metodo_Entrega_Id = dto.Metodo_Entrega_Id,
+                    Fecha_Pedido = dto.Fecha_Pedido,
+                    Fecha_Entrega = dto.Fecha_Entrega,
+                    Total = totalCalculado,
+                    Metodo_Pago = dto.MetodoPago ?? "Efectivo",
+                    Codigo_Pedido = dto.CodigoPedido,
+                    Detalles = dto.Productos.Select(p => new Detalle_Pedido
+                    {
+                        Producto_Id = p.Producto_Id,
+                        Nombre = p.Nombre,
+                        Cantidad = p.Cantidad,
+                        Precio_Unitario = p.Precio_Unitario,
+                        Subtotal = p.Cantidad * p.Precio_Unitario
+                    }).ToList()
+                };
 
-                Pedido entidad = mapper.Map<Pedido>(entidadDTO);
+                _context.Pedido.Add(pedido);
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-
-                return await repositorio.Insert(entidad);
-
+                return Ok(pedido.Pedido_Id);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                return BadRequest(e.Message);
+                await transaction.RollbackAsync();
+                return BadRequest($"Error al guardar el pedido: {ex.Message}");
             }
         }
         #endregion
 
-
-        #region Método Put
+        #region PUT: Actualizar pedido
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, [FromBody] Pedido entidad)
         {
-            if (id != entidad.Id)
-            {
-                return BadRequest("Datos incorrectos");
-            }
+            if (id != entidad.Pedido_Id)
+                return BadRequest("El ID del pedido no coincide.");
 
-            // Obtenemos el pedido existente
-            var dammy = await repositorio.SelectById(id);
+            var pedidoExistente = await _context.Pedido.FindAsync(id);
+            if (pedidoExistente == null)
+                return NotFound("No se encontró el pedido.");
 
-            if (dammy == null)
-            {
-                return NotFound("No se encontró el pedido buscado");
-            }
-
-            // Actualizamos todas las propiedades que queremos permitir modificar
-            dammy.Fecha_Pedido = entidad.Fecha_Pedido;
-            dammy.Fecha_Entrega = entidad.Fecha_Entrega;
-            dammy.Total = entidad.Total;
-            dammy.Observaciones_Catering = entidad.Observaciones_Catering;
+            pedidoExistente.Fecha_Pedido = entidad.Fecha_Pedido;
+            pedidoExistente.Fecha_Entrega = entidad.Fecha_Entrega;
+            pedidoExistente.Total = entidad.Total;
+            pedidoExistente.Observaciones_Catering = entidad.Observaciones_Catering;
+            pedidoExistente.Estado_Pedido_Id = entidad.Estado_Pedido_Id;
 
             try
             {
-                await repositorio.Update(id, dammy);
+                await _context.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest($"Error al actualizar el pedido: {e.Message}");
             }
         }
         #endregion
 
+        #region GET: Descargar recibo PDF
+        [HttpGet("{id:int}/recibo")]
+        public async Task<IActionResult> DescargarRecibo(int id)
+        {
+            var pedido = await _context.Pedido
+                .Include(p => p.Detalles)
+                .FirstOrDefaultAsync(p => p.Pedido_Id == id);
 
+            if (pedido == null)
+                return NotFound("Pedido no encontrado.");
 
+            var pdfServicio = new PdfServicio(); // Asegurate de tener esta clase implementada
+            var pdfBytes = pdfServicio.GenerarRecibo(pedido);
 
-        //#region Método Put
-        //[HttpPut("{id:int}")]
-        //public async Task<ActionResult> Put(int id, [FromBody] Pedido entidad)
-        //{
-        //    if (id != entidad.Id)
-        //    {
-        //        return BadRequest("Datos incorrectos");
-        //    }
-
-        //    var dammy = await repositorio.SelectById(id);
-
-        //    if (dammy == null)
-        //    {
-        //        return NotFound("No se encontró el pedido buscado");
-        //    }
-
-        //    dammy.Fecha_Pedido = entidad.Fecha_Pedido;
-        //    dammy.Fecha_Entrega = entidad.Fecha_Entrega;
-        //    dammy.Total = entidad.Total;
-
-        //    //dammy.Fecha_Registro = entidad.Fecha_Registro;
-
-        //    try
-        //    {
-        //        await repositorio.Update(id, dammy);
-
-
-        //        return Ok();
-
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //        return BadRequest(e.Message);
-        //    }
-        //}
-        //#endregion
+            return File(pdfBytes, "application/pdf", $"Recibo_{pedido.Codigo_Pedido}.pdf");
+        }
+        #endregion
     }
 }
