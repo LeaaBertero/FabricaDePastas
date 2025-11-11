@@ -99,16 +99,12 @@ else
         🎉 <strong>¡Tu pedido fue registrado exitosamente!</strong><br />
         Gracias por tu compra 🍝
         <div class="mt-3 d-flex justify-content-center gap-2">
-            <button class="btn btn-primary" @onclick="VolverAlCatalogo">
-                Volver al catálogo
-            </button>
+            <button class="btn btn-primary" @onclick="VolverAlCatalogo">Volver al catálogo</button>
 
-            @* Botón para descargar el recibo PDF, solo aparece si hay un pedido creado *@
+            @* Botón para descargar el recibo PDF *@
             @if (pedidoCreadoId != 0)
             {
-                <button class="btn btn-info" @onclick="DescargarRecibo">
-                    🧾 Descargar Recibo
-                </button>
+                <button class="btn btn-info" @onclick="DescargarRecibo">🧾 Descargar Recibo</button>
             }
         </div>
     </div>
@@ -117,6 +113,7 @@ else
 @code {
     private CrearPedidoDTO pedido = new();
     private bool pedidoEnviado = false;
+    private int pedidoCreadoId = 0;
 
     protected override void OnInitialized()
     {
@@ -143,13 +140,13 @@ else
 
             pedido.Total = carritoServicio.ObtenerTotal();
 
-            // POST y obtenemos el pedido completo con ID
-            var respuesta = await http.Post<CrearPedidoDTO, Pedido>("api/Pedido", pedido);
+            // 🔹 Aquí usamos la versión tipada para obtener el ID
+            var respuesta = await http.Post<CrearPedidoDTO, int>("api/Pedido", pedido);
 
             if (!respuesta.Error)
             {
                 carritoServicio.Vaciar();
-                pedido = respuesta.Respuesta; // Ahora pedido tiene su Pedido_Id
+                pedidoCreadoId = respuesta.Respuesta; // ✅ guardamos el ID
                 pedidoEnviado = true;
             }
             else
@@ -164,11 +161,12 @@ else
         }
     }
 
+
     private void DescargarRecibo()
     {
-        if (pedido.Pedido_Id != 0)
+        if (pedidoCreadoId != 0)
         {
-            navigationManager.NavigateTo($"api/Pedido/{pedido.Pedido_Id}/recibo", true);
+            navigationManager.NavigateTo($"api/Pedido/{pedidoCreadoId}/recibo", true);
         }
     }
 
@@ -177,4 +175,3 @@ else
         navigationManager.NavigateTo("/catalogo-usuario");
     }
 }
-
