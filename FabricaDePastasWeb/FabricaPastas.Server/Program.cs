@@ -26,9 +26,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-#region ConnectionString
-builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
-#endregion
+//#region ConnectionString
+//builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
+//#endregion
+
+builder.Services.AddDbContext<Context>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
+
 
 #region Automapper
 builder.Services.AddAutoMapper(typeof(Program));
