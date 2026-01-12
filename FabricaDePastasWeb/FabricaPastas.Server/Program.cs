@@ -1,4 +1,5 @@
 using FabricaPastas.BD.Data;
+using FabricaPastas.BD.Data.Seed;
 using FabricaPastas.Client.Servicios;
 using FabricaPastas.Server.Repositorio;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +60,16 @@ builder.Services.AddScoped<CarritoServicio>();
 #endregion
 
 var app = builder.Build();
+
+// ======================
+// SEED DE DATOS INICIALES
+// ======================
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<Context>();
+    DbInitializer.Seed(context);
+}
+// ======================
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
