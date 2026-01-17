@@ -1,7 +1,7 @@
 ﻿@page "/"
 
-<!-- 🔹 Navbar superior simplificada -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+<!-- 🔹 Navbar superior -->
+@* <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4">
     <div class="container-fluid">
 
         <a class="navbar-brand fw-bold text-danger" href="/">🍝 La Nonna</a>
@@ -14,29 +14,79 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNonna">
+        <div class="collapse navbar-collapse ms-auto" id="navbarNonna">
             <ul class="navbar-nav gap-3">
 
                 <li class="nav-item">
-                    <a class="nav-link active d-flex align-items-center gap-2 text-primary fw-bold" href="/">
+                    <a class="nav-link active d-flex align-items-center gap-2 fw-bold text-primary" href="/">
                         <i class="bi bi-house-door-fill"></i>Inicio
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-success fw-semibold" href="/LoginUsuarios">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-success" href="/LoginUsuarios">
                         <i class="bi bi-person-circle"></i>Iniciar sesión
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-info fw-semibold" href="/Nosotros">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-info" href="/Nosotros">
                         <i class="bi bi-people-fill"></i>Nosotros
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-warning fw-semibold" href="/preguntas-frecuentes">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-warning" href="/preguntas-frecuentes">
+                        <i class="bi bi-question-circle-fill"></i>FAQ
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav> *@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4">
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold text-danger" href="/">
+            🍝 La Nonna
+        </a>
+
+        <!-- Botón responsive -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNonna"
+                aria-controls="navbarNonna"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menú centrado -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNonna">
+            <ul class="navbar-nav gap-4">
+
+                <li class="nav-item">
+                    <a class="nav-link active d-flex align-items-center gap-2 fw-bold text-primary" href="/">
+                        <i class="bi bi-house-door-fill"></i>Inicio
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-success" href="/LoginUsuarios">
+                        <i class="bi bi-person-circle"></i>Iniciar sesión
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-info" href="/Nosotros">
+                        <i class="bi bi-people-fill"></i>Nosotros
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 fw-semibold text-warning" href="/preguntas-frecuentes">
                         <i class="bi bi-question-circle-fill"></i>FAQ
                     </a>
                 </li>
@@ -52,7 +102,6 @@
     <p class="lead mb-4">Sabores caseros, calidad artesanal y tradición familiar.</p>
 
     <div class="d-flex flex-column align-items-center gap-3">
-
         <a class="btn btn-outline-light d-flex align-items-center gap-2 fw-semibold shadow-sm"
            target="_blank"
            href="https://web.whatsapp.com/">
@@ -66,7 +115,6 @@
             <i class="bi bi-geo-alt-fill fs-5"></i>
             Encontranos aquí
         </a>
-
     </div>
 </div>
 
@@ -77,9 +125,7 @@
         <div class="col">
             <div class="card h-100 shadow-sm border-start border-4 border-success">
                 <div class="card-body">
-                    <h5 class="card-title text-success fw-bold">
-                        🎯 Promos activas
-                    </h5>
+                    <h5 class="card-title text-success fw-bold">🎯 Promos activas</h5>
                     <p class="card-text">¿Querés ver nuestras promociones? ¡Clickeá el botón!</p>
                     <a href="/api/Promocion/ListaUsuarios" class="btn btn-success">Ver promociones</a>
                 </div>
@@ -87,25 +133,21 @@
         </div>
 
         <div class="col">
-            <div class="card h-100 shadow-sm border-start border-4 border-warning">
+            <div class="card h-100 shadow-sm border-start border-4 border-primary">
                 <div class="card-body">
-                    <h5 class="card-title text-warning fw-bold">
-                        🛍️ Promos por producto
-                    </h5>
+                    <h5 class="card-title text-primary fw-bold">🛍️ Promos por producto</h5>
                     <p class="card-text">Consultá las promociones específicas por producto.</p>
-                    <a href="/api/Promocion_Producto/ListaSB" class="btn btn-warning text-white">Ver promos por producto</a>
+                    <a href="/api/Promocion_Producto/ListaSB" class="btn btn-primary">Ver promos por producto</a>
                 </div>
             </div>
         </div>
 
         <div class="col">
-            <div class="card h-100 shadow-sm border-start border-4 border-warning">
+            <div class="card h-100 shadow-sm border-start border-4 border-danger">
                 <div class="card-body">
-                    <h5 class="card-title text-warning fw-bold">
-                        👥 Promos por usuarios
-                    </h5>
+                    <h5 class="card-title text-danger fw-bold">👥 Promos por usuarios</h5>
                     <p class="card-text">Consultá las promociones específicas por usuarios.</p>
-                    <a href="/api/Promocion_Usuario/Lista" class="btn btn-warning text-white">Ver promos por usuarios</a>
+                    <a href="/api/Promocion_Usuario/Lista" class="btn btn-danger">Ver promos por usuarios</a>
                 </div>
             </div>
         </div>
@@ -121,21 +163,42 @@
     body {
         background: url('/images/width_550.png') no-repeat center center fixed;
         background-size: cover;
-        backdrop-filter: brightness(0.8);
     }
 
+        /* Overlay para oscurecer el fondo */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
     .hero {
-        min-height: 70vh;
-        background: rgba(0, 0, 0, 0.5);
+        min-height: 75vh;
         padding: 3rem;
         border-radius: 1rem;
-        margin: 2rem;
         box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
     }
 
     .card {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.95);
     }
+
+    /* estilos para el menu de navegacion */
+
+    .navbar {
+        font-size: 1.1rem;
+    }
+
+    .navbar-nav .nav-link {
+        transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+        .navbar-nav .nav-link:hover {
+            transform: scale(1.05);
+            color: #f8f9fa !important; /* blanco al pasar el mouse */
+        }
 </style>
 
 @code {

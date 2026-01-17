@@ -21,28 +21,30 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <label for="MetodoEntregaSeleccionado" class="form-label">Seleccione el método de entrega</label>
-            <select id="MetodoEntregaSeleccionado" @bind="MetodoEntregaSeleccionado" class="form-select">
-                <option disabled selected value="">-- Seleccione una opción --</option>
-                @if (ListaMetodoEntrega != null)
-                {
-                    foreach (var MetodoEntrega in ListaMetodoEntrega)
+        <div class="col-md-8">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ListaMetodoEntrega != null)
                     {
-                        <option value="@MetodoEntrega.Metodo_Entrega_Id">@MetodoEntrega.Descripcion</option>
+                        foreach (var MetodoEntrega in ListaMetodoEntrega)
+                        {
+                            <tr>
+                                <td>@MetodoEntrega.Metodo_Entrega_Id</td>
+                                <td>@MetodoEntrega.Descripcion</td>
+                            </tr>
+                        }
                     }
-                }
-            </select>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
-@if (!string.IsNullOrEmpty(MetodoEntregaSeleccionado))
-{
-    <p>Cliente seleccionado: <strong>@MetodoEntregaSeleccionado</strong></p>
-}
-
-@* <button class="btn btn-primary" @onclick="IngresarConMetodoEntrega">Ingresar</button> *@
 
 @if (Mensaje == null)
 {
@@ -52,7 +54,7 @@
     }
     else if (ListaMetodoEntrega.Count == 0)
     {
-        <p>No existen tipos de cliente</p>
+        <p>No existen métodos de entrega</p>
     }
 }
 else
