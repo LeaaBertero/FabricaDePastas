@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FabricaPastas.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class actualizoBD : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,24 +43,6 @@ namespace FabricaPastas.BD.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Detalle_Lista_Precio", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Detalle_Pedido",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Detalle_Pedido_Id = table.Column<int>(type: "int", nullable: false),
-                    Pedido_Id = table.Column<int>(type: "int", nullable: false),
-                    Producto_Id = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    Precio_Unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Detalle_Pedido", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +91,7 @@ namespace FabricaPastas.BD.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Metodo_entrega",
+                name: "Metodo_Entrega",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -119,7 +101,7 @@ namespace FabricaPastas.BD.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Metodo_entrega", x => x.Id);
+                    table.PrimaryKey("PK_Metodo_Entrega", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,10 +115,12 @@ namespace FabricaPastas.BD.Migrations
                     Estado_Pedido_Id = table.Column<int>(type: "int", nullable: false),
                     Forma_Pago_Id = table.Column<int>(type: "int", nullable: false),
                     Metodo_Entrega_Id = table.Column<int>(type: "int", nullable: false),
-                    Fecha_Pedido = table.Column<DateOnly>(type: "date", nullable: false),
-                    Fecha_Entrega = table.Column<DateOnly>(type: "date", nullable: false),
+                    Fecha_Pedido = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha_Entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Observaciones_Catering = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Metodo_Pago = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Codigo_Pedido = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -269,6 +253,38 @@ namespace FabricaPastas.BD.Migrations
                     table.PrimaryKey("PK_Usuario", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Detalle_Pedido",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Detalle_Pedido_Id = table.Column<int>(type: "int", nullable: false),
+                    Pedido_Id = table.Column<int>(type: "int", nullable: false),
+                    Producto_Id = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Precio_Unitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Detalle_Pedido", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Detalle_Pedido_Pedido_Pedido_Id",
+                        column: x => x.Pedido_Id,
+                        principalTable: "Pedido",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Detalle_Pedido_Producto_Producto_Id",
+                        column: x => x.Producto_Id,
+                        principalTable: "Producto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "Tipo_Pasta_Forma_Tamanio_IngredientesBase_ProcesoElaboracion",
                 table: "Categoria_Producto",
@@ -280,9 +296,14 @@ namespace FabricaPastas.BD.Migrations
                 column: "Precio_Personalizado");
 
             migrationBuilder.CreateIndex(
-                name: "Cantidad_Precio_Unitario",
+                name: "IX_Detalle_Pedido_Pedido_Id",
                 table: "Detalle_Pedido",
-                columns: new[] { "Cantidad", "Precio_Unitario" });
+                column: "Pedido_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Detalle_Pedido_Producto_Id",
+                table: "Detalle_Pedido",
+                column: "Producto_Id");
 
             migrationBuilder.CreateIndex(
                 name: "Descripcion",
@@ -301,7 +322,7 @@ namespace FabricaPastas.BD.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "Descripcion",
-                table: "Metodo_entrega",
+                table: "Metodo_Entrega",
                 column: "Descripcion");
 
             migrationBuilder.CreateIndex(
@@ -342,13 +363,7 @@ namespace FabricaPastas.BD.Migrations
                 name: "Lista_Precio");
 
             migrationBuilder.DropTable(
-                name: "Metodo_entrega");
-
-            migrationBuilder.DropTable(
-                name: "Pedido");
-
-            migrationBuilder.DropTable(
-                name: "Producto");
+                name: "Metodo_Entrega");
 
             migrationBuilder.DropTable(
                 name: "Promocion");
@@ -367,6 +382,12 @@ namespace FabricaPastas.BD.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuario");
+
+            migrationBuilder.DropTable(
+                name: "Pedido");
+
+            migrationBuilder.DropTable(
+                name: "Producto");
         }
     }
 }

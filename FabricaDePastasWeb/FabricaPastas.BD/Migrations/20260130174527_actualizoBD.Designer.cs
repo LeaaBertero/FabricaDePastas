@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FabricaPastas.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20251109214144_registro")]
-    partial class registro
+    [Migration("20260130174527_actualizoBD")]
+    partial class actualizoBD
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,12 +105,17 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<int>("Detalle_Pedido_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Pedido_Id")
                         .HasColumnType("int");
@@ -121,9 +126,14 @@ namespace FabricaPastas.BD.Migrations
                     b.Property<int>("Producto_Id")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Cantidad", "Precio_Unitario" }, "Cantidad_Precio_Unitario");
+                    b.HasIndex("Pedido_Id");
+
+                    b.HasIndex("Producto_Id");
 
                     b.ToTable("Detalle_Pedido");
                 });
@@ -225,7 +235,7 @@ namespace FabricaPastas.BD.Migrations
 
                     b.HasIndex(new[] { "Descripcion" }, "Descripcion");
 
-                    b.ToTable("Metodo_entrega");
+                    b.ToTable("Metodo_Entrega");
                 });
 
             modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Pedido", b =>
@@ -236,20 +246,30 @@ namespace FabricaPastas.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Codigo_Pedido")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<int>("Estado_Pedido_Id")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Fecha_Entrega")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Fecha_Entrega")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("Fecha_Pedido")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Fecha_Pedido")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Forma_Pago_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Metodo_Entrega_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Metodo_Pago")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Observaciones_Catering")
                         .HasColumnType("nvarchar(max)");
@@ -523,6 +543,30 @@ namespace FabricaPastas.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuario");
+                });
+
+            modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Detalle_Pedido", b =>
+                {
+                    b.HasOne("FabricaPastas.BD.Data.Entity.Pedido", "Pedido")
+                        .WithMany("Detalles")
+                        .HasForeignKey("Pedido_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FabricaPastas.BD.Data.Entity.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("Producto_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("FabricaPastas.BD.Data.Entity.Pedido", b =>
+                {
+                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }
